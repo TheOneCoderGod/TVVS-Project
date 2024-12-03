@@ -1,30 +1,44 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <!-- Basic project configuration -->
   <modelVersion>4.0.0</modelVersion>
   <groupId>badIceCream</groupId>
   <artifactId>BadIceCream</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
+
+  <!-- Project metadata -->
   <name>BadIceCream</name>
   <inceptionYear>2023</inceptionYear>
+
+  <!-- Maven prerequisites -->
   <prerequisites>
     <maven>3.9.9</maven>
   </prerequisites>
+
+  <!-- Project properties -->
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <java.version>21</java.version>
+    <java.version>21</java.version> <!-- Use Java 21 -->
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <maven.compiler.release>${java.version}</maven.compiler.release>
   </properties>
+
+  <!-- Dependencies section -->
   <dependencies>
-    <!--  Main Dependency  -->
+    <!-- Main Dependency for console-based UI -->
     <dependency>
       <groupId>com.googlecode.lanterna</groupId>
       <artifactId>lanterna</artifactId>
       <version>3.1.1</version>
     </dependency>
-    <!--  Testing Dependencies  -->
+
+    <!-- Testing Dependencies -->
     <dependency>
       <groupId>net.jqwik</groupId>
       <artifactId>jqwik</artifactId>
@@ -80,9 +94,11 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+  <!-- Build plugins -->
   <build>
     <plugins>
-      <!--  Compiler plugin  -->
+      <!-- Compiler Plugin for Java -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -92,7 +108,8 @@
           <target>${maven.compiler.target}</target>
         </configuration>
       </plugin>
-      <!--  Assembly Plugin  -->
+
+      <!-- Assembly Plugin for packaging the application with dependencies -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
@@ -118,7 +135,8 @@
           </execution>
         </executions>
       </plugin>
-      <!--  Surefire plugin for testing  -->
+
+      <!-- Surefire Plugin for running tests -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -134,7 +152,8 @@
           <trimStackTrace>false</trimStackTrace>
         </configuration>
       </plugin>
-      <!--  JaCoCo for code coverage  -->
+
+      <!-- JaCoCo Plugin for code coverage -->
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
@@ -155,7 +174,8 @@
           </execution>
         </executions>
       </plugin>
-      <!--  PIT (Mutation Testing) plugin  -->
+
+      <!-- PIT (Mutation Testing) plugin -->
       <plugin>
         <groupId>org.pitest</groupId>
         <artifactId>pitest-maven</artifactId>
@@ -173,32 +193,41 @@
             <feature>-macos_focus</feature>
           </features>
           <excludedClasses>
-            <param>badIceCream.utils.Audio</param>
+            <param>badIceCream.utils.Audio</param> <!-- Exclude Audio class from mutation testing -->
           </excludedClasses>
         </configuration>
       </plugin>
     </plugins>
   </build>
+
+  <!-- Reporting Plugins for Maven reports -->
   <reporting>
     <plugins>
+      <!-- Project Information Reports Plugin -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-project-info-reports-plugin</artifactId>
         <version>3.7.0</version>
       </plugin>
+
+      <!-- Javadoc Plugin for generating documentation -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <version>3.10.1</version>
         <configuration>
-          <failOnError>false</failOnError>
+          <failOnError>false</failOnError> <!-- Don't fail on Javadoc generation errors -->
         </configuration>
       </plugin>
+
+      <!-- Surefire Report Plugin for test reports -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-report-plugin</artifactId>
         <version>3.5.2</version>
       </plugin>
+
+      <!-- JaCoCo Report Plugin for code coverage reports -->
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
