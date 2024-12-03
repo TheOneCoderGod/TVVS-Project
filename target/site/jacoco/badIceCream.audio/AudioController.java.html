@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AudioController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BadIceCream</a> &gt; <a href="index.source.html" class="el_package">badIceCream.audio</a> &gt; <span class="el_source">AudioController.java</span></div><h1>AudioController.java</h1><pre class="source lang-java linenums">package badIceCream.audio;
+
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.IOException;
+
+<span class="fc" id="L7">public class AudioController {</span>
+    private static Audio breakWallSound, buildWallSound, gameOverMusic, levelCompleteMusic, levelMusic, menuMusic, runnerMonsterSound;
+
+    public static synchronized void playLevelMusic() {
+<span class="pc bpc" id="L11" title="1 of 2 branches missed.">        if (levelMusic == null) {</span>
+            try {
+<span class="nc" id="L13">                levelMusic = new Audio(Audio.loadMusic(&quot;LevelMusic.wav&quot;));</span>
+<span class="nc" id="L14">            } catch (LineUnavailableException | UnsupportedAudioFileException | IOException e) {</span>
+<span class="nc" id="L15">                throw new RuntimeException(e);</span>
+<span class="nc" id="L16">            }</span>
+        }
+<span class="fc" id="L18">        levelMusic.play();</span>
+<span class="fc" id="L19">    }</span>
+    public static synchronized void playMenuMusic() {
+<span class="pc bpc" id="L21" title="1 of 2 branches missed.">        if (menuMusic == null) {</span>
+            try {
+<span class="nc" id="L23">                menuMusic = new Audio(Audio.loadMusic(&quot;MainMenuMusic.wav&quot;));</span>
+<span class="nc" id="L24">            } catch (LineUnavailableException | UnsupportedAudioFileException | IOException e) {</span>
+<span class="nc" id="L25">                throw new RuntimeException(e);</span>
+<span class="nc" id="L26">            }</span>
+        }
+<span class="fc" id="L28">        menuMusic.play();</span>
+<span class="fc" id="L29">    }</span>
+    public static synchronized void playLevelCompleteMusic() {
+<span class="pc bpc" id="L31" title="1 of 2 branches missed.">        if (levelCompleteMusic == null) {</span>
+            try {
+<span class="nc" id="L33">                levelCompleteMusic = new Audio(Audio.loadMusic(&quot;LevelCompleteMenuSound.wav&quot;));</span>
+<span class="nc" id="L34">            } catch (LineUnavailableException | UnsupportedAudioFileException | IOException e) {</span>
+<span class="nc" id="L35">                throw new RuntimeException(e);</span>
+<span class="nc" id="L36">            }</span>
+        }
+<span class="fc" id="L38">        levelCompleteMusic.playOnce();</span>
+<span class="fc" id="L39">    }</span>
+    public static synchronized void playGameOverMusic() {
+<span class="pc bpc" id="L41" title="1 of 2 branches missed.">        if (gameOverMusic == null) {</span>
+            try {
+<span class="nc" id="L43">                gameOverMusic = new Audio(Audio.loadMusic(&quot;GameOverMenuSound.wav&quot;));</span>
+<span class="nc" id="L44">            } catch (LineUnavailableException | UnsupportedAudioFileException | IOException e) {</span>
+<span class="nc" id="L45">                throw new RuntimeException(e);</span>
+<span class="nc" id="L46">            }</span>
+        }
+<span class="fc" id="L48">        gameOverMusic.playOnce();</span>
+<span class="fc" id="L49">    }</span>
+    public static synchronized void playBuildWallSound() {
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">        if (buildWallSound == null) {</span>
+            try {
+<span class="nc" id="L53">                buildWallSound = new Audio(Audio.loadMusic(&quot;BuildWallSound.wav&quot;));</span>
+<span class="nc" id="L54">            } catch (LineUnavailableException | UnsupportedAudioFileException | IOException e) {</span>
+<span class="nc" id="L55">                throw new RuntimeException(e);</span>
+<span class="nc" id="L56">            }</span>
+        }
+<span class="fc" id="L58">        buildWallSound.playOnce();</span>
+<span class="fc" id="L59">    }</span>
+    public static synchronized void playBreakWallSound() {
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">        if (breakWallSound == null) {</span>
+            try {
+<span class="nc" id="L63">                breakWallSound = new Audio(Audio.loadMusic(&quot;BreakWallSound.wav&quot;));</span>
+<span class="nc" id="L64">            } catch (LineUnavailableException | UnsupportedAudioFileException | IOException e) {</span>
+<span class="nc" id="L65">                throw new RuntimeException(e);</span>
+<span class="nc" id="L66">            }</span>
+        }
+<span class="fc" id="L68">        breakWallSound.playOnce();</span>
+<span class="fc" id="L69">    }</span>
+    public static synchronized void playRunnerMonsterSound() {
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">        if (runnerMonsterSound == null) {</span>
+            try {
+<span class="nc" id="L73">                runnerMonsterSound = new Audio(Audio.loadMusic(&quot;RunnerMonsterSound.wav&quot;));</span>
+<span class="nc" id="L74">            } catch (LineUnavailableException | UnsupportedAudioFileException | IOException e) {</span>
+<span class="nc" id="L75">                throw new RuntimeException(e);</span>
+<span class="nc" id="L76">            }</span>
+        }
+<span class="fc" id="L78">        runnerMonsterSound.playOnce();</span>
+<span class="fc" id="L79">    }</span>
+    public static synchronized void stopLevelMusic() {
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">        if (levelMusic != null) {</span>
+<span class="fc" id="L82">            levelMusic.stop();</span>
+        }
+<span class="fc" id="L84">    }</span>
+    public static synchronized void stopMenuMusic() {
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">        if (menuMusic != null) {</span>
+<span class="fc" id="L87">            menuMusic.stop();</span>
+        }
+<span class="fc" id="L89">    }</span>
+    public static synchronized void stopGameOverMusic() {
+<span class="nc bnc" id="L91" title="All 2 branches missed.">        if (gameOverMusic != null) {</span>
+<span class="nc" id="L92">            gameOverMusic.stop();</span>
+        }
+<span class="nc" id="L94">    }</span>
+    public static synchronized void stopLevelCompleteMusic() {
+<span class="nc bnc" id="L96" title="All 2 branches missed.">        if (levelCompleteMusic != null) {</span>
+<span class="nc" id="L97">            levelCompleteMusic.stop();</span>
+        }
+<span class="nc" id="L99">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -1,21 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <groupId>badIceCream</groupId>
   <artifactId>BadIceCream</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
-
   <name>BadIceCream</name>
   <inceptionYear>2023</inceptionYear>
-
   <prerequisites>
     <maven>3.9.9</maven>
   </prerequisites>
-
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -24,16 +17,14 @@
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <maven.compiler.release>${java.version}</maven.compiler.release>
   </properties>
-
   <dependencies>
-    <!-- Main Dependency -->
+    <!--  Main Dependency  -->
     <dependency>
       <groupId>com.googlecode.lanterna</groupId>
       <artifactId>lanterna</artifactId>
       <version>3.1.1</version>
     </dependency>
-
-    <!-- Testing Dependencies -->
+    <!--  Testing Dependencies  -->
     <dependency>
       <groupId>net.jqwik</groupId>
       <artifactId>jqwik</artifactId>
@@ -89,10 +80,9 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
   <build>
     <plugins>
-      <!-- Compiler plugin -->
+      <!--  Compiler plugin  -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -102,8 +92,7 @@
           <target>${maven.compiler.target}</target>
         </configuration>
       </plugin>
-
-      <!-- Assembly Plugin -->
+      <!--  Assembly Plugin  -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
@@ -129,8 +118,7 @@
           </execution>
         </executions>
       </plugin>
-
-      <!-- Surefire plugin for testing -->
+      <!--  Surefire plugin for testing  -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -146,8 +134,7 @@
           <trimStackTrace>false</trimStackTrace>
         </configuration>
       </plugin>
-
-      <!-- JaCoCo for code coverage -->
+      <!--  JaCoCo for code coverage  -->
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
@@ -168,8 +155,7 @@
           </execution>
         </executions>
       </plugin>
-
-      <!-- PIT (Mutation Testing) plugin -->
+      <!--  PIT (Mutation Testing) plugin  -->
       <plugin>
         <groupId>org.pitest</groupId>
         <artifactId>pitest-maven</artifactId>
@@ -193,7 +179,6 @@
       </plugin>
     </plugins>
   </build>
-
   <reporting>
     <plugins>
       <plugin>
@@ -201,7 +186,6 @@
         <artifactId>maven-project-info-reports-plugin</artifactId>
         <version>3.7.0</version>
       </plugin>
-
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
@@ -210,13 +194,11 @@
           <failOnError>false</failOnError>
         </configuration>
       </plugin>
-
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-report-plugin</artifactId>
         <version>3.5.2</version>
       </plugin>
-
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>

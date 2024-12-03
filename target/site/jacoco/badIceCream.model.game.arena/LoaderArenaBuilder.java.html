@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LoaderArenaBuilder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BadIceCream</a> &gt; <a href="index.source.html" class="el_package">badIceCream.model.game.arena</a> &gt; <span class="el_source">LoaderArenaBuilder.java</span></div><h1>LoaderArenaBuilder.java</h1><pre class="source lang-java linenums">package badIceCream.model.game.arena;
+
+import badIceCream.model.game.elements.*;
+import badIceCream.model.game.elements.fruits.*;
+import badIceCream.model.game.elements.monsters.*;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+
+public class LoaderArenaBuilder extends ArenaBuilder {
+    private final List&lt;String&gt; lines;
+    private final int level;
+
+<span class="nc" id="L20">    public LoaderArenaBuilder(int level) throws IOException {</span>
+<span class="nc" id="L21">        this.level = level;</span>
+
+<span class="nc" id="L23">        String rootPath = new File(System.getProperty(&quot;user.dir&quot;)).getPath();</span>
+<span class="nc" id="L24">        String mapLocation = rootPath + &quot;/src/main/resources/levels/level&quot;  + level + &quot;.lvl&quot;;</span>
+
+<span class="nc" id="L26">        BufferedReader br = Files.newBufferedReader(Paths.get(mapLocation), Charset.defaultCharset());</span>
+
+<span class="nc" id="L28">        lines = readLines(br);</span>
+<span class="nc" id="L29">    }</span>
+
+    private List&lt;String&gt; readLines(BufferedReader br) throws IOException {
+<span class="nc" id="L32">        List&lt;String&gt; lines = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L33" title="All 2 branches missed.">        for (String line; (line = br.readLine()) != null; )</span>
+<span class="nc" id="L34">            lines.add(line);</span>
+<span class="nc" id="L35">        return lines;</span>
+    }
+
+    @Override
+    protected int getLevel() {
+<span class="nc" id="L40">        return this.level;</span>
+    }
+
+    @Override
+    protected int getWidth() {
+<span class="nc" id="L45">        int width = 0;</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">        for (String line : lines) width = Math.max(width, line.length());</span>
+<span class="nc" id="L47">        return width;</span>
+    }
+
+    @Override
+    protected int getHeight() {
+<span class="nc" id="L52">        return lines.size();</span>
+    }
+
+    @Override
+    protected List&lt;Wall&gt; createWalls() {
+<span class="nc" id="L57">        List&lt;Wall&gt; walls = new ArrayList&lt;&gt;();</span>
+
+<span class="nc bnc" id="L59" title="All 2 branches missed.">        for (int y = 0; y &lt; lines.size(); y++) {</span>
+<span class="nc" id="L60">            String line = lines.get(y);</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">            for (int x = 0; x &lt; line.length(); x++)</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">                if (line.charAt(x) == 'G') walls.add(new StoneWall(x, y));</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">                else if (line.charAt(x) == 'F') walls.add(new IceWall(x,y));</span>
+        }
+
+<span class="nc" id="L66">        return walls;</span>
+    }
+
+    @Override
+    protected List&lt;Monster&gt; createMonsters() {
+<span class="nc" id="L71">        List&lt;Monster&gt; monsters = new ArrayList&lt;&gt;();</span>
+
+<span class="nc bnc" id="L73" title="All 2 branches missed.">        for (int y = 0; y &lt; lines.size(); y++) {</span>
+<span class="nc" id="L74">            String line = lines.get(y);</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">            for (int x = 0; x &lt; line.length(); x++)</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">                if (line.charAt(x) == 'Y') monsters.add(new DefaultMonster(x, y));</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">                else if (line.charAt(x) == 'J') monsters.add(new JumperMonster(x, y));</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">                else if (line.charAt(x) == 'V') monsters.add(new RunnerMonster(x, y));</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">                else if (line.charAt(x) == 'W') monsters.add(new WallBreakerMonster(x, y));</span>
+        }
+<span class="nc" id="L81">        return monsters;</span>
+    }
+
+    @Override
+    protected IceCream createIceCream() {
+<span class="nc bnc" id="L86" title="All 2 branches missed.">        for (int y = 0; y &lt; lines.size(); y++) {</span>
+<span class="nc" id="L87">            String line = lines.get(y);</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">            for (int x = 0; x &lt; line.length(); x++)</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">                if (line.charAt(x) == 'Z') return new IceCream(x, y);</span>
+        }
+<span class="nc" id="L91">        return null;</span>
+    }
+
+    @Override
+    protected List&lt;Fruit&gt; createFruits() {
+<span class="nc" id="L96">        List&lt;Fruit&gt; fruits = new ArrayList&lt;&gt;();</span>
+
+<span class="nc bnc" id="L98" title="All 2 branches missed.">        for (int y = 0; y &lt; lines.size(); y++) {</span>
+<span class="nc" id="L99">            String line = lines.get(y);</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">            for (int x = 0; x &lt; line.length(); x++)</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">                if (line.charAt(x) == 'M') fruits.add(new BananaFruit(x,y));</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">                else if (line.charAt(x) == 'Q') fruits.add(new StrawberryFruit(x,y));</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">                else if (line.charAt(x) == 'K') fruits.add(new CherryFruit(x,y));</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">                else if (line.charAt(x) == 'O') fruits.add(new PineappleFruit(x,y));</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">                else if (line.charAt(x) == 'T') fruits.add(new AppleFruit(x,y));</span>
+        }
+<span class="nc" id="L107">        return fruits;</span>
+    }
+
+    @Override
+    protected List&lt;HotFloor&gt; createHotFloors() {
+<span class="nc" id="L112">        List&lt;HotFloor&gt; hotFloors = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">        for (int y = 0; y &lt; lines.size(); y++) {</span>
+<span class="nc" id="L114">            String line = lines.get(y);</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">            for (int x = 0; x &lt; line.length(); x++)</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">                if (line.charAt(x) == 'E') hotFloors.add(new HotFloor(x,y));</span>
+        }
+<span class="nc" id="L118">        return hotFloors;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
