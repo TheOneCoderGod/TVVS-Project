@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ShortestPathNextMove.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BadIceCream</a> &gt; <a href="index.source.html" class="el_package">badIceCream.utils</a> &gt; <span class="el_source">ShortestPathNextMove.java</span></div><h1>ShortestPathNextMove.java</h1><pre class="source lang-java linenums">package badIceCream.utils;
+
+import badIceCream.model.Position;
+import badIceCream.model.game.arena.Arena;
+import badIceCream.model.game.elements.monsters.Monster;
+
+import java.util.*;
+
+<span class="nc" id="L9">public class ShortestPathNextMove {</span>
+    public Position findShortestPath(Monster monster, Arena arena) {
+<span class="nc" id="L11">        Position monsterPos = monster.getPosition();</span>
+<span class="nc" id="L12">        Position iceCreamPos = arena.getIceCream().getPosition();</span>
+
+<span class="nc bnc" id="L14" title="All 2 branches missed.">        if (monsterPos.equals(iceCreamPos)) return null;</span>
+
+<span class="nc" id="L16">        PriorityQueue&lt;Node&gt; pq = new PriorityQueue&lt;&gt;();</span>
+
+<span class="nc" id="L18">        pq.offer(new Node(monsterPos, 0, manhattanDistance(monsterPos, iceCreamPos), null));</span>
+
+<span class="nc" id="L20">        Set&lt;String&gt; visited = new HashSet&lt;&gt;();</span>
+
+<span class="nc bnc" id="L22" title="All 2 branches missed.">        while (!pq.isEmpty()) {</span>
+<span class="nc" id="L23">            Node current = pq.poll();</span>
+
+<span class="nc bnc" id="L25" title="All 2 branches missed.">            if (current.position.equals(iceCreamPos)) {</span>
+
+<span class="nc bnc" id="L27" title="All 2 branches missed.">                while (!Objects.equals(current.parent.position, monsterPos)) {</span>
+<span class="nc" id="L28">                    current = current.parent;</span>
+                }
+<span class="nc" id="L30">                return current.position;</span>
+            }
+
+<span class="nc bnc" id="L33" title="All 2 branches missed.">            if (!visited.contains(current.position.getX() + &quot;,&quot; + current.position.getY())) {</span>
+<span class="nc" id="L34">                visited.add(current.position.getX() + &quot;,&quot; + current.position.getY());</span>
+<span class="nc" id="L35">                List&lt;Position&gt; options = new ArrayList&lt;&gt;(List.of(new Position[]{current.position.getDown(), current.position.getLeft(), current.position.getUp(), current.position.getRight()}));</span>
+<span class="nc bnc" id="L36" title="All 2 branches missed.">                for (Position pos : options) {</span>
+<span class="nc bnc" id="L37" title="All 2 branches missed.">                    if (arena.isEmptyMonsters(pos)) {</span>
+<span class="nc" id="L38">                        int newCost = current.cost + 1;</span>
+<span class="nc" id="L39">                        int newHeuristic = manhattanDistance(pos, iceCreamPos);</span>
+<span class="nc" id="L40">                        pq.offer(new Node(pos, newCost, newHeuristic, current));</span>
+                    }
+<span class="nc" id="L42">                }</span>
+            }
+<span class="nc" id="L44">        }</span>
+<span class="nc" id="L45">        return null;</span>
+    }
+    private static int manhattanDistance(Position pos1, Position pos2) {
+<span class="nc" id="L48">        return Math.abs(pos1.getX() - pos2.getX()) + Math.abs(pos1.getY() - pos2.getY());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

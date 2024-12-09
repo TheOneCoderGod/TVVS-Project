@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RunnerMovementDisabled.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BadIceCream</a> &gt; <a href="index.source.html" class="el_package">badIceCream.controller.game.monsters</a> &gt; <span class="el_source">RunnerMovementDisabled.java</span></div><h1>RunnerMovementDisabled.java</h1><pre class="source lang-java linenums">package badIceCream.controller.game.monsters;
+
+
+import badIceCream.GUI.GUI;
+import badIceCream.controller.game.StepMonsters;
+import badIceCream.model.Position;
+import badIceCream.model.game.arena.Arena;
+import badIceCream.model.game.elements.monsters.Monster;
+
+import java.io.IOException;
+import java.util.List;
+
+<span class="nc" id="L13">public class RunnerMovementDisabled implements StepMonsters {</span>
+    @Override
+    public void step(Monster monster, Arena arena, long time, long lastMovement) throws IOException {
+<span class="nc bnc" id="L16" title="All 2 branches missed.">        if (time - lastMovement &gt;= 150) {</span>
+<span class="nc" id="L17">            Position pos = getPossible(monster, arena);</span>
+<span class="nc bnc" id="L18" title="All 2 branches missed.">            if (pos != null) {</span>
+<span class="nc" id="L19">                monster.setLastAction(lastMove(monster.getPosition(), pos));</span>
+<span class="nc" id="L20">                moveMonster(monster, pos, arena);</span>
+            }
+        }
+<span class="nc" id="L23">    }</span>
+
+    private Position getPossible(Monster monster, Arena arena) {
+<span class="nc" id="L26">        List&lt;Position&gt; options = new java.util.ArrayList&lt;&gt;(List.of(new Position[]{monster.getPosition().getDown(), monster.getPosition().getLeft(), monster.getPosition().getUp(), monster.getPosition().getRight()}));</span>
+
+<span class="nc bnc" id="L28" title="All 2 branches missed.">        options.removeIf(pos -&gt; !arena.isEmptyMonsters(pos));</span>
+
+<span class="nc bnc" id="L30" title="All 2 branches missed.">        if (options.isEmpty()) return null;</span>
+
+<span class="nc" id="L32">        java.util.Random random = new java.util.Random();</span>
+<span class="nc" id="L33">        int randomIndex = random.nextInt(options.size());</span>
+
+<span class="nc" id="L35">        return options.get(randomIndex);</span>
+    }
+    @Override
+    public void moveMonster(Monster monster, Position position, Arena arena) {
+<span class="nc" id="L39">        monster.setPosition(position);</span>
+<span class="nc bnc" id="L40" title="All 4 branches missed.">        if (!arena.getIceCream().isStrawberryActive() &amp;&amp; arena.getIceCream().getPosition().equals(position))</span>
+<span class="nc" id="L41">            arena.getIceCream().changeAlive();</span>
+
+<span class="nc" id="L43">    }</span>
+
+    private GUI.ACTION lastMove(Position previous, Position after) {
+<span class="nc bnc" id="L46" title="All 2 branches missed.">        if (previous.getY() == after.getY()) {</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">            if (previous.getX() &gt; after.getX()) {</span>
+<span class="nc" id="L48">                return GUI.ACTION.LEFT;</span>
+            }
+<span class="nc" id="L50">            else return GUI.ACTION.RIGHT;</span>
+        }
+
+<span class="nc bnc" id="L53" title="All 2 branches missed.">        if (previous.getX() == after.getX()) {</span>
+<span class="nc bnc" id="L54" title="All 2 branches missed.">            if (previous.getY() &gt; after.getY()) {</span>
+<span class="nc" id="L55">                return GUI.ACTION.UP;</span>
+            }
+        }
+<span class="nc" id="L58">        return GUI.ACTION.DOWN;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
