@@ -1,4 +1,4 @@
-package badIceCream.controller.game.monsters;
+package badIceCream.controller.game;
 
 import badIceCream.GUI.GUI;
 import badIceCream.Game;

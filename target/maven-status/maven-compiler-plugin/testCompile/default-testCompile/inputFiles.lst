@@ -1,8 +1,13 @@
 D:\School\Masters\1st Year\1st Semester\TVVS\Project\TVVS-Project\src\test\java\badIceCream\audio\AudioControllerTest.java
 D:\School\Masters\1st Year\1st Semester\TVVS\Project\TVVS-Project\src\test\java\badIceCream\audio\AudioTest.java
 D:\School\Masters\1st Year\1st Semester\TVVS\Project\TVVS-Project\src\test\java\badIceCream\controller\ControllerTest.java
-D:\School\Masters\1st Year\1st Semester\TVVS\Project\TVVS-Project\src\test\java\badIceCream\controller\game\monsters\ArenaControllerTest.java
-D:\School\Masters\1st Year\1st Semester\TVVS\Project\TVVS-Project\src\test\java\badIceCream\controller\game\monsters\GameControllerTest.java
-D:\School\Masters\1st Year\1st Semester\TVVS\Project\TVVS-Project\src\test\java\badIceCream\controller\game\monsters\IceCreamControllerTest.java
-D:\School\Masters\1st Year\1st Semester\TVVS\Project\TVVS-Project\src\test\java\badIceCream\controller\game\monsters\MonsterControllerTest.java
+D:\School\Masters\1st Year\1st Semester\TVVS\Project\TVVS-Project\src\test\java\badIceCream\controller\game\ArenaControllerTest.java
+D:\School\Masters\1st Year\1st Semester\TVVS\Project\TVVS-Project\src\test\java\badIceCream\controller\game\GameControllerTest.java
+D:\School\Masters\1st Year\1st Semester\TVVS\Project\TVVS-Project\src\test\java\badIceCream\controller\game\IceCreamControllerTest.java
+D:\School\Masters\1st Year\1st Semester\TVVS\Project\TVVS-Project\src\test\java\badIceCream\controller\game\MonsterControllerTest.java
+D:\School\Masters\1st Year\1st Semester\TVVS\Project\TVVS-Project\src\test\java\badIceCream\controller\game\monsters\DefaultMovementTest.java
+D:\School\Masters\1st Year\1st Semester\TVVS\Project\TVVS-Project\src\test\java\badIceCream\controller\game\monsters\JumperMovementTest.java
+D:\School\Masters\1st Year\1st Semester\TVVS\Project\TVVS-Project\src\test\java\badIceCream\controller\game\monsters\RunnerMovementDisabledTest.java
+D:\School\Masters\1st Year\1st Semester\TVVS\Project\TVVS-Project\src\test\java\badIceCream\controller\game\monsters\RunnerMovementEnabledTest.java
+D:\School\Masters\1st Year\1st Semester\TVVS\Project\TVVS-Project\src\test\java\badIceCream\controller\game\monsters\WallBreakerMovementTest.java
 D:\School\Masters\1st Year\1st Semester\TVVS\Project\TVVS-Project\src\test\java\badIceCream\GameTest.java

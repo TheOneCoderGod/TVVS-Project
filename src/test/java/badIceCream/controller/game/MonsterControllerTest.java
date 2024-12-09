@@ -1,99 +1,127 @@
-package badIceCream.controller.game.monsters;
-
-import static org.mockito.Mockito.*;
-import static org.junit.Assert.*;
-
-import badIceCream.controller.game.MonsterController;
-import badIceCream.controller.game.StepMonsters;
-import badIceCream.model.Position;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.*;
+package badIceCream.controller.game;
 
 import badIceCream.audio.AudioController;
+import badIceCream.controller.game.monsters.RunnerMovementDisabled;
+import badIceCream.controller.game.monsters.RunnerMovementEnabled;
+import badIceCream.model.Position;
 import badIceCream.model.game.arena.Arena;
-import badIceCream.model.game.elements.monsters.Monster;
 import badIceCream.model.game.elements.IceCream;
+import badIceCream.model.game.elements.monsters.Monster;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.*;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
 
-public class MonsterControllerTest {
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
-    @Mock private Arena mockArena;
-    @Mock private Monster mockMonster;
-    @Mock private StepMonsters mockStep;
+@ExtendWith(MockitoExtension.class)
+class MonsterControllerTest {
 
-    private MonsterController controller;
+    @Mock
+    private Arena arena;
 
-    @Before
-    public void setup() {
-        // Add the Mockito Java agent
-        System.setProperty("org.mockito.inline.mock-maker", "true");
+    @Mock
+    private StepMonsters initialStepMonsters;
 
-        MockitoAnnotations.openMocks(this);
-        controller = new MonsterController(mockArena, mockStep, mockMonster);
+    @Mock
+    private Monster monster;
 
-        // Mock the getIceCream method to return a non-null IceCream object
-        IceCream mockIceCream = mock(IceCream.class);
-        when(mockArena.getIceCream()).thenReturn(mockIceCream);
+    @InjectMocks
+    private MonsterController monsterController;
 
-        // Mock the getPosition method to return a non-null Position object for IceCream
-        Position mockIceCreamPosition = mock(Position.class);
-        when(mockIceCream.getPosition()).thenReturn(mockIceCreamPosition);
+    @BeforeEach
+    void setUp() throws NoSuchFieldException, IllegalAccessException {
+        // Initialize MonsterController with mocks
+        monsterController = new MonsterController(arena, initialStepMonsters, monster);
 
-        // Mock the getPosition method to return a non-null Position object for Monster
-        Position mockMonsterPosition = mock(Position.class);
-        when(mockMonster.getPosition()).thenReturn(mockMonsterPosition);
+        // Mock private fields
+        setPrivateField(monsterController, "lastMovement", 0L);
+        setPrivateField(monsterController, "lastChange", 0L);
+        setPrivateField(monsterController, "step", initialStepMonsters);
+    }
 
-        // Mock the getDown, getUp, getLeft, and getRight methods to return non-null Position objects
-        when(mockMonsterPosition.getDown()).thenReturn(mock(Position.class));
-        when(mockMonsterPosition.getUp()).thenReturn(mock(Position.class));
-        when(mockMonsterPosition.getLeft()).thenReturn(mock(Position.class));
-        when(mockMonsterPosition.getRight()).thenReturn(mock(Position.class));
+    private void setPrivateField(Object target, String fieldName, Object value) throws NoSuchFieldException, IllegalAccessException {
+        java.lang.reflect.Field field = target.getClass().getDeclaredField(fieldName);
+        field.setAccessible(true);
+        field.set(target, value);
     }
 
     @Test
-    public void testStepWithMonsterNotType3() throws IOException {
-        when(mockMonster.getType()).thenReturn(1);  // Set monster type to a non-3 value
+    void constructor_initializesFieldsCorrectly() throws NoSuchFieldException, IllegalAccessException {
+        // Given
+        MonsterController controller = new MonsterController(arena, initialStepMonsters, monster);
 
-        long currentTime = System.currentTimeMillis();
-        controller.step(currentTime);  // Call step with a random time
-
-        // Verify that the step method is invoked and runner methods are not triggered
-        verify(mockStep, times(1)).step(mockMonster, mockArena, currentTime, 0);
-        verify(mockMonster, never()).startRunning();
-        verify(mockMonster, never()).stopRunning();
+        // Then
+        assertThat(getPrivateField(controller, "arena")).isEqualTo(arena);
+        assertThat(getPrivateField(controller, "step")).isEqualTo(initialStepMonsters);
+        assertThat(getPrivateField(controller, "monster")).isEqualTo(monster);
+        assertThat(getPrivateField(controller, "lastMovement")).isEqualTo(0L);
+        assertThat(getPrivateField(controller, "lastChange")).isEqualTo(0L);
+        assertThat(getPrivateField(controller, "runnerOn")).isEqualTo(false);
     }
 
     @Test
-    public void testStepWithMonsterType3AndInterval() throws IOException, NoSuchFieldException, IllegalAccessException {
-        when(mockMonster.getType()).thenReturn(3);
+    void step_monsterTypeNot3_delegatesToStep() throws IOException, NoSuchFieldException, IllegalAccessException {
+        // Given
+        when(monster.getType()).thenReturn(2); // Type is not 3
+        long currentTime = 10000L;
 
-        long currentTime = System.currentTimeMillis();
+        // Mock AudioController's static method
+        try (MockedStatic<AudioController> mockedAudio = mockStatic(AudioController.class)) {
+            // When
+            monsterController.step(currentTime);
 
-        controller.step(currentTime);  // First step
-
-        // Use reflection to access the private field 'lastChange'
-        Field lastChangeField = MonsterController.class.getDeclaredField("lastChange");
-        lastChangeField.setAccessible(true);
-
-        // Ensure lastChange is set
-        assertEquals(currentTime, lastChangeField.get(controller));
+            // Then
+            verify(initialStepMonsters, times(1)).step(monster, arena, currentTime, 0L);
+            assertThat(getPrivateField(monsterController, "lastMovement")).isEqualTo(currentTime);
+            assertThat(getPrivateField(monsterController, "runnerOn")).isEqualTo(false);
+            mockedAudio.verifyNoInteractions();
+        }
     }
 
-        @Test
-    public void testStepMonsters() throws IOException {
-        // Create a mock implementation of StepMonsters
-        StepMonsters mockStepMonsters = mock(StepMonsters.class);
+    @Test
+    void step_monsterType3_timeBelowThreshold_delegatesToStep() throws IOException, NoSuchFieldException, IllegalAccessException {
+        // Given
+        when(monster.getType()).thenReturn(3);
+        long currentTime = 6000L; // Assuming randomLong is between 5000 and 15000
 
-        // Create a MonsterController with the mock StepMonsters
-        MonsterController controller = new MonsterController(mockArena, mockStepMonsters, mockMonster);
+        // Set lastChange to currentTime - 4000L (< minValue of 5000L)
+        setPrivateField(monsterController, "lastChange", currentTime - 4000L);
 
-        long currentTime = System.currentTimeMillis();
-        controller.step(currentTime);
+        // Mock AudioController's static method
+        try (MockedStatic<AudioController> mockedAudio = mockStatic(AudioController.class)) {
+            // When
+            monsterController.step(currentTime);
 
-        // Verify that the step method of StepMonsters is called
-        verify(mockStepMonsters, times(1)).step(mockMonster, mockArena, currentTime, 0);
+            // Then
+            verify(initialStepMonsters, times(1)).step(monster, arena, currentTime, 0L);
+            assertThat(getPrivateField(monsterController, "lastMovement")).isEqualTo(currentTime);
+            assertThat(getPrivateField(monsterController, "runnerOn")).isEqualTo(false);
+            mockedAudio.verifyNoInteractions();
+        }
+    }
+
+    @Test
+    void step_underlyingStepThrowsIOException_propagatesException() throws IOException {
+        // Given
+        when(monster.getType()).thenReturn(2);
+        long currentTime = 10000L;
+        doThrow(new IOException("Test IOException")).when(initialStepMonsters)
+                .step(monster, arena, currentTime, 0L);
+
+        // When / Then
+        org.junit.jupiter.api.Assertions.assertThrows(IOException.class, () -> {
+            monsterController.step(currentTime);
+        });
+    }
+
+    private Object getPrivateField(Object target, String fieldName) throws NoSuchFieldException, IllegalAccessException {
+        java.lang.reflect.Field field = target.getClass().getDeclaredField(fieldName);
+        field.setAccessible(true);
+        return field.get(target);
     }
 }
