@@ -81,4 +81,19 @@ public class MonsterControllerTest {
         // Ensure lastChange is set
         assertEquals(currentTime, lastChangeField.get(controller));
     }
+
+        @Test
+    public void testStepMonsters() throws IOException {
+        // Create a mock implementation of StepMonsters
+        StepMonsters mockStepMonsters = mock(StepMonsters.class);
+
+        // Create a MonsterController with the mock StepMonsters
+        MonsterController controller = new MonsterController(mockArena, mockStepMonsters, mockMonster);
+
+        long currentTime = System.currentTimeMillis();
+        controller.step(currentTime);
+
+        // Verify that the step method of StepMonsters is called
+        verify(mockStepMonsters, times(1)).step(mockMonster, mockArena, currentTime, 0);
+    }
 }
