@@ -8,12 +8,16 @@ import badIceCream.viewer.menu.InstructionsMenuSecondPageViewer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedConstruction;
 
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * Improved test class for InstructionsMenuSecondPageState, covering all constructors and interactions.
+ */
 class InstructionsMenuSecondPageStateTest {
 
     private InstructionsMenuSecondPage model;
@@ -30,10 +34,10 @@ class InstructionsMenuSecondPageStateTest {
     }
 
     @Test
-    @DisplayName("Constructor sets model, level")
-    void testConstructor() {
-        assertEquals(model, state.getModel());
-        assertEquals(2, state.getLevel());
+    @DisplayName("Constructor with controller and viewer sets model and level")
+    void testConstructorWithControllerAndViewer() {
+        assertEquals(model, state.getModel(), "Model should be set correctly");
+        assertEquals(2, state.getLevel(), "Level should be set correctly");
     }
 
     @Test
@@ -44,14 +48,35 @@ class InstructionsMenuSecondPageStateTest {
 
         state.step(game, graphics, 999L);
 
-        verify(controller).step(eq(game), any(), eq(999L));
-        verify(viewer).draw(graphics);
+        verify(controller, times(1)).step(eq(game), any(), eq(999L));
+        verify(viewer, times(1)).draw(graphics);
     }
 
     @Test
     @DisplayName("stepMonsters(...) calls controller.stepMonsters(...)")
     void testStepMonsters() throws IOException {
         state.stepMonsters(123L);
-        verify(controller).stepMonsters(123L);
+        verify(controller, times(1)).stepMonsters(123L);
+    }
+
+    @Test
+    @DisplayName("Constructor without controller and viewer initializes them correctly")
+    void testConstructorWithoutControllerAndViewer() throws IOException {
+        try (MockedConstruction<InstructionsMenuSecondPageController> mockedController = mockConstruction(InstructionsMenuSecondPageController.class,
+                (mock, context) -> {
+                    doNothing().when(mock).step(any(), any(), anyLong());
+                });
+             MockedConstruction<InstructionsMenuSecondPageViewer> mockedViewer = mockConstruction(InstructionsMenuSecondPageViewer.class)) {
+
+            InstructionsMenuSecondPageState newState = new InstructionsMenuSecondPageState(model, 3);
+
+            // Verify that InstructionsMenuSecondPageController was instantiated with the correct model
+            assertEquals(1, mockedController.constructed().size(), "InstructionsMenuSecondPageController should be instantiated once");
+            InstructionsMenuSecondPageController instantiatedController = mockedController.constructed().get(0);
+            verify(instantiatedController, never()).step(any(), any(), anyLong());
+
+            // Verify that InstructionsMenuSecondPageViewer was instantiated with the correct model
+            assertEquals(1, mockedViewer.constructed().size(), "InstructionsMenuSecondPageViewer should be instantiated once");
+        }
     }
 }

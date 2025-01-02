@@ -1,6 +1,5 @@
 package badIceCream.GUI;
 
-import badIceCream.GUI.GUI.ACTION;
 import badIceCream.model.Position;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
@@ -15,18 +14,16 @@ import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 /**
- * Comprehensive test class for the Graphics class, including a FIX for "TooManyActualInvocations."
+ * Comprehensive test class for the Graphics class, addressing all mutations.
  */
 class GraphicsTest {
 
     private GUI gui;
     private Screen screen;
     private TextGraphics textGraphics;
-    private Terminal terminal;
     private Graphics graphics;
 
     @BeforeEach
@@ -35,9 +32,9 @@ class GraphicsTest {
         gui = mock(GUI.class);
         screen = mock(Screen.class);
         textGraphics = mock(TextGraphics.class);
-        terminal = mock(Terminal.class);
 
         // GUI: createTerminal() => mock Terminal
+        Terminal terminal = mock(Terminal.class);
         when(gui.createTerminal()).thenReturn(terminal);
 
         // GUI: createScreen(Terminal) => mock Screen
@@ -54,6 +51,7 @@ class GraphicsTest {
     @DisplayName("Constructor should instantiate and not be null")
     void testConstructor() {
         assertNotNull(graphics, "Graphics should be instantiated");
+        assertEquals(gui, graphics.getGui(), "GUI should be set correctly in constructor");
     }
 
     @Test
@@ -76,30 +74,39 @@ class GraphicsTest {
         void testDrawIceCreamUpStrawberry() {
             Position position = new Position(10, 5);
 
-            graphics.drawIceCream(position, ACTION.UP, true);
+            graphics.drawIceCream(position, GUI.ACTION.UP, true);
 
             verifyCharacterDrawn(10, 5, '7', "#48DEFF");
         }
 
         @Test
-        @DisplayName("RIGHT + strawberry=false => char='9', color='#FFFFFF'")
-        void testDrawIceCreamRightNoStrawberry() {
-            Position position = new Position(3, 7);
+        @DisplayName("LEFT + strawberry=false => char=':', color='#FFFFFF'")
+        void testDrawIceCreamLeftNoStrawberry() {
+            Position position = new Position(4, 8);
 
-            graphics.drawIceCream(position, ACTION.RIGHT, false);
+            graphics.drawIceCream(position, GUI.ACTION.LEFT, false);
 
-            verifyCharacterDrawn(3, 7, '9', "#FFFFFF");
+            verifyCharacterDrawn(4, 8, ':', "#FFFFFF");
         }
 
         @Test
-        @DisplayName("Default (e.g. DOWN) + strawberry => char='8', color='#48DEFF'")
-        void testDrawIceCreamDefaultStrawberry() {
-            Position position = new Position(2, 2);
+        @DisplayName("RIGHT + strawberry=true => char='9', color='#48DEFF'")
+        void testDrawIceCreamRightStrawberry() {
+            Position position = new Position(7, 12);
 
-            // 'default' means not UP/LEFT/RIGHT => e.g. DOWN
-            graphics.drawIceCream(position, ACTION.DOWN, true);
+            graphics.drawIceCream(position, GUI.ACTION.RIGHT, true);
 
-            verifyCharacterDrawn(2, 2, '8', "#48DEFF");
+            verifyCharacterDrawn(7, 12, '9', "#48DEFF");
+        }
+
+        @Test
+        @DisplayName("Default action + strawberry=false => char='8', color='#FFFFFF'")
+        void testDrawIceCreamDefaultNoStrawberry() {
+            Position position = new Position(2, 3);
+
+            graphics.drawIceCream(position, GUI.ACTION.DOWN, false);
+
+            verifyCharacterDrawn(2, 3, '8', "#FFFFFF");
         }
     }
 
@@ -141,18 +148,225 @@ class GraphicsTest {
         }
 
         @Test
-        @DisplayName("type=0 => no drawing (switch doesn't match case)")
+        @DisplayName("type=15 => no drawing (invalid type)")
+        void testDrawIceWallType15() {
+            Position pos = new Position(8, 14);
+            graphics.drawIceWall(pos, 15);
+
+            // Verify that no drawing is done for invalid type
+            verify(textGraphics, never()).setForegroundColor(any());
+            verify(textGraphics, never()).putString(anyInt(), anyInt(), anyString());
+        }
+
+        @Test
+        @DisplayName("type=28 => no drawing (invalid type)")
+        void testDrawIceWallType28() {
+            Position pos = new Position(9, 16);
+            graphics.drawIceWall(pos, 28);
+
+            // Verify that no drawing is done for invalid type
+            verify(textGraphics, never()).setForegroundColor(any());
+            verify(textGraphics, never()).putString(anyInt(), anyInt(), anyString());
+        }
+
+        @Test
+        @DisplayName("Invalid type => no drawing")
         void testDrawIceWallInvalidType() {
             Position pos = new Position(1, 1);
             graphics.drawIceWall(pos, 0);
 
             // no calls to putString
+            verify(textGraphics, never()).setForegroundColor(any());
             verify(textGraphics, never()).putString(anyInt(), anyInt(), anyString());
         }
     }
 
     // -------------------------------------------------------------------
-    // drawCharacters() test => FIX for TooManyActualInvocations
+    // drawDefaultMonster(...) test
+    // -------------------------------------------------------------------
+    @Test
+    @DisplayName("drawDefaultMonster => appropriate char and color based on action")
+    void testDrawDefaultMonster() {
+        Position position = new Position(10, 10);
+        graphics.drawDefaultMonster(position, GUI.ACTION.UP);
+
+        verifyCharacterDrawn(10, 10, '4', "#00FF00");
+    }
+
+    // -------------------------------------------------------------------
+    // drawJumperMonster(...) test
+    // -------------------------------------------------------------------
+    @Test
+    @DisplayName("drawJumperMonster => appropriate char and color based on action")
+    void testDrawJumperMonster() {
+        Position position = new Position(5, 5);
+        graphics.drawJumperMonster(position, GUI.ACTION.LEFT);
+
+        verifyCharacterDrawn(5, 5, 'y', "#FF3333");
+    }
+
+    // -------------------------------------------------------------------
+    // drawRunnerMonster(...) tests
+    // -------------------------------------------------------------------
+    @Nested
+    @DisplayName("drawRunnerMonster(...) tests")
+    class DrawRunnerMonsterTests {
+
+        @Test
+        @DisplayName("runner=true, action=UP => char='3', color='#FF0000'")
+        void testDrawRunnerMonsterRunnerUp() {
+            Position position = new Position(7, 7);
+            graphics.drawRunnerMonster(position, GUI.ACTION.UP, true);
+
+            verifyCharacterDrawn(7, 7, '3', "#FF0000");
+        }
+
+        @Test
+        @DisplayName("runner=false, action=LEFT => char='W', color='#FFFF66'")
+        void testDrawRunnerMonsterNonRunnerLeft() {
+            Position position = new Position(8, 8);
+            graphics.drawRunnerMonster(position, GUI.ACTION.LEFT, false);
+
+            verifyCharacterDrawn(8, 8, 'W', "#FFFF66");
+        }
+
+        @Test
+        @DisplayName("runner=true, action=RIGHT => char='}', color='#FF0000'")
+        void testDrawRunnerMonsterRunnerRight() {
+            Position position = new Position(9, 9);
+            graphics.drawRunnerMonster(position, GUI.ACTION.RIGHT, true);
+
+            verifyCharacterDrawn(9, 9, '}', "#FF0000");
+        }
+
+        @Test
+        @DisplayName("runner=false, default action => char='V', color='#FFFF66'")
+        void testDrawRunnerMonsterNonRunnerDefault() {
+            Position position = new Position(10, 10);
+            graphics.drawRunnerMonster(position, GUI.ACTION.DOWN, false);
+
+            verifyCharacterDrawn(10, 10, 'V', "#FFFF66");
+        }
+    }
+
+    // -------------------------------------------------------------------
+    // drawWallBreakerMonster(...) test
+    // -------------------------------------------------------------------
+    @Test
+    @DisplayName("drawWallBreakerMonster => appropriate char and color based on action")
+    void testDrawWallBreakerMonster() {
+        Position position = new Position(3, 3);
+        graphics.drawWallBreakerMonster(position, GUI.ACTION.SELECT);
+
+        verifyCharacterDrawn(3, 3, 'U', "#FF99FF");
+    }
+
+    // -------------------------------------------------------------------
+    // drawAppleFruit(...) test
+    // -------------------------------------------------------------------
+    @Test
+    @DisplayName("drawAppleFruit => char=']', color='#FF0000'")
+    void testDrawAppleFruit() {
+        Position position = new Position(4, 4);
+        graphics.drawAppleFruit(position);
+
+        verifyCharacterDrawn(4, 4, ']', "#FF0000");
+    }
+
+    // -------------------------------------------------------------------
+    // drawBananaFruit(...) test
+    // -------------------------------------------------------------------
+    @Test
+    @DisplayName("drawBananaFruit => char='a', color='#FFFF00'")
+    void testDrawBananaFruit() {
+        Position position = new Position(5, 5);
+        graphics.drawBananaFruit(position);
+
+        verifyCharacterDrawn(5, 5, 'a', "#FFFF00");
+    }
+
+    // -------------------------------------------------------------------
+    // drawPineappleFruit(...) test
+    // -------------------------------------------------------------------
+    @Test
+    @DisplayName("drawPineappleFruit => char='^', color='#FFFF66'")
+    void testDrawPineappleFruit() {
+        Position position = new Position(6, 6);
+        graphics.drawPineappleFruit(position);
+
+        verifyCharacterDrawn(6, 6, '^', "#FFFF66");
+    }
+
+    // -------------------------------------------------------------------
+    // drawCherryFruit(...) test
+    // -------------------------------------------------------------------
+    @Test
+    @DisplayName("drawCherryFruit => char='\\', color='#FF0000'")
+    void testDrawCherryFruit() {
+        Position position = new Position(7, 7);
+        graphics.drawCherryFruit(position);
+
+        verifyCharacterDrawn(7, 7, '\\', "#FF0000");
+    }
+
+    // -------------------------------------------------------------------
+    // drawStrawberryFruit(...) test
+    // -------------------------------------------------------------------
+    @Test
+    @DisplayName("drawStrawberryFruit => char='_', color='#FF0000'")
+    void testDrawStrawberryFruit() {
+        Position position = new Position(8, 8);
+        graphics.drawStrawberryFruit(position);
+
+        verifyCharacterDrawn(8, 8, '_', "#FF0000");
+    }
+
+    // -------------------------------------------------------------------
+    // drawHotFloor(...) tests
+    // -------------------------------------------------------------------
+    @Nested
+    @DisplayName("drawHotFloor(...) tests")
+    class DrawHotFloorTests {
+
+        @Test
+        @DisplayName("type=1 => char='w', color='#e14750'")
+        void testDrawHotFloorType1() {
+            Position position = new Position(9, 9);
+            graphics.drawHotFloor(position, 1);
+
+            verifyCharacterDrawn(9, 9, 'w', "#e14750");
+        }
+
+        @Test
+        @DisplayName("type=10 => char='+', color='#e14750'")
+        void testDrawHotFloorType10() {
+            Position position = new Position(10, 10);
+            graphics.drawHotFloor(position, 10);
+
+            verifyCharacterDrawn(10, 10, '+', "#e14750");
+        }
+
+        @Test
+        @DisplayName("type=28 => char='>', color='#e14750'")
+        void testDrawHotFloorType28() {
+            Position position = new Position(11, 11);
+            graphics.drawHotFloor(position, 28);
+
+            verifyCharacterDrawn(11, 11, '>', "#e14750");
+        }
+
+        @Test
+        @DisplayName("Invalid type => char='b', color='#e14750'")
+        void testDrawHotFloorInvalidType() {
+            Position position = new Position(12, 12);
+            graphics.drawHotFloor(position, 99);
+
+            verifyCharacterDrawn(12, 12, 'b', "#e14750");
+        }
+    }
+
+    // -------------------------------------------------------------------
+    // drawCharacters() test
     // -------------------------------------------------------------------
     @Test
     @DisplayName("drawCharacters() draws 6 special chars in green at specific positions")
@@ -241,6 +455,22 @@ class GraphicsTest {
     }
 
     // -------------------------------------------------------------------
+    // drawText(...) test
+    // -------------------------------------------------------------------
+    @Test
+    @DisplayName("drawText() should draw text at specified position with color")
+    void testDrawText() {
+        Position position = new Position(20, 20);
+        String text = "Hello";
+        String color = "#123456";
+
+        graphics.drawText(position, text, color);
+
+        verify(textGraphics).setForegroundColor(TextColor.Factory.fromString(color));
+        verify(textGraphics).putString(20, 20, text);
+    }
+
+    // -------------------------------------------------------------------
     // getNextAction() tests
     // -------------------------------------------------------------------
     @Nested
@@ -251,8 +481,8 @@ class GraphicsTest {
         void testNullKeyStroke() throws IOException {
             when(screen.pollInput()).thenReturn(null);
 
-            ACTION action = graphics.getNextAction();
-            assertEquals(ACTION.NONE, action);
+            GUI.ACTION action = graphics.getNextAction();
+            assertEquals(GUI.ACTION.NONE, action);
         }
 
         @Test
@@ -262,8 +492,8 @@ class GraphicsTest {
             when(ks.getKeyType()).thenReturn(KeyType.ArrowDown);
             when(screen.pollInput()).thenReturn(ks);
 
-            ACTION action = graphics.getNextAction();
-            assertEquals(ACTION.DOWN, action);
+            GUI.ACTION action = graphics.getNextAction();
+            assertEquals(GUI.ACTION.DOWN, action);
         }
 
         @Test
@@ -273,8 +503,8 @@ class GraphicsTest {
             when(ks.getKeyType()).thenReturn(KeyType.ArrowUp);
             when(screen.pollInput()).thenReturn(ks);
 
-            ACTION action = graphics.getNextAction();
-            assertEquals(ACTION.UP, action);
+            GUI.ACTION action = graphics.getNextAction();
+            assertEquals(GUI.ACTION.UP, action);
         }
 
         @Test
@@ -284,8 +514,8 @@ class GraphicsTest {
             when(ks.getKeyType()).thenReturn(KeyType.ArrowRight);
             when(screen.pollInput()).thenReturn(ks);
 
-            ACTION action = graphics.getNextAction();
-            assertEquals(ACTION.RIGHT, action);
+            GUI.ACTION action = graphics.getNextAction();
+            assertEquals(GUI.ACTION.RIGHT, action);
         }
 
         @Test
@@ -295,8 +525,8 @@ class GraphicsTest {
             when(ks.getKeyType()).thenReturn(KeyType.ArrowLeft);
             when(screen.pollInput()).thenReturn(ks);
 
-            ACTION action = graphics.getNextAction();
-            assertEquals(ACTION.LEFT, action);
+            GUI.ACTION action = graphics.getNextAction();
+            assertEquals(GUI.ACTION.LEFT, action);
         }
 
         @Test
@@ -306,8 +536,8 @@ class GraphicsTest {
             when(ks.getKeyType()).thenReturn(KeyType.Enter);
             when(screen.pollInput()).thenReturn(ks);
 
-            ACTION action = graphics.getNextAction();
-            assertEquals(ACTION.SELECT, action);
+            GUI.ACTION action = graphics.getNextAction();
+            assertEquals(GUI.ACTION.SELECT, action);
         }
 
         @Test
@@ -317,8 +547,8 @@ class GraphicsTest {
             when(ks.getKeyType()).thenReturn(KeyType.Escape);
             when(screen.pollInput()).thenReturn(ks);
 
-            ACTION action = graphics.getNextAction();
-            assertEquals(ACTION.PAUSE, action);
+            GUI.ACTION action = graphics.getNextAction();
+            assertEquals(GUI.ACTION.PAUSE, action);
         }
 
         @Test
@@ -329,8 +559,8 @@ class GraphicsTest {
             when(ks.getCharacter()).thenReturn(' ');
             when(screen.pollInput()).thenReturn(ks);
 
-            ACTION action = graphics.getNextAction();
-            assertEquals(ACTION.SPACE, action);
+            GUI.ACTION action = graphics.getNextAction();
+            assertEquals(GUI.ACTION.SPACE, action);
         }
 
         @Test
@@ -341,8 +571,8 @@ class GraphicsTest {
             when(ks.getCharacter()).thenReturn('X');  // e.g., 'X'
             when(screen.pollInput()).thenReturn(ks);
 
-            ACTION action = graphics.getNextAction();
-            assertEquals(ACTION.NONE, action);
+            GUI.ACTION action = graphics.getNextAction();
+            assertEquals(GUI.ACTION.NONE, action);
         }
     }
 

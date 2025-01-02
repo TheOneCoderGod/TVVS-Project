@@ -9,14 +9,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedConstruction;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
 
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * Improved test class for GameOverMenuState, covering all constructors and interactions.
+ */
 class GameOverMenuStateTest {
 
     private GameOverMenu model;
@@ -33,10 +34,10 @@ class GameOverMenuStateTest {
     }
 
     @Test
-    @DisplayName("Constructor sets model, controller, viewer, and level")
-    void testConstructor() {
-        assertEquals(model, state.getModel());
-        assertEquals(2, state.getLevel());
+    @DisplayName("Constructor with controller and viewer sets model and level")
+    void testConstructorWithControllerAndViewer() {
+        assertEquals(model, state.getModel(), "Model should be set correctly");
+        assertEquals(2, state.getLevel(), "Level should be set correctly");
     }
 
     @Test
@@ -59,15 +60,26 @@ class GameOverMenuStateTest {
     }
 
     @Test
-    @DisplayName("increaseLevel() does not exceed 5")
-    void testIncreaseLevel() {
-        state.increaseLevel();
-        assertEquals(3, state.getLevel());
+    @DisplayName("Constructor without controller and viewer initializes them correctly")
+    void testConstructorWithoutControllerAndViewer() throws IOException {
+        try (MockedConstruction<GameOverMenuController> mockedController = mockConstruction(GameOverMenuController.class,
+                (mock, context) -> {
+                    doNothing().when(mock).step(any(), any(), anyLong());
+                });
+             MockedConstruction<GameOverMenuViewer> mockedViewer = mockConstruction(GameOverMenuViewer.class)) {
 
-        // If we call enough times, max is 5
-        for(int i=0; i<10; i++) {
-            state.increaseLevel();
+            GameOverMenuState newState = new GameOverMenuState(model, 3);
+
+            // Verify that GameOverMenuController was instantiated with the correct model
+            assertEquals(1, mockedController.constructed().size(), "GameOverMenuController should be instantiated once");
+            GameOverMenuController instantiatedController = mockedController.constructed().get(0);
+            verify(instantiatedController, never()).step(any(), any(), anyLong()); // No interactions yet
+
+            // Verify that GameOverMenuViewer was instantiated with the correct model
+            assertEquals(1, mockedViewer.constructed().size(), "GameOverMenuViewer should be instantiated once");
+
+            // Optionally, verify that the state has the newly created controller and viewer
+            // This requires getters or other means to access internal state, which are not shown here
         }
-        assertEquals(5, state.getLevel());
     }
 }

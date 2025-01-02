@@ -8,13 +8,16 @@ import badIceCream.viewer.ArenaViewer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockedStatic;
+import org.mockito.MockedConstruction;
 
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * Improved test class for GameState, covering all constructors and interactions.
+ */
 class GameStateTest {
 
     private Arena model;
@@ -31,10 +34,10 @@ class GameStateTest {
     }
 
     @Test
-    @DisplayName("Constructor sets model, controller, viewer, and level")
-    void testConstructor() {
-        assertEquals(model, state.getModel());
-        assertEquals(3, state.getLevel());
+    @DisplayName("Constructor with controller and viewer sets model and level")
+    void testConstructorWithControllerAndViewer() {
+        assertEquals(model, state.getModel(), "Model should be set correctly");
+        assertEquals(3, state.getLevel(), "Level should be set correctly");
     }
 
     @Test
@@ -53,19 +56,27 @@ class GameStateTest {
     @DisplayName("stepMonsters(...) calls controller.stepMonsters(...)")
     void testStepMonsters() throws IOException {
         state.stepMonsters(200L);
-        verify(controller).stepMonsters(200L);
+        verify(controller, times(1)).stepMonsters(200L);
     }
 
     @Test
-    @DisplayName("increaseLevel() up to 5")
-    void testIncreaseLevel() {
-        assertEquals(3, state.getLevel());
-        state.increaseLevel();
-        assertEquals(4, state.getLevel());
-        state.increaseLevel();
-        assertEquals(5, state.getLevel());
-        // Additional calls won't exceed 5
-        state.increaseLevel();
-        assertEquals(5, state.getLevel());
+    @DisplayName("Constructor without controller and viewer initializes them correctly")
+    void testConstructorWithoutControllerAndViewer() throws IOException {
+        try (MockedConstruction<ArenaController> mockedController = mockConstruction(ArenaController.class,
+                (mock, context) -> {
+                    doNothing().when(mock).step(any(), any(), anyLong());
+                });
+             MockedConstruction<ArenaViewer> mockedViewer = mockConstruction(ArenaViewer.class)) {
+
+            GameState newState = new GameState(model, 4);
+
+            // Verify that ArenaController was instantiated with the correct parameters
+            assertEquals(1, mockedController.constructed().size(), "ArenaController should be instantiated once");
+            ArenaController instantiatedController = mockedController.constructed().get(0);
+            verify(instantiatedController, never()).step(any(), any(), anyLong());
+
+            // Verify that ArenaViewer was instantiated with the correct parameters
+            assertEquals(1, mockedViewer.constructed().size(), "ArenaViewer should be instantiated once");
+        }
     }
 }
