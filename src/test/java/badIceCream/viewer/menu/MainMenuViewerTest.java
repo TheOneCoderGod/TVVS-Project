@@ -1,78 +1,115 @@
 package badIceCream.viewer.menu;
 
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.*;
+
 import badIceCream.GUI.Graphics;
 import badIceCream.model.Position;
 import badIceCream.model.menu.MainMenu;
+import badIceCream.viewer.menu.MainMenuViewer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import java.util.List;
 
+@ExtendWith(MockitoExtension.class)
 class MainMenuViewerTest {
 
-    private MainMenu model;
+    @Mock
+    private Graphics mockGraphics;
+
+    @Mock
+    private MainMenu mockMenu;
+
+    @InjectMocks
     private MainMenuViewer viewer;
-    private Graphics graphics;
+
+    @Captor
+    private ArgumentCaptor<Position> positionCaptor;
+
+    @Captor
+    private ArgumentCaptor<String> textCaptor;
+
+    @Captor
+    private ArgumentCaptor<String> colorCaptor;
 
     @BeforeEach
     void setUp() {
-        model = mock(MainMenu.class);
-        graphics = mock(Graphics.class);
-        viewer = new MainMenuViewer(model);
+        // Reset mocks before each test to ensure test isolation
+        reset(mockGraphics, mockMenu);
     }
 
-    @Test
-    @DisplayName("All ASCII lines from drawTitle/drawSnowflake, plus entries loop")
-    void testDrawElementsAllLines() {
-        when(model.getNumberEntries()).thenReturn(3);
-        when(model.getEntry(0)).thenReturn("   START");
-        when(model.getEntry(1)).thenReturn("INSTRUCTIONS");
-        when(model.getEntry(2)).thenReturn("    EXIT");
-        when(model.isSelected(0)).thenReturn(true);
-        when(model.isSelected(1)).thenReturn(false);
-        when(model.isSelected(2)).thenReturn(false);
+    @Nested
+    @DisplayName("Draw Elements Tests")
+    class DrawElementsTests {
 
-        viewer.drawElements(graphics);
+        @Test
+        @DisplayName("Should draw all menu entries with correct text and colors")
+        void testDrawElementsWithEntries() {
+            // Arrange
+            when(mockMenu.getNumberEntries()).thenReturn(3);
+            when(mockMenu.getEntry(0)).thenReturn("Start Game");
+            when(mockMenu.getEntry(1)).thenReturn("Options");
+            when(mockMenu.getEntry(2)).thenReturn("Exit");
+            when(mockMenu.isSelected(anyInt())).thenReturn(false);
+            when(mockMenu.isSelected(eq(1))).thenReturn(true); // "Options" is selected
 
-        var txtCap = ArgumentCaptor.forClass(String.class);
-        verify(graphics, atLeast(1)).drawText(any(Position.class), txtCap.capture(), anyString());
-        var allTexts = txtCap.getAllValues();
+            // Act
+            viewer.drawElements(mockGraphics);
 
-        // Title lines s0..s13
-        assertTrue(allTexts.contains("                        ....                .                                     "),
-                "Missing s0 from drawTitle");
-        // ... up to s13
+            // Assert
+            // Capture all drawText calls
+            verify(mockGraphics, atLeast(1)).drawText(positionCaptor.capture(), textCaptor.capture(), colorCaptor.capture());
 
-        // Snowflake lines
-        String s0 = "   ..    ..          ";
-        long countS0 = allTexts.stream().filter(s0::equals).count();
-        // code draws s0 about 4 or 5 times => adjust
-        assertTrue(countS0 > 3, "Missing s0 lines from snowflake");
+            List<Position> capturedPositions = positionCaptor.getAllValues();
+            List<String> capturedTexts = textCaptor.getAllValues();
+            List<String> capturedColors = colorCaptor.getAllValues();
 
-        // The loop => "   START" => selected => #D1D100, etc.
-        assertTrue(allTexts.contains("   START"));
-        assertTrue(allTexts.contains("INSTRUCTIONS"));
-        assertTrue(allTexts.contains("    EXIT"));
-    }
+            // Verify that menu entries are drawn with correct text and colors
+            assertThat(capturedTexts).contains("Start Game", "Options", "Exit");
 
-    @Test
-    @DisplayName("Zero entries => no loop calls, but still ASCII from title & snowflake")
-    void testDrawElementsZeroEntries() {
-        when(model.getNumberEntries()).thenReturn(0);
+            // Filter the captured colors to only include the colors of the menu entries
+            List<String> entryColors = capturedColors.subList(capturedColors.size() - 3, capturedColors.size());
+            assertThat(entryColors).containsExactly(
+                    "#FFFFFF", // Start Game
+                    "#D1D100", // Options
+                    "#FFFFFF"  // Exit
+            );
 
-        viewer.drawElements(graphics);
-        verify(model).getNumberEntries();
-        verify(model, never()).getEntry(anyInt());
-        verify(model, never()).isSelected(anyInt());
+            // Filter the captured positions to only include the positions of the menu entries
+            List<Position> entryPositions = capturedPositions.subList(capturedPositions.size() - 3, capturedPositions.size());
+            assertThat(entryPositions).containsExactly(
+                    new Position(63, 20),
+                    new Position(63, 24),
+                    new Position(63, 28)
+            );
+        }
 
-        var txtCap = ArgumentCaptor.forClass(String.class);
-        verify(graphics, atLeast(1)).drawText(any(), txtCap.capture(), anyString());
-        var allTexts = txtCap.getAllValues();
+        @Test
+        @DisplayName("Should handle zero menu entries without errors")
+        void testDrawElementsZeroEntries() {
+            // Arrange
+            when(mockMenu.getNumberEntries()).thenReturn(0);
 
-        assertTrue(allTexts.contains("                        ....                .                                     "),
-                "Title line missing");
+            // Act
+            viewer.drawElements(mockGraphics);
+
+            // Assert
+            // Verify that no menu entry drawText calls are made
+            verify(mockGraphics, never()).drawText(argThat(pos -> pos.getX() == 63), anyString(), anyString());
+
+            // However, title and snowflakes should still be drawn
+            // Assuming title has 14 drawText calls and snowflakes have 32 drawText calls
+            verify(mockGraphics, atLeast(46)).drawText(any(Position.class), anyString(), anyString());
+        }
     }
 }

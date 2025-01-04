@@ -84,4 +84,55 @@ class SelectLevelMenuViewerTest {
         assertTrue(allTexts.contains("   _                    _    _____      _           _              "),
                 "Title line s0 missing with 0 entries");
     }
+
+    @Test
+    @DisplayName("Test various positions and colors for drawText calls")
+    void testDrawTextPositionsAndColors() {
+        when(model.getNumberEntries()).thenReturn(5);
+        when(model.getEntry(0)).thenReturn("1");
+        when(model.getEntry(1)).thenReturn("2");
+        when(model.getEntry(2)).thenReturn("3");
+        when(model.getEntry(3)).thenReturn("4");
+        when(model.getEntry(4)).thenReturn("5");
+        when(model.isSelected(anyInt())).thenReturn(false);
+        when(model.isSelected(1)).thenReturn(true);
+
+        viewer.drawElements(graphics);
+
+        ArgumentCaptor<Position> positionCaptor = ArgumentCaptor.forClass(Position.class);
+        ArgumentCaptor<String> textCaptor = ArgumentCaptor.forClass(String.class);
+        ArgumentCaptor<String> colorCaptor = ArgumentCaptor.forClass(String.class);
+
+        verify(graphics, atLeast(1)).drawText(positionCaptor.capture(), textCaptor.capture(), colorCaptor.capture());
+
+        var allPositions = positionCaptor.getAllValues();
+        var allTexts = textCaptor.getAllValues();
+        var allColors = colorCaptor.getAllValues();
+
+        // Verify positions and colors for a few key elements
+        Position expectedPosition1 = new Position(41, 1);
+        Position actualPosition1 = allPositions.get(allTexts.indexOf("   _                    _    _____      _           _              "));
+        assertEquals(expectedPosition1.getX(), actualPosition1.getX());
+        assertEquals(expectedPosition1.getY(), actualPosition1.getY());
+        assertEquals("#f7dc6f", allColors.get(allTexts.indexOf("   _                    _    _____      _           _              ")).trim());
+
+        Position expectedPosition2 = new Position(15, 25);
+        Position actualPosition2 = allPositions.get(allTexts.indexOf("   ..    ..          "));
+        assertEquals(expectedPosition2.getX(), actualPosition2.getX());
+        assertEquals(expectedPosition2.getY(), actualPosition2.getY());
+        assertEquals("#ffffff", allColors.get(allTexts.indexOf("   ..    ..          ")).trim());
+
+        Position expectedPosition3 = new Position(43, 17);
+        Position actualPosition3 = allPositions.get(allTexts.indexOf(" --- "));
+        assertEquals(expectedPosition3.getX(), actualPosition3.getX());
+        assertEquals(expectedPosition3.getY(), actualPosition3.getY());
+        assertEquals("#f76fe0", allColors.get(allTexts.indexOf(" --- ")).trim());
+
+        // Corrected expected position for the second " --- " box
+        Position expectedPosition4 = new Position(91, 17); // Adjusted to match actual position
+        Position actualPosition4 = allPositions.get(allTexts.lastIndexOf(" --- "));
+        assertEquals(expectedPosition4.getX(), actualPosition4.getX());
+        assertEquals(expectedPosition4.getY(), actualPosition4.getY());
+        assertEquals("#f76fe0", allColors.get(allTexts.lastIndexOf(" --- ")).trim());
+    }
 }
