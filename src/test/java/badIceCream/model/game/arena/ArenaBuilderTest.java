@@ -16,11 +16,11 @@ import static org.mockito.Mockito.*;
    No calls to private or reflection.
 */
 
-class ArenaBuilderTest {
+public class ArenaBuilderTest {
 
     @Test
     @DisplayName("createArena() sets fields properly using protected methods")
-    void testCreateArena() {
+    public void testCreateArena() {
         ArenaBuilder builder = new DummyArenaBuilder();
         Arena arena = builder.createArena();
 
@@ -34,7 +34,7 @@ class ArenaBuilderTest {
         assertNotNull(arena.getHotFloors());
     }
 
-    static class DummyArenaBuilder extends ArenaBuilder {
+    public static class DummyArenaBuilder extends ArenaBuilder {
         @Override
         protected int getWidth() {return 10;}
         @Override

@@ -13,12 +13,12 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class GUITest {
+public class GUITest {
 
     private GUI gui;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         gui = new GUI() {
             @Override
             protected Terminal createTerminal() throws IOException {
@@ -29,7 +29,7 @@ class GUITest {
 
     @Test
     @DisplayName("createScreen(...) should return a TerminalScreen with non-null size")
-    void testCreateScreen() throws IOException {
+    public void testCreateScreen() throws IOException {
         Terminal terminalMock = mock(Terminal.class);
         // Stub getTerminalSize() so it doesn't return null
         when(terminalMock.getTerminalSize()).thenReturn(new TerminalSize(80, 24));
@@ -41,7 +41,7 @@ class GUITest {
 
     @Test
     @DisplayName("createTerminal() in anonymous GUI returns a mock Terminal")
-    void testCreateTerminal() throws IOException {
+    public void testCreateTerminal() throws IOException {
         Terminal terminal = gui.createTerminal();
         assertNotNull(terminal);
     }

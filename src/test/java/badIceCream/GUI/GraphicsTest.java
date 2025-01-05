@@ -19,7 +19,7 @@ import static org.mockito.Mockito.*;
 /**
  * Comprehensive test class for the Graphics class, addressing all mutations.
  */
-class GraphicsTest {
+public class GraphicsTest {
 
     private GUI gui;
     private Screen screen;
@@ -27,7 +27,7 @@ class GraphicsTest {
     private Graphics graphics;
 
     @BeforeEach
-    void setUp() throws IOException {
+    public void setUp() throws IOException {
         // Mocks
         gui = mock(GUI.class);
         screen = mock(Screen.class);
@@ -49,14 +49,14 @@ class GraphicsTest {
 
     @Test
     @DisplayName("Constructor should instantiate and not be null")
-    void testConstructor() {
+    public void testConstructor() {
         assertNotNull(graphics, "Graphics should be instantiated");
         assertEquals(gui, graphics.getGui(), "GUI should be set correctly in constructor");
     }
 
     @Test
     @DisplayName("setGui() and getGui() should update/return the GUI instance")
-    void testSetGetGui() {
+    public void testSetGetGui() {
         GUI newGui = mock(GUI.class);
         graphics.setGui(newGui);
         assertEquals(newGui, graphics.getGui(), "getGui() should return the newly set GUI");
@@ -67,11 +67,11 @@ class GraphicsTest {
     // -------------------------------------------------------------------
     @Nested
     @DisplayName("drawIceCream(...) tests")
-    class DrawIceCreamTests {
+    public class DrawIceCreamTests {
 
         @Test
         @DisplayName("UP + strawberry=true => char='7', color='#48DEFF'")
-        void testDrawIceCreamUpStrawberry() {
+        public void testDrawIceCreamUpStrawberry() {
             Position position = new Position(10, 5);
 
             graphics.drawIceCream(position, GUI.ACTION.UP, true);
@@ -81,7 +81,7 @@ class GraphicsTest {
 
         @Test
         @DisplayName("LEFT + strawberry=false => char=':', color='#FFFFFF'")
-        void testDrawIceCreamLeftNoStrawberry() {
+        public void testDrawIceCreamLeftNoStrawberry() {
             Position position = new Position(4, 8);
 
             graphics.drawIceCream(position, GUI.ACTION.LEFT, false);
@@ -91,7 +91,7 @@ class GraphicsTest {
 
         @Test
         @DisplayName("RIGHT + strawberry=true => char='9', color='#48DEFF'")
-        void testDrawIceCreamRightStrawberry() {
+        public void testDrawIceCreamRightStrawberry() {
             Position position = new Position(7, 12);
 
             graphics.drawIceCream(position, GUI.ACTION.RIGHT, true);
@@ -101,7 +101,7 @@ class GraphicsTest {
 
         @Test
         @DisplayName("Default action + strawberry=false => char='8', color='#FFFFFF'")
-        void testDrawIceCreamDefaultNoStrawberry() {
+        public void testDrawIceCreamDefaultNoStrawberry() {
             Position position = new Position(2, 3);
 
             graphics.drawIceCream(position, GUI.ACTION.DOWN, false);
@@ -115,7 +115,7 @@ class GraphicsTest {
     // -------------------------------------------------------------------
     @Test
     @DisplayName("drawStoneWall => char='G', color='#696969'")
-    void testDrawStoneWall() {
+    public void testDrawStoneWall() {
         Position position = new Position(0, 0);
         graphics.drawStoneWall(position);
 
@@ -127,11 +127,11 @@ class GraphicsTest {
     // -------------------------------------------------------------------
     @Nested
     @DisplayName("drawIceWall(...) tests")
-    class DrawIceWallTests {
+    public class DrawIceWallTests {
 
         @Test
         @DisplayName("type=1 => char='F', color='#87CEFA'")
-        void testDrawIceWallType1() {
+        public void testDrawIceWallType1() {
             Position pos = new Position(5, 5);
             graphics.drawIceWall(pos, 1);
 
@@ -140,7 +140,7 @@ class GraphicsTest {
 
         @Test
         @DisplayName("type=9 => char='l', color='#87CEFA'")
-        void testDrawIceWallType9() {
+        public void testDrawIceWallType9() {
             Position pos = new Position(6, 10);
             graphics.drawIceWall(pos, 9);
 
@@ -149,7 +149,7 @@ class GraphicsTest {
 
         @Test
         @DisplayName("type=15 => no drawing (invalid type)")
-        void testDrawIceWallType15() {
+        public void testDrawIceWallType15() {
             Position pos = new Position(8, 14);
             graphics.drawIceWall(pos, 15);
 
@@ -160,7 +160,7 @@ class GraphicsTest {
 
         @Test
         @DisplayName("type=28 => no drawing (invalid type)")
-        void testDrawIceWallType28() {
+        public void testDrawIceWallType28() {
             Position pos = new Position(9, 16);
             graphics.drawIceWall(pos, 28);
 
@@ -171,7 +171,7 @@ class GraphicsTest {
 
         @Test
         @DisplayName("Invalid type => no drawing")
-        void testDrawIceWallInvalidType() {
+        public void testDrawIceWallInvalidType() {
             Position pos = new Position(1, 1);
             graphics.drawIceWall(pos, 0);
 
@@ -186,7 +186,7 @@ class GraphicsTest {
     // -------------------------------------------------------------------
     @Test
     @DisplayName("drawDefaultMonster => appropriate char and color based on action")
-    void testDrawDefaultMonster() {
+    public void testDrawDefaultMonster() {
         Position position = new Position(10, 10);
         graphics.drawDefaultMonster(position, GUI.ACTION.UP);
 
@@ -198,7 +198,7 @@ class GraphicsTest {
     // -------------------------------------------------------------------
     @Test
     @DisplayName("drawJumperMonster => appropriate char and color based on action")
-    void testDrawJumperMonster() {
+    public void testDrawJumperMonster() {
         Position position = new Position(5, 5);
         graphics.drawJumperMonster(position, GUI.ACTION.LEFT);
 
@@ -210,11 +210,11 @@ class GraphicsTest {
     // -------------------------------------------------------------------
     @Nested
     @DisplayName("drawRunnerMonster(...) tests")
-    class DrawRunnerMonsterTests {
+    public class DrawRunnerMonsterTests {
 
         @Test
         @DisplayName("runner=true, action=UP => char='3', color='#FF0000'")
-        void testDrawRunnerMonsterRunnerUp() {
+        public void testDrawRunnerMonsterRunnerUp() {
             Position position = new Position(7, 7);
             graphics.drawRunnerMonster(position, GUI.ACTION.UP, true);
 
@@ -223,7 +223,7 @@ class GraphicsTest {
 
         @Test
         @DisplayName("runner=false, action=LEFT => char='W', color='#FFFF66'")
-        void testDrawRunnerMonsterNonRunnerLeft() {
+        public void testDrawRunnerMonsterNonRunnerLeft() {
             Position position = new Position(8, 8);
             graphics.drawRunnerMonster(position, GUI.ACTION.LEFT, false);
 
@@ -232,7 +232,7 @@ class GraphicsTest {
 
         @Test
         @DisplayName("runner=true, action=RIGHT => char='}', color='#FF0000'")
-        void testDrawRunnerMonsterRunnerRight() {
+        public void testDrawRunnerMonsterRunnerRight() {
             Position position = new Position(9, 9);
             graphics.drawRunnerMonster(position, GUI.ACTION.RIGHT, true);
 
@@ -241,7 +241,7 @@ class GraphicsTest {
 
         @Test
         @DisplayName("runner=false, default action => char='V', color='#FFFF66'")
-        void testDrawRunnerMonsterNonRunnerDefault() {
+        public void testDrawRunnerMonsterNonRunnerDefault() {
             Position position = new Position(10, 10);
             graphics.drawRunnerMonster(position, GUI.ACTION.DOWN, false);
 
@@ -254,7 +254,7 @@ class GraphicsTest {
     // -------------------------------------------------------------------
     @Test
     @DisplayName("drawWallBreakerMonster => appropriate char and color based on action")
-    void testDrawWallBreakerMonster() {
+    public void testDrawWallBreakerMonster() {
         Position position = new Position(3, 3);
         graphics.drawWallBreakerMonster(position, GUI.ACTION.SELECT);
 
@@ -266,7 +266,7 @@ class GraphicsTest {
     // -------------------------------------------------------------------
     @Test
     @DisplayName("drawAppleFruit => char=']', color='#FF0000'")
-    void testDrawAppleFruit() {
+    public void testDrawAppleFruit() {
         Position position = new Position(4, 4);
         graphics.drawAppleFruit(position);
 
@@ -278,7 +278,7 @@ class GraphicsTest {
     // -------------------------------------------------------------------
     @Test
     @DisplayName("drawBananaFruit => char='a', color='#FFFF00'")
-    void testDrawBananaFruit() {
+    public void testDrawBananaFruit() {
         Position position = new Position(5, 5);
         graphics.drawBananaFruit(position);
 
@@ -290,7 +290,7 @@ class GraphicsTest {
     // -------------------------------------------------------------------
     @Test
     @DisplayName("drawPineappleFruit => char='^', color='#FFFF66'")
-    void testDrawPineappleFruit() {
+    public void testDrawPineappleFruit() {
         Position position = new Position(6, 6);
         graphics.drawPineappleFruit(position);
 
@@ -302,7 +302,7 @@ class GraphicsTest {
     // -------------------------------------------------------------------
     @Test
     @DisplayName("drawCherryFruit => char='\\', color='#FF0000'")
-    void testDrawCherryFruit() {
+    public void testDrawCherryFruit() {
         Position position = new Position(7, 7);
         graphics.drawCherryFruit(position);
 
@@ -314,7 +314,7 @@ class GraphicsTest {
     // -------------------------------------------------------------------
     @Test
     @DisplayName("drawStrawberryFruit => char='_', color='#FF0000'")
-    void testDrawStrawberryFruit() {
+    public void testDrawStrawberryFruit() {
         Position position = new Position(8, 8);
         graphics.drawStrawberryFruit(position);
 
@@ -326,11 +326,11 @@ class GraphicsTest {
     // -------------------------------------------------------------------
     @Nested
     @DisplayName("drawHotFloor(...) tests")
-    class DrawHotFloorTests {
+    public class DrawHotFloorTests {
 
         @Test
         @DisplayName("type=1 => char='w', color='#e14750'")
-        void testDrawHotFloorType1() {
+        public void testDrawHotFloorType1() {
             Position position = new Position(9, 9);
             graphics.drawHotFloor(position, 1);
 
@@ -339,7 +339,7 @@ class GraphicsTest {
 
         @Test
         @DisplayName("type=10 => char='+', color='#e14750'")
-        void testDrawHotFloorType10() {
+        public void testDrawHotFloorType10() {
             Position position = new Position(10, 10);
             graphics.drawHotFloor(position, 10);
 
@@ -348,7 +348,7 @@ class GraphicsTest {
 
         @Test
         @DisplayName("type=28 => char='>', color='#e14750'")
-        void testDrawHotFloorType28() {
+        public void testDrawHotFloorType28() {
             Position position = new Position(11, 11);
             graphics.drawHotFloor(position, 28);
 
@@ -357,7 +357,7 @@ class GraphicsTest {
 
         @Test
         @DisplayName("Invalid type => char='b', color='#e14750'")
-        void testDrawHotFloorInvalidType() {
+        public void testDrawHotFloorInvalidType() {
             Position position = new Position(12, 12);
             graphics.drawHotFloor(position, 99);
 
@@ -370,7 +370,7 @@ class GraphicsTest {
     // -------------------------------------------------------------------
     @Test
     @DisplayName("drawCharacters() draws 6 special chars in green at specific positions")
-    void testDrawCharacters() {
+    public void testDrawCharacters() {
         /*
          * drawCharacters() calls:
          *   drawCharacter(33, 15, 'Ê', "#00FF00")
@@ -435,21 +435,21 @@ class GraphicsTest {
     // -------------------------------------------------------------------
     @Test
     @DisplayName("clear() should call screen.clear()")
-    void testClear() {
+    public void testClear() {
         graphics.clear();
         verify(screen).clear();
     }
 
     @Test
     @DisplayName("refresh() should call screen.refresh()")
-    void testRefresh() throws IOException {
+    public void testRefresh() throws IOException {
         graphics.refresh();
         verify(screen).refresh();
     }
 
     @Test
     @DisplayName("close() should call screen.close()")
-    void testClose() throws IOException {
+    public void testClose() throws IOException {
         graphics.close();
         verify(screen).close();
     }
@@ -459,7 +459,7 @@ class GraphicsTest {
     // -------------------------------------------------------------------
     @Test
     @DisplayName("drawText() should draw text at specified position with color")
-    void testDrawText() {
+    public void testDrawText() {
         Position position = new Position(20, 20);
         String text = "Hello";
         String color = "#123456";
@@ -475,10 +475,10 @@ class GraphicsTest {
     // -------------------------------------------------------------------
     @Nested
     @DisplayName("getNextAction() tests")
-    class GetNextActionTests {
+    public class GetNextActionTests {
         @Test
         @DisplayName("Null KeyStroke => ACTION.NONE")
-        void testNullKeyStroke() throws IOException {
+        public void testNullKeyStroke() throws IOException {
             when(screen.pollInput()).thenReturn(null);
 
             GUI.ACTION action = graphics.getNextAction();
@@ -487,7 +487,7 @@ class GraphicsTest {
 
         @Test
         @DisplayName("ArrowDown => ACTION.DOWN")
-        void testArrowDown() throws IOException {
+        public void testArrowDown() throws IOException {
             KeyStroke ks = mock(KeyStroke.class);
             when(ks.getKeyType()).thenReturn(KeyType.ArrowDown);
             when(screen.pollInput()).thenReturn(ks);
@@ -498,7 +498,7 @@ class GraphicsTest {
 
         @Test
         @DisplayName("ArrowUp => ACTION.UP")
-        void testArrowUp() throws IOException {
+        public void testArrowUp() throws IOException {
             KeyStroke ks = mock(KeyStroke.class);
             when(ks.getKeyType()).thenReturn(KeyType.ArrowUp);
             when(screen.pollInput()).thenReturn(ks);
@@ -509,7 +509,7 @@ class GraphicsTest {
 
         @Test
         @DisplayName("ArrowRight => ACTION.RIGHT")
-        void testArrowRight() throws IOException {
+        public void testArrowRight() throws IOException {
             KeyStroke ks = mock(KeyStroke.class);
             when(ks.getKeyType()).thenReturn(KeyType.ArrowRight);
             when(screen.pollInput()).thenReturn(ks);
@@ -520,7 +520,7 @@ class GraphicsTest {
 
         @Test
         @DisplayName("ArrowLeft => ACTION.LEFT")
-        void testArrowLeft() throws IOException {
+        public void testArrowLeft() throws IOException {
             KeyStroke ks = mock(KeyStroke.class);
             when(ks.getKeyType()).thenReturn(KeyType.ArrowLeft);
             when(screen.pollInput()).thenReturn(ks);
@@ -531,7 +531,7 @@ class GraphicsTest {
 
         @Test
         @DisplayName("KeyType.Enter => ACTION.SELECT")
-        void testEnter() throws IOException {
+        public void testEnter() throws IOException {
             KeyStroke ks = mock(KeyStroke.class);
             when(ks.getKeyType()).thenReturn(KeyType.Enter);
             when(screen.pollInput()).thenReturn(ks);
@@ -542,7 +542,7 @@ class GraphicsTest {
 
         @Test
         @DisplayName("KeyType.Escape => ACTION.PAUSE")
-        void testEscape() throws IOException {
+        public void testEscape() throws IOException {
             KeyStroke ks = mock(KeyStroke.class);
             when(ks.getKeyType()).thenReturn(KeyType.Escape);
             when(screen.pollInput()).thenReturn(ks);
@@ -553,7 +553,7 @@ class GraphicsTest {
 
         @Test
         @DisplayName("Space char => ACTION.SPACE")
-        void testSpaceChar() throws IOException {
+        public void testSpaceChar() throws IOException {
             KeyStroke ks = mock(KeyStroke.class);
             when(ks.getKeyType()).thenReturn(KeyType.Character);
             when(ks.getCharacter()).thenReturn(' ');
@@ -565,7 +565,7 @@ class GraphicsTest {
 
         @Test
         @DisplayName("Any other char => ACTION.NONE")
-        void testAnyOtherChar() throws IOException {
+        public void testAnyOtherChar() throws IOException {
             KeyStroke ks = mock(KeyStroke.class);
             when(ks.getKeyType()).thenReturn(KeyType.Character);
             when(ks.getCharacter()).thenReturn('X');  // e.g., 'X'
@@ -579,7 +579,7 @@ class GraphicsTest {
     // -------------------------------------------------------------------
     // Utility method to verify a single drawCharacter(...) call
     // -------------------------------------------------------------------
-    private void verifyCharacterDrawn(int x, int y, char c, String color) {
+    public void verifyCharacterDrawn(int x, int y, char c, String color) {
         // We expect:
         //   textGraphics.setForegroundColor(TextColor.Factory.fromString(color));
         //   textGraphics.putString(x, y, String.valueOf(c));

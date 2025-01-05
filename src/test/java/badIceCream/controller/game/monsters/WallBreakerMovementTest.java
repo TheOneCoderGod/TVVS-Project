@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class WallBreakerMovementTest {
+public class WallBreakerMovementTest {
 
     @Mock
     private Monster monster;
@@ -38,7 +38,7 @@ class WallBreakerMovementTest {
      * Tests the step method when the time condition is met and a possible move is available with an ice wall present.
      */
     @Test
-    void step_ShouldMoveMonster_WhenTimeConditionMetAndPossibleMoveAvailableAndIceWallPresent() throws Exception {
+    public void step_ShouldMoveMonster_WhenTimeConditionMetAndPossibleMoveAvailableAndIceWallPresent() throws Exception {
         // Arrange
         long currentTime = 300;
         long lastMovement = 100;
@@ -72,7 +72,7 @@ class WallBreakerMovementTest {
      * Tests the step method when the time condition is met and a possible move is available without an ice wall.
      */
     @Test
-    void step_ShouldMoveMonster_WhenTimeConditionMetAndPossibleMoveAvailableAndNoIceWall() throws Exception {
+    public void step_ShouldMoveMonster_WhenTimeConditionMetAndPossibleMoveAvailableAndNoIceWall() throws Exception {
         // Arrange
         long currentTime = 250;
         long lastMovement = 50;
@@ -102,12 +102,11 @@ class WallBreakerMovementTest {
         }
     }
 
-
     /**
      * Tests the step method when the time condition is not met.
      */
     @Test
-    void step_ShouldNotMoveMonster_WhenTimeConditionNotMet() throws IOException {
+    public void step_ShouldNotMoveMonster_WhenTimeConditionNotMet() throws IOException {
         // Arrange
         long currentTime = 150;
         long lastMovement = 100;
@@ -124,7 +123,7 @@ class WallBreakerMovementTest {
      * Tests the lastMove private method when the monster moves down.
      */
     @Test
-    void lastMove_ShouldReturnDOWN_WhenMovedDown() throws Exception {
+    public void lastMove_ShouldReturnDOWN_WhenMovedDown() throws Exception {
         // Arrange
         Position previous = new Position(1, 1);
         Position after = new Position(1, 2);
@@ -144,7 +143,7 @@ class WallBreakerMovementTest {
      * Tests the lastMove private method when the monster moves left.
      */
     @Test
-    void lastMove_ShouldReturnLEFT_WhenMovedLeft() throws Exception {
+    public void lastMove_ShouldReturnLEFT_WhenMovedLeft() throws Exception {
         // Arrange
         Position previous = new Position(1, 1);
         Position after = new Position(0, 1);
@@ -164,7 +163,7 @@ class WallBreakerMovementTest {
      * Tests the lastMove private method when the monster moves right.
      */
     @Test
-    void lastMove_ShouldReturnRIGHT_WhenMovedRight() throws Exception {
+    public void lastMove_ShouldReturnRIGHT_WhenMovedRight() throws Exception {
         // Arrange
         Position previous = new Position(1, 1);
         Position after = new Position(2, 1);
@@ -184,7 +183,7 @@ class WallBreakerMovementTest {
      * Tests the lastMove private method when the monster moves up.
      */
     @Test
-    void lastMove_ShouldReturnUP_WhenMovedUp() throws Exception {
+    public void lastMove_ShouldReturnUP_WhenMovedUp() throws Exception {
         // Arrange
         Position previous = new Position(1, 2);
         Position after = new Position(1, 1);
@@ -204,7 +203,7 @@ class WallBreakerMovementTest {
      * Tests the getPossible private method when all directions are available.
      */
     @Test
-    void getPossible_ShouldReturnOneOfTheAvailablePositions_WhenAllDirectionsAreAvailable() throws Exception {
+    public void getPossible_ShouldReturnOneOfTheAvailablePositions_WhenAllDirectionsAreAvailable() throws Exception {
         // Arrange
         Position currentPosition = new Position(1, 1);
         Position down = new Position(1, 2);
@@ -239,7 +238,7 @@ class WallBreakerMovementTest {
      * Tests the getPossible private method when some directions are unavailable.
      */
     @Test
-    void getPossible_ShouldReturnOneOfTheAvailablePositions_WhenSomeDirectionsAreUnavailable() throws Exception {
+    public void getPossible_ShouldReturnOneOfTheAvailablePositions_WhenSomeDirectionsAreUnavailable() throws Exception {
         // Arrange
         Position currentPosition = new Position(2, 2);
         Position down = new Position(2, 3);
@@ -274,7 +273,7 @@ class WallBreakerMovementTest {
      * Tests the getPossible private method when no directions are available.
      */
     @Test
-    void getPossible_ShouldReturnNull_WhenNoDirectionsAreAvailable() throws Exception {
+    public void getPossible_ShouldReturnNull_WhenNoDirectionsAreAvailable() throws Exception {
         // Arrange
         Position currentPosition = new Position(0, 0);
         Position down = new Position(0, 1);

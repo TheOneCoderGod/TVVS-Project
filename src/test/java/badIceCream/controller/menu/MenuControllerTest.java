@@ -13,13 +13,13 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 /**
  * Tests for the abstract MenuController class.
  */
-class MenuControllerTest {
+public class MenuControllerTest {
 
     /**
      * A dummy subclass of MenuController to allow instantiation and testing.
      * We must implement the abstract step(...) method from Controller<T>.
      */
-    private static class DummyMenuController extends MenuController<String> {
+    public static class DummyMenuController extends MenuController<String> {
         public DummyMenuController(String model) {
             super(model);
         }
@@ -32,7 +32,7 @@ class MenuControllerTest {
 
     @Test
     @DisplayName("Constructor in abstract MenuController should set up correctly")
-    void testConstructor() {
+    public void testConstructor() {
         // Instantiate the dummy subclass
         MenuController<String> controller = new DummyMenuController("test-model");
 

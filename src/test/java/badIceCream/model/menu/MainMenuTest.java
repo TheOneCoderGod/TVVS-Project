@@ -6,18 +6,18 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class MainMenuTest {
+public class MainMenuTest {
 
     private MainMenu menu;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         menu = new MainMenu();
     }
 
     @Test
     @DisplayName("Constructor should have 3 entries: START, INSTRUCTIONS, EXIT")
-    void testConstructor() {
+    public void testConstructor() {
         assertEquals(3, menu.getNumberEntries());
         assertEquals("   START", menu.getEntry(0));
         assertEquals("INSTRUCTIONS", menu.getEntry(1));
@@ -26,7 +26,7 @@ class MainMenuTest {
 
     @Test
     @DisplayName("isSelectedExit(), isSelectedInstructions(), isSelectedStart() checks")
-    void testSelections() {
+    public void testSelections() {
         // By default, currentEntry=0 => START
         assertTrue(menu.isSelectedStart());
         assertFalse(menu.isSelectedInstructions());
@@ -47,7 +47,7 @@ class MainMenuTest {
 
     @Test
     @DisplayName("nextEntry() and previousEntry() wrap around 3 entries")
-    void testWrapAround() {
+    public void testWrapAround() {
         // Start at index 0
         assertTrue(menu.isSelected(0));
 

@@ -6,25 +6,25 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class BananaFruitTest {
+public class BananaFruitTest {
 
     private BananaFruit bananaFruit;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         bananaFruit = new BananaFruit(2, 3);
     }
 
     @Test
     @DisplayName("Constructor sets X and Y")
-    void testConstructor() {
+    public void testConstructor() {
         assertEquals(2, bananaFruit.getPosition().getX());
         assertEquals(3, bananaFruit.getPosition().getY());
     }
 
     @Test
     @DisplayName("getType() returns 2")
-    void testGetType() {
+    public void testGetType() {
         assertEquals(2, bananaFruit.getType());
     }
 }

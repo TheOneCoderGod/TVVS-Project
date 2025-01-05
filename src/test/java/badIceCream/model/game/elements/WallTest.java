@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Wall is abstract, so we create a dummy subclass
  * to test basic "Wall" functionality from the parent.
  */
-class WallTest {
+public class WallTest {
 
     private static class DummyWall extends Wall {
         public DummyWall(int x, int y) {
@@ -26,20 +26,20 @@ class WallTest {
     private Wall wall;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         wall = new DummyWall(2,2);
     }
 
     @Test
     @DisplayName("Constructor sets position")
-    void testConstructor() {
+    public void testConstructor() {
         assertEquals(2, wall.getPosition().getX());
         assertEquals(2, wall.getPosition().getY());
     }
 
     @Test
     @DisplayName("getType() in dummy returns 999")
-    void testGetType() {
+    public void testGetType() {
         assertEquals(999, wall.getType());
     }
 }

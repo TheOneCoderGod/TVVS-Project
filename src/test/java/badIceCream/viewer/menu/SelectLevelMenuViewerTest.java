@@ -11,14 +11,14 @@ import org.mockito.ArgumentCaptor;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class SelectLevelMenuViewerTest {
+public class SelectLevelMenuViewerTest {
 
     private SelectLevelMenu model;
     private SelectLevelMenuViewer viewer;
     private Graphics graphics;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         model = mock(SelectLevelMenu.class);
         graphics = mock(Graphics.class);
         viewer = new SelectLevelMenuViewer(model);
@@ -26,7 +26,7 @@ class SelectLevelMenuViewerTest {
 
     @Test
     @DisplayName("drawElements => verify all lines from drawTitle, drawSnowflake, plus the 5 level boxes, plus loop calls")
-    void testDrawElementsAllLines() {
+    public void testDrawElementsAllLines() {
         // Suppose we have 5 entries: 1..5
         when(model.getNumberEntries()).thenReturn(5);
         when(model.getEntry(0)).thenReturn("1");
@@ -68,7 +68,7 @@ class SelectLevelMenuViewerTest {
 
     @Test
     @DisplayName("If 0 entries => no loop calls, still all ASCII from title and snowflake are present")
-    void testDrawElementsZeroEntries() {
+    public void testDrawElementsZeroEntries() {
         when(model.getNumberEntries()).thenReturn(0);
 
         viewer.drawElements(graphics);
@@ -87,7 +87,7 @@ class SelectLevelMenuViewerTest {
 
     @Test
     @DisplayName("Test various positions and colors for drawText calls")
-    void testDrawTextPositionsAndColors() {
+    public  void testDrawTextPositionsAndColors() {
         when(model.getNumberEntries()).thenReturn(5);
         when(model.getEntry(0)).thenReturn("1");
         when(model.getEntry(1)).thenReturn("2");

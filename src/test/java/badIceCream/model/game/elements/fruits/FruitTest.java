@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Fruit is abstract, so we create a dummy subclass for testing any
  * common functionality from Fruit or from the parent Element.
  */
-class FruitTest {
+public class FruitTest {
 
     private static class DummyFruit extends Fruit {
         public DummyFruit(int x, int y) {
@@ -26,20 +26,20 @@ class FruitTest {
     private Fruit dummyFruit;
 
     @BeforeEach
-    void setUp() {
+    public  void setUp() {
         dummyFruit = new DummyFruit(4, 4);
     }
 
     @Test
     @DisplayName("Constructor sets X and Y (from Element)")
-    void testConstructor() {
+    public void testConstructor() {
         assertEquals(4, dummyFruit.getPosition().getX());
         assertEquals(4, dummyFruit.getPosition().getY());
     }
 
     @Test
     @DisplayName("getType() in dummy fruit => 999 (just verifying override)")
-    void testGetType() {
+    public void testGetType() {
         assertEquals(999, dummyFruit.getType());
     }
 }

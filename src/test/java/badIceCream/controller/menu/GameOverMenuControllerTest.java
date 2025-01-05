@@ -21,14 +21,14 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-class GameOverMenuControllerTest {
+public class GameOverMenuControllerTest {
 
     private GameOverMenu menu;
     private GameOverMenuController controller;
     private Game game;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         menu = mock(GameOverMenu.class);
         game = mock(Game.class);
 
@@ -42,13 +42,13 @@ class GameOverMenuControllerTest {
 
     @Test
     @DisplayName("Constructor should properly instantiate the controller")
-    void testConstructor() {
+    public void testConstructor() {
         assertNotNull(controller, "Controller should be instantiated");
     }
 
     @Test
     @DisplayName("step(...) with UP should call previousEntry() on the menu")
-    void testStepUp() throws IOException {
+    public void testStepUp() throws IOException {
         controller.step(game, GUI.ACTION.UP, 0L);
 
         verify(menu, times(1)).previousEntry();
@@ -58,7 +58,7 @@ class GameOverMenuControllerTest {
 
     @Test
     @DisplayName("step(...) with DOWN should call nextEntry() on the menu")
-    void testStepDown() throws IOException {
+    public void testStepDown() throws IOException {
         controller.step(game, GUI.ACTION.DOWN, 0L);
 
         verify(menu, times(1)).nextEntry();
@@ -68,7 +68,7 @@ class GameOverMenuControllerTest {
 
     @Test
     @DisplayName("step(...) with SELECT + Quit to MainMenu selected should go to MainMenuState")
-    void testStepSelectQuitToMainMenu() throws IOException {
+    public void testStepSelectQuitToMainMenu() throws IOException {
         // Force the menu to "Quit"
         when(menu.isSelectedQuitToMainMenu()).thenReturn(true);
 
@@ -90,7 +90,7 @@ class GameOverMenuControllerTest {
 
     @Test
     @DisplayName("step(...) with SELECT + Play Again selected should create new Arena and GameState")
-    void testStepSelectPlayAgain() throws IOException {
+    public void testStepSelectPlayAgain() throws IOException {
         // Force the menu to "Play Again"
         when(menu.isSelectedPlayAgain()).thenReturn(true);
 
@@ -134,7 +134,7 @@ class GameOverMenuControllerTest {
 
     @Test
     @DisplayName("step(...) with a non-handled action (like LEFT) should do nothing")
-    void testStepDefault() throws IOException {
+    public void testStepDefault() throws IOException {
         // No special selection
         controller.step(game, GUI.ACTION.LEFT, 0L);
 

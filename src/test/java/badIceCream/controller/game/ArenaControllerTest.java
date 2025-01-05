@@ -28,7 +28,7 @@ import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.Mockito.*;
 
-class ArenaControllerTest {
+public class ArenaControllerTest {
 
     @Mock
     private Arena arena;
@@ -84,7 +84,7 @@ class ArenaControllerTest {
      * Tests the constructor to ensure MonsterControllers are added based on monster types.
      */
     @Test
-    void constructor_ShouldAddMonsterControllersBasedOnMonsterTypes() {
+    public void constructor_ShouldAddMonsterControllersBasedOnMonsterTypes() {
         // Arrange
         when(arena.getMonsters()).thenReturn(List.of(mockMonster1, mockMonster2));
 
@@ -104,7 +104,7 @@ class ArenaControllerTest {
      * Tests the step method when getFruits is empty and first is true, generating new fruits.
      */
     @Test
-    void step_ShouldGenerateNewFruits_WhenFruitsEmptyAndFirstIsTrue() throws IOException {
+    public void step_ShouldGenerateNewFruits_WhenFruitsEmptyAndFirstIsTrue() throws IOException {
         // Arrange
         when(arena.getIceCream()).thenReturn(iceCream);
         when(iceCreamController.eatFruit()).thenReturn(-1); // No fruit eaten
@@ -126,7 +126,7 @@ class ArenaControllerTest {
      * Tests the step method when getFruits is empty and first is false, and level >= game state level.
      */
     @Test
-    void step_ShouldIncreaseLevelAndSetLevelCompletedState_WhenFruitsEmptyAndFirstIsFalse_AndLevelGEGameStateLevel() throws IOException, NoSuchFieldException, IllegalAccessException {
+    public void step_ShouldIncreaseLevelAndSetLevelCompletedState_WhenFruitsEmptyAndFirstIsFalse_AndLevelGEGameStateLevel() throws IOException, NoSuchFieldException, IllegalAccessException {
         // Arrange
         when(arena.getIceCream()).thenReturn(iceCream);
         when(iceCreamController.eatFruit()).thenReturn(-1); // No fruit eaten
@@ -154,7 +154,7 @@ class ArenaControllerTest {
      * Tests the step method when getFruits is empty and first is false, and level < game state level.
      */
     @Test
-    void step_ShouldSetLevelCompletedState_WhenFruitsEmptyAndFirstIsFalse_AndLevelLTGameStateLevel() throws IOException, NoSuchFieldException, IllegalAccessException {
+    public void step_ShouldSetLevelCompletedState_WhenFruitsEmptyAndFirstIsFalse_AndLevelLTGameStateLevel() throws IOException, NoSuchFieldException, IllegalAccessException {
         // Arrange
         when(arena.getIceCream()).thenReturn(iceCream);
         when(iceCreamController.eatFruit()).thenReturn(-1); // No fruit eaten
@@ -183,7 +183,7 @@ class ArenaControllerTest {
      * Tests the step method when action is PAUSE, setting pause menu state.
      */
     @Test
-    void step_ShouldSetPauseMenuState_WhenActionIsPause() throws IOException {
+    public void step_ShouldSetPauseMenuState_WhenActionIsPause() throws IOException {
         // Arrange
         when(arena.getIceCream()).thenReturn(iceCream);
         when(iceCreamController.eatFruit()).thenReturn(-1); // No fruit eaten
@@ -206,7 +206,7 @@ class ArenaControllerTest {
      * Tests the stepMonsters method, ensuring step(time) is called on all MonsterControllers.
      */
     @Test
-    void stepMonsters_ShouldCallStepOnAllMonsterControllers() throws IOException {
+    public void stepMonsters_ShouldCallStepOnAllMonsterControllers() throws IOException {
         // Arrange
         MonsterController mockMonsterController1 = mock(MonsterController.class);
         MonsterController mockMonsterController2 = mock(MonsterController.class);
@@ -229,7 +229,7 @@ class ArenaControllerTest {
      * Tests the stepMonsters method with no MonsterControllers.
      */
     @Test
-    void stepMonsters_ShouldNotThrow_WhenNoMonsterControllers() throws IOException {
+    public void stepMonsters_ShouldNotThrow_WhenNoMonsterControllers() throws IOException {
         // Arrange
         arenaController = new ArenaController(arena, iceCreamController, monsterControllers); // Empty list
 
@@ -244,7 +244,7 @@ class ArenaControllerTest {
      * Tests the step method when game state is null, should not throw exception.
      */
     @Test
-    void step_ShouldHandleNullGameState() throws IOException {
+    public void step_ShouldHandleNullGameState() throws IOException {
         // Arrange
         when(arena.getIceCream()).thenReturn(iceCream);
         when(iceCreamController.eatFruit()).thenReturn(-1); // No fruit eaten
@@ -267,7 +267,7 @@ class ArenaControllerTest {
      * Tests the step method when setStrawberry is called but is already active.
      */
     @Test
-    void step_ShouldNotThrow_WhenSetStrawberryCalledWhileAlreadyActive() throws IOException {
+    public void step_ShouldNotThrow_WhenSetStrawberryCalledWhileAlreadyActive() throws IOException {
         // Arrange
         when(arena.getIceCream()).thenReturn(iceCream);
         when(iceCreamController.eatFruit()).thenReturn(5); // Eat strawberry

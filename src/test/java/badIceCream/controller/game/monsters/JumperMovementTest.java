@@ -16,7 +16,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class JumperMovementTest {
+public class JumperMovementTest {
 
     private JumperMovement jumperMovement;
 
@@ -44,14 +44,14 @@ class JumperMovementTest {
     }
 
     // Utility method to invoke private method using reflection
-    private Object invokePrivateMethod(String methodName, Object... args) throws Exception {
+    public Object invokePrivateMethod(String methodName, Object... args) throws Exception {
         Method method = JumperMovement.class.getDeclaredMethod(methodName, Monster.class, Arena.class);
         method.setAccessible(true);
         return method.invoke(jumperMovement, args);
     }
 
     @Test
-    void testGetPossible_ValidMove() throws Exception {
+    public void testGetPossible_ValidMove() throws Exception {
         when(monster.getPosition()).thenReturn(position);
         when(position.getDown()).thenReturn(down);
         when(position.getLeft()).thenReturn(left);
@@ -69,7 +69,7 @@ class JumperMovementTest {
     }
 
     @Test
-    void testGetPossible_NoValidMove() throws Exception {
+    public void testGetPossible_NoValidMove() throws Exception {
         when(monster.getPosition()).thenReturn(position);
         when(position.getDown()).thenReturn(down);
         when(position.getLeft()).thenReturn(left);
@@ -87,7 +87,7 @@ class JumperMovementTest {
     }
 
     @Test
-    void testStepMovement_NoMovement() throws IOException {
+    public void testStepMovement_NoMovement() throws IOException {
         long time = 100;
         long lastMovement = 0;
 
@@ -99,7 +99,7 @@ class JumperMovementTest {
     }
 
     @Test
-    void testStepMovement_WithMovement() throws IOException {
+    public void testStepMovement_WithMovement() throws IOException {
         long time = 300;
         long lastMovement = 0;
 
@@ -120,8 +120,9 @@ class JumperMovementTest {
 
         verify(monster, times(1)).setPosition(any(Position.class));
     }
+
     @Test
-    void testMoveMonster() {
+    public void testMoveMonster() {
         when(monster.getPosition()).thenReturn(position);
         when(arena.getIceCream()).thenReturn(iceCream);
         when(iceCream.isStrawberryActive()).thenReturn(false);

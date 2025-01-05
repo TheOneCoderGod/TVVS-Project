@@ -13,14 +13,14 @@ import org.mockito.ArgumentCaptor;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class LevelCompletedMenuViewerTest {
+public class LevelCompletedMenuViewerTest {
 
     private LevelCompletedMenu model;
     private LevelCompletedMenuViewer viewer;
     private Graphics graphics;
 
     @BeforeEach
-    void setUp() {
+    public  void setUp() {
         model = mock(LevelCompletedMenu.class);
         graphics = mock(Graphics.class);
         viewer = new LevelCompletedMenuViewer(model);
@@ -28,7 +28,7 @@ class LevelCompletedMenuViewerTest {
 
     @Test
     @DisplayName("Check drawTitle, drawSnowflake, and all text lines with entries")
-    void testDrawElementsAllLines() {
+    public void testDrawElementsAllLines() {
         // Setup model with 2 entries
         when(model.getNumberEntries()).thenReturn(2);
         when(model.getEntry(0)).thenReturn("NEXT LEVEL");
@@ -130,7 +130,7 @@ class LevelCompletedMenuViewerTest {
 
     @Test
     @DisplayName("0 entries => still prints ASCII, no loop calls")
-    void testDrawElementsZeroEntries() {
+    public void testDrawElementsZeroEntries() {
         // Setup model with 0 entries
         when(model.getNumberEntries()).thenReturn(0);
 

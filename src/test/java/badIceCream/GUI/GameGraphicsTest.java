@@ -21,30 +21,30 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-class GameGraphicsTest {
+public class GameGraphicsTest {
 
     private GameGraphics gameGraphics;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         // We'll instantiate with some sample width/height
         gameGraphics = new GameGraphics(80, 24);
     }
 
     @Test
     @DisplayName("Constructor properly sets width and height (no crash)")
-    void testConstructor() {
+    public void testConstructor() {
         assertNotNull(gameGraphics, "GameGraphics should be instantiated");
         // If you had getters for width/height, you could assert them here.
     }
 
     @Nested
     @DisplayName("createTerminal() tests")
-    class CreateTerminalTests {
+    public class CreateTerminalTests {
 
         @Test
         @DisplayName("createTerminal() - success scenario with no NullPointerException")
-        void testCreateTerminalSuccess() throws Exception {
+        public void testCreateTerminalSuccess() throws Exception {
             // We'll mock static calls to Font.createFont and also intercept DefaultTerminalFactory
             // Key point: we set the defaultAnswer(...) to RETURNS_SELF to allow method chaining
             try (MockedStatic<Font> fontStaticMock = mockStatic(Font.class);
@@ -80,7 +80,7 @@ class GameGraphicsTest {
 
         @Test
         @DisplayName("createTerminal() - FontFormatException => wraps in IOException")
-        void testCreateTerminalFontFormatException() throws Exception {
+        public void testCreateTerminalFontFormatException() throws Exception {
             try (MockedStatic<Font> fontStaticMock = mockStatic(Font.class)) {
                 // Simulate a FontFormatException
                 fontStaticMock.when(() -> Font.createFont(eq(Font.TRUETYPE_FONT), any(File.class)))
@@ -94,7 +94,7 @@ class GameGraphicsTest {
 
         @Test
         @DisplayName("createTerminal() - IOException reading file => rethrows IOException")
-        void testCreateTerminalIOException() throws Exception {
+        public void testCreateTerminalIOException() throws Exception {
             try (MockedStatic<Font> fontStaticMock = mockStatic(Font.class)) {
                 // Simulate an IOException when reading the font file
                 fontStaticMock.when(() -> Font.createFont(eq(Font.TRUETYPE_FONT), any(File.class)))

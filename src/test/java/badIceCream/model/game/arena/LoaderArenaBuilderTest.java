@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Comprehensive test suite for the LoaderArenaBuilder class.
  * Ensures correct parsing of level files and accurate construction of game elements.
  */
-class LoaderArenaBuilderTest {
+public class LoaderArenaBuilderTest {
 
     @TempDir
     Path tempDir;
@@ -28,7 +28,7 @@ class LoaderArenaBuilderTest {
     private String originalUserDir;
 
     @BeforeEach
-    void setUp() throws IOException {
+    public void setUp() throws IOException {
         // Store the original user.dir to restore it later
         originalUserDir = System.getProperty("user.dir");
 
@@ -41,7 +41,7 @@ class LoaderArenaBuilderTest {
     }
 
     @AfterEach
-    void tearDown() {
+    public void tearDown() {
         // Restore the original user.dir system property
         System.setProperty("user.dir", originalUserDir);
     }
@@ -53,7 +53,7 @@ class LoaderArenaBuilderTest {
      * @param lines The content of the level file.
      * @throws IOException If an I/O error occurs.
      */
-    private void createLevelFile(int level, List<String> lines) throws IOException {
+    public void createLevelFile(int level, List<String> lines) throws IOException {
         Path levelFile = levelsDir.resolve("level" + level + ".lvl");
         try (BufferedWriter writer = Files.newBufferedWriter(levelFile, StandardCharsets.UTF_8)) {
             for (String line : lines) {
@@ -69,7 +69,7 @@ class LoaderArenaBuilderTest {
      */
     @Test
     @DisplayName("Constructor with valid level initializes correctly")
-    void testConstructorWithValidLevel() throws IOException {
+    public void testConstructorWithValidLevel() throws IOException {
         int level = 1;
         List<String> levelData = List.of(
                 "GGG",
@@ -92,7 +92,7 @@ class LoaderArenaBuilderTest {
      */
     @Test
     @DisplayName("Constructor with missing level file throws IOException")
-    void testConstructorWithMissingLevelFile() {
+    public void testConstructorWithMissingLevelFile() {
         int level = 2;
         // Do not create the level file
 
@@ -105,7 +105,7 @@ class LoaderArenaBuilderTest {
      */
     @Test
     @DisplayName("createWalls() correctly creates StoneWall and IceWall objects")
-    void testCreateWalls() throws IOException {
+    public void testCreateWalls() throws IOException {
         int level = 3;
         List<String> levelData = List.of(
                 "GFG",
@@ -134,7 +134,7 @@ class LoaderArenaBuilderTest {
      */
     @Test
     @DisplayName("createMonsters() correctly creates various Monster objects")
-    void testCreateMonsters() throws IOException {
+    public void testCreateMonsters() throws IOException {
         int level = 4;
         List<String> levelData = List.of(
                 "YJVW",
@@ -169,7 +169,7 @@ class LoaderArenaBuilderTest {
      */
     @Test
     @DisplayName("createIceCream() correctly creates IceCream object when present")
-    void testCreateIceCreamPresent() throws IOException {
+    public void testCreateIceCreamPresent() throws IOException {
         int level = 5;
         List<String> levelData = List.of(
                 "GZG",
@@ -190,7 +190,7 @@ class LoaderArenaBuilderTest {
      */
     @Test
     @DisplayName("createIceCream() returns null when IceCream is absent")
-    void testCreateIceCreamAbsent() throws IOException {
+    public void testCreateIceCreamAbsent() throws IOException {
         int level = 6;
         List<String> levelData = List.of(
                 "GGG",
@@ -211,7 +211,7 @@ class LoaderArenaBuilderTest {
      */
     @Test
     @DisplayName("createFruits() correctly creates various Fruit objects")
-    void testCreateFruits() throws IOException {
+    public void testCreateFruits() throws IOException {
         int level = 7;
         List<String> levelData = List.of(
                 "M.Q.K",
@@ -249,7 +249,7 @@ class LoaderArenaBuilderTest {
      */
     @Test
     @DisplayName("createHotFloors() correctly creates HotFloor objects")
-    void testCreateHotFloors() throws IOException {
+    public void testCreateHotFloors() throws IOException {
         int level = 8;
         List<String> levelData = List.of(
                 "E.E",
@@ -271,7 +271,7 @@ class LoaderArenaBuilderTest {
      */
     @Test
     @DisplayName("getWidth() and getHeight() correctly identify arena dimensions")
-    void testGetWidthAndHeightWithDifferentLineLengths() throws IOException {
+    public void testGetWidthAndHeightWithDifferentLineLengths() throws IOException {
         int level = 9;
         List<String> levelData = List.of(
                 "G",

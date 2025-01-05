@@ -105,7 +105,6 @@ public class IceCreamControllerTest {
         verify(arena).powerIceCream(any(GUI.ACTION.class));
     }
 
-
     @Test
     public void testMoveIceCreamLeftWhenNotEmpty() {
         Position position = mock(Position.class);

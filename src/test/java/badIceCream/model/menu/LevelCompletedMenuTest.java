@@ -6,18 +6,18 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class LevelCompletedMenuTest {
+public class LevelCompletedMenuTest {
 
     private LevelCompletedMenu menu;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         menu = new LevelCompletedMenu();
     }
 
     @Test
     @DisplayName("Constructor with 2 entries: NEXT LEVEL, MENU")
-    void testConstructor() {
+    public void testConstructor() {
         assertEquals(2, menu.getNumberEntries());
         assertEquals("NEXT LEVEL", menu.getEntry(0));
         assertEquals("   MENU", menu.getEntry(1));
@@ -25,7 +25,7 @@ class LevelCompletedMenuTest {
 
     @Test
     @DisplayName("isSelectedNextLevel() and isSelectedQuitToMainMenu() checks")
-    void testSelections() {
+    public void testSelections() {
         // By default, currentEntry=0 => nextLevel
         assertTrue(menu.isSelectedNextLevel());
         assertFalse(menu.isSelectedQuitToMainMenu());
@@ -38,7 +38,7 @@ class LevelCompletedMenuTest {
 
     @Test
     @DisplayName("nextEntry() / previousEntry() wrap around properly")
-    void testEntryNavigation() {
+    public void testEntryNavigation() {
         assertTrue(menu.isSelected(0));
 
         menu.nextEntry();

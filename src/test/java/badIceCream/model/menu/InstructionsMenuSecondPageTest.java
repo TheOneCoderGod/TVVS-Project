@@ -6,25 +6,25 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class InstructionsMenuSecondPageTest {
+public class InstructionsMenuSecondPageTest {
 
     private InstructionsMenuSecondPage menu;
 
     @BeforeEach
-    void setUp() {
+    public  void setUp() {
         menu = new InstructionsMenuSecondPage();
     }
 
     @Test
     @DisplayName("Constructor has only 1 entry: Quit to Main Menu")
-    void testConstructor() {
+    public void testConstructor() {
         assertEquals(1, menu.getNumberEntries());
         assertEquals("Quit to Main Menu", menu.getEntry(0));
     }
 
     @Test
     @DisplayName("Single entry means selection never changes")
-    void testSingleEntry() {
+    public void testSingleEntry() {
         assertTrue(menu.isSelected(0));
         menu.nextEntry();
         assertTrue(menu.isSelected(0));

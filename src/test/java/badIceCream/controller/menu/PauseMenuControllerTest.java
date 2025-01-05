@@ -2,7 +2,7 @@ package badIceCream.controller.menu;
 
 import badIceCream.GUI.GUI;
 import badIceCream.Game;
-import badIceCream.model.game.arena.Arena; // <-- Make sure this import matches your actual Arena class location
+import badIceCream.model.game.arena.Arena;
 import badIceCream.model.menu.MainMenu;
 import badIceCream.model.menu.PauseMenu;
 import badIceCream.states.GameState;
@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-class PauseMenuControllerTest {
+public class PauseMenuControllerTest {
 
     private PauseMenu menu;
     private GameState parentState;
@@ -27,7 +27,7 @@ class PauseMenuControllerTest {
     private Game game;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         // Mocks
         menu = mock(PauseMenu.class);
         parentState = mock(GameState.class);
@@ -52,13 +52,13 @@ class PauseMenuControllerTest {
 
     @Test
     @DisplayName("Constructor should properly instantiate")
-    void testConstructor() {
+    public void testConstructor() {
         assertNotNull(controller, "Controller should be instantiated");
     }
 
     @Test
     @DisplayName("step(...) with UP should call previousEntry() on the menu")
-    void testStepUp() throws IOException {
+    public void testStepUp() throws IOException {
         controller.step(game, GUI.ACTION.UP, 0L);
 
         verify(menu, times(1)).previousEntry();
@@ -68,7 +68,7 @@ class PauseMenuControllerTest {
 
     @Test
     @DisplayName("step(...) with DOWN should call nextEntry() on the menu")
-    void testStepDown() throws IOException {
+    public void testStepDown() throws IOException {
         controller.step(game, GUI.ACTION.DOWN, 0L);
 
         verify(menu, times(1)).nextEntry();
@@ -78,7 +78,7 @@ class PauseMenuControllerTest {
 
     @Test
     @DisplayName("step(...) with SELECT + Resume selected => restore parent game state")
-    void testStepSelectResume() throws IOException {
+    public void testStepSelectResume() throws IOException {
         // Indicate the resume option was selected
         when(menu.isSelectedResume()).thenReturn(true);
 
@@ -93,7 +93,7 @@ class PauseMenuControllerTest {
 
     @Test
     @DisplayName("step(...) with SELECT + Menu selected => go to MainMenuState")
-    void testStepSelectMenu() throws IOException {
+    public void testStepSelectMenu() throws IOException {
         // Indicate the "Menu" option was selected
         when(menu.isSelectedMenu()).thenReturn(true);
 
@@ -116,7 +116,7 @@ class PauseMenuControllerTest {
 
     @Test
     @DisplayName("step(...) with SELECT but neither option => do nothing")
-    void testStepSelectNoOption() throws IOException {
+    public void testStepSelectNoOption() throws IOException {
         // By default, isSelectedResume() and isSelectedMenu() are false
         controller.step(game, GUI.ACTION.SELECT, 0L);
 
@@ -126,7 +126,7 @@ class PauseMenuControllerTest {
 
     @Test
     @DisplayName("step(...) with an unhandled action (LEFT, RIGHT, etc.) does nothing")
-    void testStepDefaultAction() throws IOException {
+    public void testStepDefaultAction() throws IOException {
         controller.step(game, GUI.ACTION.LEFT, 0L);
 
         // No previous/next entry calls

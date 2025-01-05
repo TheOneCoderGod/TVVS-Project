@@ -2,10 +2,9 @@ package badIceCream.controller.menu;
 
 import badIceCream.GUI.GUI;
 import badIceCream.Game;
+import badIceCream.model.menu.LevelCompletedMenu;
 import badIceCream.model.game.arena.Arena;
 import badIceCream.model.game.arena.LoaderArenaBuilder;
-import badIceCream.model.menu.LevelCompletedMenu;
-import badIceCream.model.menu.MainMenu;
 import badIceCream.states.GameState;
 import badIceCream.states.MainMenuState;
 import badIceCream.utils.Type;
@@ -21,14 +20,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
-class LevelCompletedMenuControllerTest {
+public class LevelCompletedMenuControllerTest {
 
     private LevelCompletedMenu menu;
     private LevelCompletedMenuController controller;
     private Game game;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         menu = mock(LevelCompletedMenu.class);
         game = mock(Game.class);
 
@@ -41,13 +40,13 @@ class LevelCompletedMenuControllerTest {
 
     @Test
     @DisplayName("Constructor should properly instantiate the controller")
-    void testConstructor() {
+    public void testConstructor() {
         assertNotNull(controller, "Controller should be instantiated");
     }
 
     @Test
     @DisplayName("step(...) with UP should call previousEntry() on the menu")
-    void testStepUp() throws IOException {
+    public void testStepUp() throws IOException {
         controller.step(game, GUI.ACTION.UP, 0L);
 
         verify(menu, times(1)).previousEntry();
@@ -57,7 +56,7 @@ class LevelCompletedMenuControllerTest {
 
     @Test
     @DisplayName("step(...) with DOWN should call nextEntry() on the menu")
-    void testStepDown() throws IOException {
+    public void testStepDown() throws IOException {
         controller.step(game, GUI.ACTION.DOWN, 0L);
 
         verify(menu, times(1)).nextEntry();
@@ -67,7 +66,7 @@ class LevelCompletedMenuControllerTest {
 
     @Test
     @DisplayName("step(...) with SELECT + NextLevel selected should create a new Arena and go to GameState")
-    void testStepSelectNextLevel() throws IOException {
+    public void testStepSelectNextLevel() throws IOException {
         // Force 'Next Level' selection
         when(menu.isSelectedNextLevel()).thenReturn(true);
 
@@ -108,7 +107,7 @@ class LevelCompletedMenuControllerTest {
 
     @Test
     @DisplayName("step(...) with SELECT + QuitToMainMenu selected should go to MainMenuState")
-    void testStepSelectQuitToMainMenu() throws IOException {
+    public void testStepSelectQuitToMainMenu() throws IOException {
         // Force 'Quit to Main Menu'
         when(menu.isSelectedQuitToMainMenu()).thenReturn(true);
 
@@ -131,7 +130,7 @@ class LevelCompletedMenuControllerTest {
 
     @Test
     @DisplayName("step(...) with SELECT but neither nextLevel nor quitToMainMenu selected does nothing")
-    void testStepSelectNoSelection() throws IOException {
+    public void testStepSelectNoSelection() throws IOException {
         // Both are false by default
         controller.step(game, GUI.ACTION.SELECT, 0L);
 
@@ -141,7 +140,7 @@ class LevelCompletedMenuControllerTest {
 
     @Test
     @DisplayName("step(...) with another action (e.g., LEFT) should do nothing")
-    void testStepDefault() throws IOException {
+    public void testStepDefault() throws IOException {
         controller.step(game, GUI.ACTION.LEFT, 0L);
 
         verify(menu, never()).previousEntry();

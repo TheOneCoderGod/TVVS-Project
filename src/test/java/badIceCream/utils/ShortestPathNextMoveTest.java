@@ -19,14 +19,14 @@ import static org.mockito.Mockito.*;
  * We'll test the public method findShortestPath(...).
  * The private manhattanDistance(...) method is tested via black-box approach.
  */
-class ShortestPathNextMoveTest {
+public class ShortestPathNextMoveTest {
 
     private ShortestPathNextMove sp;
     private Arena arena;
     private Monster monster;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         sp = new ShortestPathNextMove();
         arena = mock(Arena.class);
         monster = mock(Monster.class);
@@ -34,7 +34,7 @@ class ShortestPathNextMoveTest {
 
     @Test
     @DisplayName("Returns null if monster's position == ice cream position")
-    void testSamePosition() {
+    public void testSamePosition() {
         Position samePos = new Position(5,5);
         when(monster.getPosition()).thenReturn(samePos);
 
@@ -48,7 +48,7 @@ class ShortestPathNextMoveTest {
 
     @Test
     @DisplayName("Returns null if no path found (arena not isEmptyMonsters => no expansions)")
-    void testNoPathFound() {
+    public void testNoPathFound() {
         Position monsterPos = new Position(2,2);
         Position icePos = new Position(10,10);
 
@@ -65,7 +65,7 @@ class ShortestPathNextMoveTest {
 
     @Test
     @DisplayName("Returns next move if a short path is available")
-    void testShortPath() {
+    public void testShortPath() {
         Position monsterPos = new Position(5,5);
         Position icePos = new Position(5,7);
         when(monster.getPosition()).thenReturn(monsterPos);

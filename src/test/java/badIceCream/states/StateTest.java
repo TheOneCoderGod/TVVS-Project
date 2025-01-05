@@ -17,7 +17,7 @@ import static org.mockito.Mockito.*;
  * We cannot instantiate State directly (it's abstract),
  * so we create a dummy subclass for testing.
  */
-class StateTest {
+public class StateTest {
 
     private static class DummyState extends State<String> {
         public DummyState(String model, Controller<String> controller, Viewer<String> viewer, int level) {
@@ -31,7 +31,7 @@ class StateTest {
     private State<String> state;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         model = "TestModel";
         controller = mock(Controller.class);
         viewer = mock(Viewer.class);
@@ -40,14 +40,14 @@ class StateTest {
 
     @Test
     @DisplayName("Constructor sets model, controller, viewer, and level")
-    void testConstructor() {
+    public void testConstructor() {
         assertEquals(model, state.getModel());
         assertEquals(3, state.getLevel());
     }
 
     @Test
     @DisplayName("step(...) calls controller.step(...) and viewer.draw(...)")
-    void testStep() throws IOException {
+    public void testStep() throws IOException {
         Game game = mock(Game.class);
         Graphics graphics = mock(Graphics.class);
 
@@ -59,14 +59,14 @@ class StateTest {
 
     @Test
     @DisplayName("stepMonsters(...) calls controller.stepMonsters(...)")
-    void testStepMonsters() throws IOException {
+    public void testStepMonsters() throws IOException {
         state.stepMonsters(250L);
         verify(controller).stepMonsters(250L);
     }
 
     @Test
     @DisplayName("increaseLevel() does not exceed 5")
-    void testIncreaseLevel() {
+    public void testIncreaseLevel() {
         assertEquals(3, state.getLevel());
         state.increaseLevel();
         assertEquals(4, state.getLevel());

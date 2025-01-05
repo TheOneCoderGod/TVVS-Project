@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class MonsterControllerTest {
+public class MonsterControllerTest {
 
     @Mock
     private Arena arena;
@@ -34,7 +34,7 @@ class MonsterControllerTest {
     private MonsterController monsterController;
 
     @BeforeEach
-    void setUp() throws NoSuchFieldException, IllegalAccessException {
+    public void setUp() throws NoSuchFieldException, IllegalAccessException {
         // Initialize MonsterController with mocks
         monsterController = new MonsterController(arena, initialStepMonsters, monster);
 
@@ -51,7 +51,7 @@ class MonsterControllerTest {
     }
 
     @Test
-    void constructor_initializesFieldsCorrectly() throws NoSuchFieldException, IllegalAccessException {
+    public void constructor_initializesFieldsCorrectly() throws NoSuchFieldException, IllegalAccessException {
         // Given
         MonsterController controller = new MonsterController(arena, initialStepMonsters, monster);
 
@@ -65,7 +65,7 @@ class MonsterControllerTest {
     }
 
     @Test
-    void step_monsterTypeNot3_delegatesToStep() throws IOException, NoSuchFieldException, IllegalAccessException {
+    public void step_monsterTypeNot3_delegatesToStep() throws IOException, NoSuchFieldException, IllegalAccessException {
         // Given
         when(monster.getType()).thenReturn(2); // Type is not 3
         long currentTime = 10000L;
@@ -84,7 +84,7 @@ class MonsterControllerTest {
     }
 
     @Test
-    void step_monsterType3_timeBelowThreshold_delegatesToStep() throws IOException, NoSuchFieldException, IllegalAccessException {
+    public void step_monsterType3_timeBelowThreshold_delegatesToStep() throws IOException, NoSuchFieldException, IllegalAccessException {
         // Given
         when(monster.getType()).thenReturn(3);
         long currentTime = 6000L; // Assuming randomLong is between 5000 and 15000
@@ -106,7 +106,7 @@ class MonsterControllerTest {
     }
 
     @Test
-    void step_underlyingStepThrowsIOException_propagatesException() throws IOException {
+    public void step_underlyingStepThrowsIOException_propagatesException() throws IOException {
         // Given
         when(monster.getType()).thenReturn(2);
         long currentTime = 10000L;

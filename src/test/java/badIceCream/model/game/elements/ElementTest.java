@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Element is abstract, so we create a dummy subclass to test the
  * functionality that Element provides: position management, etc.
  */
-class ElementTest {
+public class ElementTest {
 
     private static class DummyElement extends Element {
         public DummyElement(int x, int y) {
@@ -26,20 +26,20 @@ class ElementTest {
     private Element element;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         element = new DummyElement(5, 7);
     }
 
     @Test
     @DisplayName("Constructor sets position correctly")
-    void testConstructor() {
+    public void testConstructor() {
         assertEquals(5, element.getPosition().getX());
         assertEquals(7, element.getPosition().getY());
     }
 
     @Test
     @DisplayName("setPosition(...) updates the position")
-    void testSetPosition() {
+    public  void testSetPosition() {
         Position newPos = new Position(10, 10);
         element.setPosition(newPos);
         assertEquals(newPos, element.getPosition());
@@ -47,7 +47,7 @@ class ElementTest {
 
     @Test
     @DisplayName("getType() in dummy returns 999")
-    void testGetType() {
+    public  void testGetType() {
         assertEquals(999, element.getType());
     }
 }

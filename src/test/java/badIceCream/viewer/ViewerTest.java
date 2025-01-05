@@ -14,7 +14,7 @@ import static org.mockito.Mockito.*;
  * Tests the abstract {@link Viewer} class with a dummy subclass
  * to cover lines in draw(...).
  */
-class ViewerTest {
+public class ViewerTest {
 
     // A dummy model & viewer
     private static class DummyModel { }
@@ -31,7 +31,7 @@ class ViewerTest {
     private Graphics graphics;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         model = new DummyModel();
         viewer = new DummyViewer(model);
         graphics = mock(Graphics.class);
@@ -39,13 +39,13 @@ class ViewerTest {
 
     @Test
     @DisplayName("getModel() returns the model")
-    void testGetModel() {
+    public  void testGetModel() {
         assertEquals(model, viewer.getModel());
     }
 
     @Test
     @DisplayName("draw(...) calls gui.clear(), drawElements(gui), gui.refresh()")
-    void testDraw() throws IOException {
+    public void testDraw() throws IOException {
         viewer.draw(graphics);
 
         verify(graphics).clear();

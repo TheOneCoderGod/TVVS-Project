@@ -10,18 +10,18 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Tests for {@link WallBreakerMonster}.
  */
-class WallBreakerMonsterTest {
+public class WallBreakerMonsterTest {
 
     private WallBreakerMonster monster;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         monster = new WallBreakerMonster(7,2);
     }
 
     @Test
     @DisplayName("Constructor sets position, lastAction=DOWN, isRunning=false")
-    void testConstructor() {
+    public void testConstructor() {
         assertEquals(7, monster.getPosition().getX());
         assertEquals(2, monster.getPosition().getY());
         assertEquals(GUI.ACTION.DOWN, monster.getLastAction());
@@ -30,13 +30,13 @@ class WallBreakerMonsterTest {
 
     @Test
     @DisplayName("getType() returns 4 for WallBreakerMonster")
-    void testGetType() {
+    public void testGetType() {
         assertEquals(4, monster.getType());
     }
 
     @Test
     @DisplayName("startRunning / stopRunning => no effect => isRunning remains false")
-    void testRunningNoOps() {
+    public void testRunningNoOps() {
         monster.startRunning();
         assertFalse(monster.isRunning());
         monster.stopRunning();

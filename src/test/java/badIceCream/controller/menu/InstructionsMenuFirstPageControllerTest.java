@@ -3,8 +3,6 @@ package badIceCream.controller.menu;
 import badIceCream.GUI.GUI;
 import badIceCream.Game;
 import badIceCream.model.menu.InstructionsMenuFirstPage;
-import badIceCream.model.menu.InstructionsMenuSecondPage;
-import badIceCream.model.menu.MainMenu;
 import badIceCream.states.InstructionsMenuSecondPageState;
 import badIceCream.states.MainMenuState;
 import badIceCream.utils.Type;
@@ -19,14 +17,14 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-class InstructionsMenuFirstPageControllerTest {
+public class InstructionsMenuFirstPageControllerTest {
 
     private InstructionsMenuFirstPage menu;
     private InstructionsMenuFirstPageController controller;
     private Game game;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         // Create mocks
         menu = mock(InstructionsMenuFirstPage.class);
         game = mock(Game.class);
@@ -37,13 +35,13 @@ class InstructionsMenuFirstPageControllerTest {
 
     @Test
     @DisplayName("Constructor should properly instantiate")
-    void testConstructor() {
+    public void testConstructor() {
         assertNotNull(controller, "Controller should be instantiated");
     }
 
     @Test
     @DisplayName("step(...) with PAUSE action should go to MainMenuState")
-    void testStepPauseAction() throws IOException {
+    public void testStepPauseAction() throws IOException {
         // Mock the game’s current state to return some level, e.g. 2
         MainMenuState oldState = mock(MainMenuState.class);
         when(oldState.getLevel()).thenReturn(2);
@@ -64,7 +62,7 @@ class InstructionsMenuFirstPageControllerTest {
 
     @Test
     @DisplayName("step(...) with RIGHT action should go to InstructionsMenuSecondPageState")
-    void testStepRightAction() throws IOException {
+    public void testStepRightAction() throws IOException {
         // Mock the game’s current state to return some level, e.g. 5
         MainMenuState oldState = mock(MainMenuState.class);
         when(oldState.getLevel()).thenReturn(5);
@@ -85,7 +83,7 @@ class InstructionsMenuFirstPageControllerTest {
 
     @Test
     @DisplayName("step(...) with any other action should do nothing")
-    void testStepOtherAction() throws IOException {
+    public void testStepOtherAction() throws IOException {
         // Try an action that isn't PAUSE or RIGHT, e.g. LEFT
         controller.step(game, GUI.ACTION.LEFT, 0L);
 

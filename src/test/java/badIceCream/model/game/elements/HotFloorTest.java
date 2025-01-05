@@ -7,25 +7,25 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class HotFloorTest {
+public class HotFloorTest {
 
     private HotFloor hotFloor;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         hotFloor = new HotFloor(3,4);
     }
 
     @Test
     @DisplayName("Constructor sets position")
-    void testConstructor() {
+    public void testConstructor() {
         assertEquals(3, hotFloor.getPosition().getX());
         assertEquals(4, hotFloor.getPosition().getY());
     }
 
     @Test
     @DisplayName("getType() returns 0")
-    void testGetType() {
+    public void testGetType() {
         assertEquals(0, hotFloor.getType());
     }
 }

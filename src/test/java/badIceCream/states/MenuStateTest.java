@@ -17,7 +17,7 @@ import static org.mockito.Mockito.*;
  * We can't instantiate MenuState directly because it's abstract.
  * We'll create a dummy subclass for testing.
  */
-class MenuStateTest {
+public class MenuStateTest {
 
     private static class DummyMenuState extends MenuState<String> {
         public DummyMenuState(String menu, Controller<String> controller, Viewer<String> viewer, int level) {

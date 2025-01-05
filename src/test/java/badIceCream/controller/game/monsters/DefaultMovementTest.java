@@ -14,7 +14,7 @@ import java.lang.reflect.Method;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-class DefaultMovementTest {
+public class DefaultMovementTest {
 
     private DefaultMovement defaultMovement;
 
@@ -36,13 +36,13 @@ class DefaultMovementTest {
     private IceCream iceCream;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         MockitoAnnotations.openMocks(this);
         defaultMovement = new DefaultMovement();
     }
 
     @Test
-    void testGetPossible_ValidMove() throws Exception {
+    public void testGetPossible_ValidMove() throws Exception {
         // Setup mock behavior for the Position objects
         when(monster.getPosition()).thenReturn(position);
         when(position.getDown()).thenReturn(down);
@@ -72,7 +72,7 @@ class DefaultMovementTest {
     }
 
     @Test
-    void testGetPossible_NoValidMove() throws Exception {
+    public void testGetPossible_NoValidMove() throws Exception {
         // Setup mock behavior for the Position objects
         when(monster.getPosition()).thenReturn(position);
         when(position.getDown()).thenReturn(down);
@@ -102,7 +102,7 @@ class DefaultMovementTest {
     }
 
     @Test
-    void testStepMovement_NoMovement() throws Exception {
+   public void testStepMovement_NoMovement() throws Exception {
         long time = 100;
         long lastMovement = 0;
 
@@ -120,7 +120,7 @@ class DefaultMovementTest {
 
 
     @Test
-    void testMoveMonster() {
+    public void testMoveMonster() {
         // Setup mock behavior for the Position and Arena
         when(monster.getPosition()).thenReturn(position);
         when(arena.getIceCream()).thenReturn(iceCream);

@@ -22,15 +22,15 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-class MenuGraphicsTest {
+public class MenuGraphicsTest {
 
     @Nested
     @DisplayName("createTerminal() Tests")
-    class CreateTerminalTests {
+    public class CreateTerminalTests {
 
         @Test
         @DisplayName("createTerminal() - Success Scenario: Returns a Terminal Without Exceptions")
-        void testCreateTerminalSuccess() throws Exception {
+        public void testCreateTerminalSuccess() throws Exception {
             // Mock Font.createFont and DefaultTerminalFactory constructor
             try (MockedStatic<Font> fontStaticMock = Mockito.mockStatic(Font.class);
                  MockedConstruction<DefaultTerminalFactory> factoryConstruction =
@@ -76,7 +76,7 @@ class MenuGraphicsTest {
 
         @Test
         @DisplayName("createTerminal() - FontFormatException: Should Wrap and Throw IOException")
-        void testCreateTerminalFontFormatException() throws Exception {
+        public void testCreateTerminalFontFormatException() throws Exception {
             // Mock Font.createFont to throw FontFormatException
             try (MockedStatic<Font> fontStaticMock = Mockito.mockStatic(Font.class)) {
                 fontStaticMock.when(() -> Font.createFont(eq(Font.TRUETYPE_FONT), any(File.class)))
@@ -103,7 +103,7 @@ class MenuGraphicsTest {
 
         @Test
         @DisplayName("createTerminal() - IOException Reading File: Should Rethrow IOException")
-        void testCreateTerminalIOException() throws Exception {
+        public void testCreateTerminalIOException() throws Exception {
             // Mock Font.createFont to throw IOException
             try (MockedStatic<Font> fontStaticMock = Mockito.mockStatic(Font.class)) {
                 fontStaticMock.when(() -> Font.createFont(eq(Font.TRUETYPE_FONT), any(File.class)))

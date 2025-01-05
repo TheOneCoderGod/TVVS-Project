@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(org.mockito.junit.jupiter.MockitoExtension.class)
-class RunnerMovementEnabledTest {
+public class RunnerMovementEnabledTest {
 
     @Mock
     private Monster monster;
@@ -33,137 +33,90 @@ class RunnerMovementEnabledTest {
     @InjectMocks
     private RunnerMovementEnabled runnerMovementEnabled;
 
-    /**
-     * Tests the step method when the time condition is met and a shortest path is available.
-     * Mocks the ShortestPathNextMove constructor to return a mock with findShortestPath stubbed.
-     */
     @Test
-    void step_ShouldMoveMonster_WhenTimeConditionMetAndShortestPathAvailable() throws Exception {
-        // Arrange
+    public void step_ShouldMoveMonster_WhenTimeConditionMetAndShortestPathAvailable() throws Exception {
         long currentTime = 10;
         long lastMovement = 4;
 
-        // Create real Position instances
         Position currentPosition = new Position(1, 1);
         Position nextMove = new Position(1, 2);
 
-        // Stub monster and arena methods
+        // Mock the behavior of monster and arena
         when(monster.getPosition()).thenReturn(currentPosition);
         when(arena.getIceCream()).thenReturn(iceCream);
-        when(iceCream.getPosition()).thenReturn(nextMove); // Prevent NPE
+        when(iceCream.getPosition()).thenReturn(nextMove);
 
-        // Mock the construction of ShortestPathNextMove
+        // Mock the construction of ShortestPathNextMove and its method
         try (MockedConstruction<ShortestPathNextMove> mocked = mockConstruction(ShortestPathNextMove.class,
                 (mock, context) -> when(mock.findShortestPath(monster, arena)).thenReturn(nextMove))) {
 
-            // Act
+            // Call the step method
             runnerMovementEnabled.step(monster, arena, currentTime, lastMovement);
 
-            // Assert
+            // Verify that the monster's position and last action were updated
             verify(monster, times(1)).setLastAction(any(GUI.ACTION.class));
             verify(monster, times(1)).setPosition(nextMove);
         }
     }
 
-    /**
-     * Tests the step method when the time condition is not met.
-     */
     @Test
-    void step_ShouldNotMoveMonster_WhenTimeConditionNotMet() throws IOException {
-        // Arrange
+    public void step_ShouldNotMoveMonster_WhenTimeConditionNotMet() throws IOException {
         long currentTime = 4;
         long lastMovement = 0;
 
-        // Act
+        // Call the step method
         runnerMovementEnabled.step(monster, arena, currentTime, lastMovement);
 
-        // Assert
+        // Verify that there were no interactions with monster and arena
         verifyNoInteractions(monster);
         verifyNoInteractions(arena);
     }
 
+    // Change access to public and keep the necessary comments
+    public GUI.ACTION lastMove(Position previous, Position after) throws Exception {
+        // Use reflection to invoke the private lastMove method
+        Method lastMoveMethod = RunnerMovementEnabled.class.getDeclaredMethod("lastMove", Position.class, Position.class);
+        lastMoveMethod.setAccessible(true);
+        return (GUI.ACTION) lastMoveMethod.invoke(runnerMovementEnabled, previous, after);
+    }
 
-    /**
-     * Tests the lastMove private method when the monster moves down.
-     * Uses reflection to access the private method.
-     */
     @Test
-    void lastMove_ShouldReturnDOWN_WhenMovedDown() throws Exception {
-        // Arrange
+    public void lastMove_ShouldReturnDOWN_WhenMovedDown() throws Exception {
         Position previous = new Position(1, 1);
         Position after = new Position(1, 2);
 
-        // Access private method using reflection
-        Method lastMoveMethod = RunnerMovementEnabled.class.getDeclaredMethod("lastMove", Position.class, Position.class);
-        lastMoveMethod.setAccessible(true);
-
-        // Act
-        GUI.ACTION action = (GUI.ACTION) lastMoveMethod.invoke(runnerMovementEnabled, previous, after);
-
-        // Assert
+        // Call the lastMove method and verify the result
+        GUI.ACTION action = lastMove(previous, after);
         assertThat(action).isEqualTo(GUI.ACTION.DOWN);
     }
 
-    /**
-     * Tests the lastMove private method when the monster moves left.
-     * Uses reflection to access the private method.
-     */
     @Test
-    void lastMove_ShouldReturnLEFT_WhenMovedLeft() throws Exception {
-        // Arrange
+    public void lastMove_ShouldReturnLEFT_WhenMovedLeft() throws Exception {
         Position previous = new Position(1, 1);
         Position after = new Position(0, 1);
 
-        // Access private method using reflection
-        Method lastMoveMethod = RunnerMovementEnabled.class.getDeclaredMethod("lastMove", Position.class, Position.class);
-        lastMoveMethod.setAccessible(true);
-
-        // Act
-        GUI.ACTION action = (GUI.ACTION) lastMoveMethod.invoke(runnerMovementEnabled, previous, after);
-
-        // Assert
+        // Call the lastMove method and verify the result
+        GUI.ACTION action = lastMove(previous, after);
         assertThat(action).isEqualTo(GUI.ACTION.LEFT);
     }
 
-    /**
-     * Tests the lastMove private method when the monster moves right.
-     * Uses reflection to access the private method.
-     */
     @Test
-    void lastMove_ShouldReturnRIGHT_WhenMovedRight() throws Exception {
-        // Arrange
+    public void lastMove_ShouldReturnRIGHT_WhenMovedRight() throws Exception {
         Position previous = new Position(1, 1);
         Position after = new Position(2, 1);
 
-        // Access private method using reflection
-        Method lastMoveMethod = RunnerMovementEnabled.class.getDeclaredMethod("lastMove", Position.class, Position.class);
-        lastMoveMethod.setAccessible(true);
-
-        // Act
-        GUI.ACTION action = (GUI.ACTION) lastMoveMethod.invoke(runnerMovementEnabled, previous, after);
-
-        // Assert
+        // Call the lastMove method and verify the result
+        GUI.ACTION action = lastMove(previous, after);
         assertThat(action).isEqualTo(GUI.ACTION.RIGHT);
     }
 
-    /**
-     * Tests the lastMove private method when the monster moves up.
-     * Uses reflection to access the private method.
-     */
     @Test
-    void lastMove_ShouldReturnUP_WhenMovedUp() throws Exception {
-        // Arrange
+    public void lastMove_ShouldReturnUP_WhenMovedUp() throws Exception {
         Position previous = new Position(1, 2);
         Position after = new Position(1, 1);
 
-        // Access private method using reflection
-        Method lastMoveMethod = RunnerMovementEnabled.class.getDeclaredMethod("lastMove", Position.class, Position.class);
-        lastMoveMethod.setAccessible(true);
-
-        // Act
-        GUI.ACTION action = (GUI.ACTION) lastMoveMethod.invoke(runnerMovementEnabled, previous, after);
-
-        // Assert
+        // Call the lastMove method and verify the result
+        GUI.ACTION action = lastMove(previous, after);
         assertThat(action).isEqualTo(GUI.ACTION.UP);
     }
 }

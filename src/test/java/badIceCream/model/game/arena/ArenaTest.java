@@ -22,7 +22,7 @@ import static org.mockito.Mockito.*;
  * Tests the public methods in Arena, ensuring we avoid infinite loops
  * by controlling or limiting chain-building/destroying scenarios.
  */
-class ArenaTest {
+public class ArenaTest {
 
     private Arena arena;
     private List<Wall> walls;
@@ -32,7 +32,7 @@ class ArenaTest {
     private IceCream iceCream;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         arena = new Arena(50, 20);
         walls = new ArrayList<>();
         monsters = new ArrayList<>();
@@ -50,21 +50,21 @@ class ArenaTest {
 
     @Test
     @DisplayName("Constructor sets width/height properly")
-    void testConstructor() {
+    public void testConstructor() {
         assertEquals(50, arena.getWidth());
         assertEquals(20, arena.getHeight());
     }
 
     @Test
     @DisplayName("Level setters/getters")
-    void testLevel() {
+    public void testLevel() {
         arena.setLevel(3);
         assertEquals(3, arena.getLevel());
     }
 
     @Test
     @DisplayName("isEmpty(...) returns false if position has a wall, true otherwise")
-    void testIsEmpty() {
+    public void testIsEmpty() {
         walls.add(new StoneWall(10,10));
         assertFalse(arena.isEmpty(new Position(10,10)));
         assertTrue(arena.isEmpty(new Position(9,9)));
@@ -72,7 +72,7 @@ class ArenaTest {
 
     @Test
     @DisplayName("isEmptyMonsters(...) returns false if wall/monster at position, true otherwise")
-    void testIsEmptyMonsters() {
+    public void testIsEmptyMonsters() {
         walls.add(new StoneWall(5,5));
         assertFalse(arena.isEmptyMonsters(new Position(5,5)));
         assertTrue(arena.isEmptyMonsters(new Position(2,2)));
@@ -80,7 +80,7 @@ class ArenaTest {
 
     @Test
     @DisplayName("isEmptyNoStoneWall(...) returns false if StoneWall/monster at position, true otherwise")
-    void testIsEmptyNoStoneWall() {
+    public void testIsEmptyNoStoneWall() {
         walls.add(new StoneWall(3,3));
         assertFalse(arena.isEmptyNoStoneWall(new Position(3,3)));
         assertTrue(arena.isEmptyNoStoneWall(new Position(4,4)));
@@ -88,7 +88,7 @@ class ArenaTest {
 
     @Test
     @DisplayName("isEmptySpawnFruit(...) returns false if StoneWall or Fruit at position, true otherwise")
-    void testIsEmptySpawnFruit() {
+    public void testIsEmptySpawnFruit() {
         walls.add(new StoneWall(1,1));
         assertFalse(arena.isEmptySpawnFruit(new Position(1,1)));
         assertTrue(arena.isEmptySpawnFruit(new Position(2,2)));
@@ -96,7 +96,7 @@ class ArenaTest {
 
     @Test
     @DisplayName("isHotFloor(...) returns true if HotFloor at position, false otherwise")
-    void testIsHotFloor() {
+    public void testIsHotFloor() {
         hotFloors.add(new HotFloor(5,5));
         assertTrue(arena.isHotFloor(new Position(5,5)));
         assertFalse(arena.isHotFloor(new Position(1,1)));
@@ -104,7 +104,7 @@ class ArenaTest {
 
     @Test
     @DisplayName("iceWallDestroyed(...) removes the wall at position")
-    void testIceWallDestroyed() {
+    public void testIceWallDestroyed() {
         IceWall i = new IceWall(2,2);
         walls.add(i);
         arena.iceWallDestroyed(new Position(2,2));
@@ -113,7 +113,7 @@ class ArenaTest {
 
     @Test
     @DisplayName("isIceWall(...) checks if an IceWall is at a position")
-    void testIsIceWall() {
+    public void testIsIceWall() {
         IceWall i = new IceWall(3,3);
         walls.add(i);
         assertTrue(arena.isIceWall(new Position(3,3)));
@@ -122,7 +122,7 @@ class ArenaTest {
 
     @Test
     @DisplayName("hasMonster(...) returns monster at position, else null")
-    void testHasMonster() {
+    public void testHasMonster() {
         Monster m = mock(Monster.class);
         when(m.getPosition()).thenReturn(new Position(2,2));
         monsters.add(m);
@@ -133,7 +133,7 @@ class ArenaTest {
 
     @Test
     @DisplayName("isFruit(...) returns fruit type if found, else -1")
-    void testIsFruit() {
+    public void testIsFruit() {
         AppleFruit f = new AppleFruit(0,0);
         fruits.add(f);
         assertEquals(1, arena.isFruit(new Position(0,0)));
@@ -142,7 +142,7 @@ class ArenaTest {
 
     @Test
     @DisplayName("eatFruit(...) removes the fruit and returns its type, else -1")
-    void testEatFruit() {
+    public void testEatFruit() {
         BananaFruit b = new BananaFruit(3,3);
         fruits.add(b);
         assertEquals(2, arena.eatFruit(new Position(3,3)));
@@ -152,7 +152,7 @@ class ArenaTest {
 
     @Test
     @DisplayName("powerIceCream(...) destroys or builds walls (no infinite loop by limiting scenario)")
-    void testPowerIceCream() {
+    public void testPowerIceCream() {
         // We'll spy on the real arena to limit chain building or destruction.
         Arena spyArena = spy(arena);
         Position icePos = new Position(5,5);
@@ -192,7 +192,7 @@ class ArenaTest {
 
     @Test
     @DisplayName("generateNewFruits(...) adds correct number of fruits per level")
-    void testGenerateNewFruits() {
+    public void testGenerateNewFruits() {
         Arena spyArena = spy(arena);
         doReturn(true).when(spyArena).isEmptySpawnFruit(any());
 

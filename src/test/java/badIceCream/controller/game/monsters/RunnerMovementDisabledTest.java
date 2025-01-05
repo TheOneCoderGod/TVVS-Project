@@ -14,7 +14,7 @@ import java.lang.reflect.Method;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-class RunnerMovementDisabledTest {
+public class RunnerMovementDisabledTest {
 
     private RunnerMovementDisabled runnerMovementDisabled;
 
@@ -42,7 +42,7 @@ class RunnerMovementDisabledTest {
     }
 
     @Test
-    void testGetPossible_ValidMove() throws Exception {
+    public void testGetPossible_ValidMove() throws Exception {
         // Setup mock behavior for the Position objects
         when(monster.getPosition()).thenReturn(position);
         when(position.getDown()).thenReturn(down);
@@ -72,7 +72,7 @@ class RunnerMovementDisabledTest {
     }
 
     @Test
-    void testGetPossible_NoValidMove() throws Exception {
+    public void testGetPossible_NoValidMove() throws Exception {
         // Setup mock behavior for the Position objects
         when(monster.getPosition()).thenReturn(position);
         when(position.getDown()).thenReturn(down);
@@ -102,7 +102,7 @@ class RunnerMovementDisabledTest {
     }
 
     @Test
-    void testStepMovement_NoMovement() throws Exception {
+    public void testStepMovement_NoMovement() throws Exception {
         long time = 100;
         long lastMovement = 0;
 
@@ -119,7 +119,7 @@ class RunnerMovementDisabledTest {
     }
 
     @Test
-    void testStepMovement_ValidMovement() throws Exception {
+    public void testStepMovement_ValidMovement() throws Exception {
         long time = 200;
         long lastMovement = 0;
 
@@ -155,7 +155,7 @@ class RunnerMovementDisabledTest {
     }
 
     @Test
-    void testMoveMonster() {
+    public void testMoveMonster() {
         // Setup mock behavior for the Position and Arena
         when(monster.getPosition()).thenReturn(position);
         when(arena.getIceCream()).thenReturn(iceCream);
@@ -177,7 +177,7 @@ class RunnerMovementDisabledTest {
     }
 
     @Test
-    void testStepMovement_WithInvalidTime() throws Exception {
+    public void testStepMovement_WithInvalidTime() throws Exception {
         long time = 50;
         long lastMovement = 0;
 
@@ -194,7 +194,7 @@ class RunnerMovementDisabledTest {
     }
 
     @Test
-    void testStepMovement_WithUpdatedPosition() throws Exception {
+    public void testStepMovement_WithUpdatedPosition() throws Exception {
         long time = 500;
         long lastMovement = 0;
 

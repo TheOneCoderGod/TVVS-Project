@@ -6,18 +6,18 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PauseMenuTest {
+public class PauseMenuTest {
 
     private PauseMenu menu;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         menu = new PauseMenu();
     }
 
     @Test
     @DisplayName("Constructor has 2 entries: RESUME, MENU")
-    void testConstructor() {
+    public void testConstructor() {
         assertEquals(2, menu.getNumberEntries());
         assertEquals("RESUME", menu.getEntry(0));
         assertEquals(" MENU", menu.getEntry(1));
@@ -25,7 +25,7 @@ class PauseMenuTest {
 
     @Test
     @DisplayName("isSelectedResume() and isSelectedMenu() checks")
-    void testSelections() {
+    public void testSelections() {
         // By default, currentEntry=0 => RESUME
         assertTrue(menu.isSelectedResume());
         assertFalse(menu.isSelectedMenu());
@@ -38,7 +38,7 @@ class PauseMenuTest {
 
     @Test
     @DisplayName("nextEntry() / previousEntry() wrap with 2 entries")
-    void testNavigation() {
+    public void testNavigation() {
         assertTrue(menu.isSelected(0));
         menu.nextEntry();
         assertTrue(menu.isSelected(1));

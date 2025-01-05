@@ -2,43 +2,37 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-
-  <!-- Basic project configuration -->
   <modelVersion>4.0.0</modelVersion>
+
   <groupId>badIceCream</groupId>
   <artifactId>BadIceCream</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <!-- Project metadata -->
   <name>BadIceCream</name>
   <inceptionYear>2023</inceptionYear>
 
-  <!-- Maven prerequisites -->
   <prerequisites>
     <maven>3.9.9</maven>
   </prerequisites>
 
-  <!-- Project properties -->
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
     <java.version>21</java.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <maven.compiler.release>${java.version}</maven.compiler.release>
   </properties>
 
-  <!-- Dependencies section -->
   <dependencies>
-    <!-- Main Dependency for console-based UI -->
     <dependency>
       <groupId>com.googlecode.lanterna</groupId>
       <artifactId>lanterna</artifactId>
       <version>3.1.1</version>
     </dependency>
-
-    <!-- Testing Dependencies -->
+    <!-- Test -->
     <dependency>
       <groupId>net.jqwik</groupId>
       <artifactId>jqwik</artifactId>
@@ -83,12 +77,6 @@
     </dependency>
     <dependency>
       <groupId>org.mockito</groupId>
-      <artifactId>mockito-inline</artifactId>
-      <version>4.0.0</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
       <version>5.14.1</version>
       <scope>test</scope>
@@ -99,56 +87,10 @@
       <version>5.14.1</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>io.cucumber</groupId>
-      <artifactId>cucumber-junit</artifactId>
-      <version>7.20.1</version>
-      <scope>test</scope>
-    </dependency>
-
-    <!-- PowerMock Dependencies -->
-    <dependency>
-      <groupId>org.powermock</groupId>
-      <artifactId>powermock-reflect</artifactId>
-      <version>2.0.9</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.powermock</groupId>
-      <artifactId>powermock-module-junit4</artifactId>
-      <version>2.0.9</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.powermock</groupId>
-      <artifactId>powermock-api-mockito2</artifactId>
-      <version>2.0.9</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.powermock</groupId>
-      <artifactId>powermock-api-support</artifactId>
-      <version>2.0.9</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.powermock</groupId>
-      <artifactId>powermock-module-junit4-rule</artifactId>
-      <version>2.0.9</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.powermock</groupId>
-      <artifactId>powermock-module-junit4-common</artifactId>
-      <version>2.0.9</version>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
 
-  <!-- Build plugins -->
   <build>
     <plugins>
-      <!-- Compiler Plugin for Java -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -156,11 +98,9 @@
         <configuration>
           <source>${maven.compiler.source}</source>
           <target>${maven.compiler.target}</target>
-          <release>${maven.compiler.release}</release>
         </configuration>
       </plugin>
 
-      <!-- Assembly Plugin for packaging the application with dependencies -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
@@ -171,6 +111,11 @@
           </descriptorRefs>
           <archive>
             <manifest>
+              <!-- Add the following entries
+              Implementation-Title: ${project.name}
+              Implementation-Version: ${project.version}
+              Implementation-Vendor: ${project.organization.name}
+              -->
               <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
               <mainClass>badIceCream.Game</mainClass>
             </manifest>
@@ -187,7 +132,6 @@
         </executions>
       </plugin>
 
-      <!-- Surefire Plugin for running tests -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -201,79 +145,23 @@
         </dependencies>
         <configuration>
           <trimStackTrace>false</trimStackTrace>
-          <argLine>--add-opens java.base/java.lang=ALL-UNNAMED</argLine>
         </configuration>
       </plugin>
 
-      <!-- Enforcer Plugin to enforce Maven version -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-enforcer-plugin</artifactId>
-        <version>3.5.0</version>
-        <executions>
-          <execution>
-            <id>enforce-maven</id>
-            <goals>
-              <goal>enforce</goal>
-            </goals>
-            <configuration>
-              <rules>
-                <requireMavenVersion>
-                  <version>3.9.9</version>
-                </requireMavenVersion>
-              </rules>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-
-      <!-- JAR Plugin to add default implementation entries -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>3.4.2</version>
-        <configuration>
-          <archive>
-            <manifest>
-              <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-            </manifest>
-          </archive>
-        </configuration>
-      </plugin>
-
-      <!-- Shade Plugin for creating an uber-jar -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-shade-plugin</artifactId>
-        <version>3.6.0</version>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>shade</goal>
-            </goals>
-            <configuration>
-              <createDependencyReducedPom>false</createDependencyReducedPom>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-
-      <!-- JaCoCo Plugin for code coverage -->
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>0.8.12</version>
         <executions>
           <execution>
-            <id>prepare-agent</id>
+            <id>default-prepare-agent</id>
             <goals>
               <goal>prepare-agent</goal>
             </goals>
           </execution>
           <execution>
-            <id>report</id>
-            <phase>test</phase>
+            <id>default-report</id>
+            <phase>prepare-package</phase>
             <goals>
               <goal>report</goal>
             </goals>
@@ -326,20 +214,18 @@
           </excludedClasses>
         </configuration>
       </plugin>
+
     </plugins>
   </build>
 
-  <!-- Reporting Plugins for Maven reports -->
   <reporting>
     <plugins>
-      <!-- Project Information Reports Plugin -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-project-info-reports-plugin</artifactId>
         <version>3.7.0</version>
       </plugin>
 
-      <!-- Javadoc Plugin for generating documentation -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
@@ -357,20 +243,18 @@
         </reportSets>
       </plugin>
 
-      <!-- Surefire Report Plugin for test reports -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-report-plugin</artifactId>
         <version>3.5.2</version>
       </plugin>
 
-      <!-- JaCoCo Report Plugin for code coverage reports -->
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>0.8.12</version>
       </plugin>
+
     </plugins>
   </reporting>
-
 </project>

@@ -18,7 +18,7 @@ import static org.mockito.Mockito.*;
 /**
  * Improved test class for InstructionsMenuFirstPageState, covering all constructors and interactions.
  */
-class InstructionsMenuFirstPageStateTest {
+public class InstructionsMenuFirstPageStateTest {
 
     private InstructionsMenuFirstPage model;
     private InstructionsMenuFirstPageController controller;
@@ -26,7 +26,7 @@ class InstructionsMenuFirstPageStateTest {
     private InstructionsMenuFirstPageState state;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         model = mock(InstructionsMenuFirstPage.class);
         controller = mock(InstructionsMenuFirstPageController.class);
         viewer = mock(InstructionsMenuFirstPageViewer.class);
@@ -35,14 +35,14 @@ class InstructionsMenuFirstPageStateTest {
 
     @Test
     @DisplayName("Constructor with controller and viewer sets model and level")
-    void testConstructorWithControllerAndViewer() {
+    public void testConstructorWithControllerAndViewer() {
         assertEquals(model, state.getModel(), "Model should be set correctly");
         assertEquals(1, state.getLevel(), "Level should be set correctly");
     }
 
     @Test
     @DisplayName("step(...) calls controller.step(...) and viewer.draw(...)")
-    void testStep() throws IOException {
+    public void testStep() throws IOException {
         Game game = mock(Game.class);
         Graphics graphics = mock(Graphics.class);
 
@@ -54,13 +54,13 @@ class InstructionsMenuFirstPageStateTest {
 
     @Test
     @DisplayName("stepMonsters(...) calls controller.stepMonsters(...)")
-    void testStepMonsters() throws IOException {
+    public void testStepMonsters() throws IOException {
         state.stepMonsters(50L);
         verify(controller, times(1)).stepMonsters(50L);
     }
     @Test
     @DisplayName("Constructor without controller and viewer initializes them correctly")
-    void testConstructorWithoutControllerAndViewer() throws IOException {
+    public void testConstructorWithoutControllerAndViewer() throws IOException {
         try (MockedConstruction<InstructionsMenuFirstPageController> mockedController = mockConstruction(InstructionsMenuFirstPageController.class,
                 (mock, context) -> {
                     doNothing().when(mock).step(any(), any(), anyLong());

@@ -22,7 +22,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 
 @ExtendWith(MockitoExtension.class)
-class MainMenuViewerTest {
+public class MainMenuViewerTest {
 
     @Mock
     private Graphics mockGraphics;
@@ -50,7 +50,7 @@ class MainMenuViewerTest {
 
     @Nested
     @DisplayName("Draw Elements Tests")
-    class DrawElementsTests {
+    public class DrawElementsTests {
 
         @Test
         @DisplayName("Should draw all menu entries with correct text and colors")
@@ -96,7 +96,7 @@ class MainMenuViewerTest {
 
         @Test
         @DisplayName("Should handle zero menu entries without errors")
-        void testDrawElementsZeroEntries() {
+        public void testDrawElementsZeroEntries() {
             // Arrange
             when(mockMenu.getNumberEntries()).thenReturn(0);
 

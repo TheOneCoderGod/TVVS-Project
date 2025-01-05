@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Monster is abstract. We'll create a dummy subclass
  * to test the shared logic in {@link Monster}.
  */
-class MonsterTest {
+public class MonsterTest {
 
     private static class DummyMonster extends Monster {
         public DummyMonster(int x, int y) { super(x, y); }
@@ -23,13 +23,13 @@ class MonsterTest {
     private Monster monster;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         monster = new DummyMonster(0,0);
     }
 
     @Test
     @DisplayName("Constructor sets position, lastAction=DOWN, isRunning=false")
-    void testConstructor() {
+    public  void testConstructor() {
         assertEquals(0, monster.getPosition().getX());
         assertEquals(0, monster.getPosition().getY());
         assertEquals(GUI.ACTION.DOWN, monster.getLastAction());
@@ -38,20 +38,20 @@ class MonsterTest {
 
     @Test
     @DisplayName("getType() in dummy returns 999")
-    void testGetType() {
+    public void testGetType() {
         assertEquals(999, monster.getType());
     }
 
     @Test
     @DisplayName("setLastAction(...) changes lastAction")
-    void testSetLastAction() {
+    public void testSetLastAction() {
         monster.setLastAction(GUI.ACTION.RIGHT);
         assertEquals(GUI.ACTION.RIGHT, monster.getLastAction());
     }
 
     @Test
     @DisplayName("startRunning() / stopRunning() do nothing => isRunning remains false")
-    void testRunningNoOps() {
+    public void testRunningNoOps() {
         monster.startRunning();
         assertFalse(monster.isRunning());
         monster.stopRunning();

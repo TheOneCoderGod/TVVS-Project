@@ -18,7 +18,7 @@ import static org.mockito.Mockito.*;
 /**
  * Improved test class for GameOverMenuState, covering all constructors and interactions.
  */
-class GameOverMenuStateTest {
+public class GameOverMenuStateTest {
 
     private GameOverMenu model;
     private GameOverMenuController controller;
@@ -26,7 +26,7 @@ class GameOverMenuStateTest {
     private GameOverMenuState state;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         model = mock(GameOverMenu.class);
         controller = mock(GameOverMenuController.class);
         viewer = mock(GameOverMenuViewer.class);
@@ -35,14 +35,14 @@ class GameOverMenuStateTest {
 
     @Test
     @DisplayName("Constructor with controller and viewer sets model and level")
-    void testConstructorWithControllerAndViewer() {
+    public void testConstructorWithControllerAndViewer() {
         assertEquals(model, state.getModel(), "Model should be set correctly");
         assertEquals(2, state.getLevel(), "Level should be set correctly");
     }
 
     @Test
     @DisplayName("step(...) calls controller.step(...) and viewer.draw(...)")
-    void testStep() throws IOException {
+    public  void testStep() throws IOException {
         Game game = mock(Game.class);
         Graphics graphics = mock(Graphics.class);
 
@@ -54,14 +54,14 @@ class GameOverMenuStateTest {
 
     @Test
     @DisplayName("stepMonsters(...) calls controller.stepMonsters(...)")
-    void testStepMonsters() throws IOException {
+    public  void testStepMonsters() throws IOException {
         state.stepMonsters(999L);
         verify(controller, times(1)).stepMonsters(999L);
     }
 
     @Test
     @DisplayName("Constructor without controller and viewer initializes them correctly")
-    void testConstructorWithoutControllerAndViewer() throws IOException {
+    public void testConstructorWithoutControllerAndViewer() throws IOException {
         try (MockedConstruction<GameOverMenuController> mockedController = mockConstruction(GameOverMenuController.class,
                 (mock, context) -> {
                     doNothing().when(mock).step(any(), any(), anyLong());

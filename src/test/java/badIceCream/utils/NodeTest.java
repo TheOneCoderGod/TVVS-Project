@@ -7,14 +7,14 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class NodeTest {
+public class NodeTest {
 
     private Node node1;
     private Node node2;
     private Node node3;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         // We don't have private classes in Node, so we just test the public API
         Position pos1 = new Position(2, 2);
         Position pos2 = new Position(3, 3);
@@ -26,7 +26,7 @@ class NodeTest {
 
     @Test
     @DisplayName("compareTo() returns negative, zero, or positive based on cost+heuristic")
-    void testCompareTo() {
+    public void testCompareTo() {
         // node1 = total=7, node2=node3 = total=5
         // node2 ~ node3 => both 5
         assertTrue(node2.compareTo(node1) < 0, "node2 < node1 because 5 < 7");
@@ -36,7 +36,7 @@ class NodeTest {
 
     @Test
     @DisplayName("Constructor stores position, cost, heuristic, parent")
-    void testConstructor() {
+    public void testConstructor() {
         assertEquals(2, node1.position.getX());
         assertEquals(2, node1.position.getY());
         assertEquals(2, node1.cost);

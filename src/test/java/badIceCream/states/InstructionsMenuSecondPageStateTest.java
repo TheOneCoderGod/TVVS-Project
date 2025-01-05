@@ -18,7 +18,7 @@ import static org.mockito.Mockito.*;
 /**
  * Improved test class for InstructionsMenuSecondPageState, covering all constructors and interactions.
  */
-class InstructionsMenuSecondPageStateTest {
+public class InstructionsMenuSecondPageStateTest {
 
     private InstructionsMenuSecondPage model;
     private InstructionsMenuSecondPageController controller;
@@ -26,7 +26,7 @@ class InstructionsMenuSecondPageStateTest {
     private InstructionsMenuSecondPageState state;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         model = mock(InstructionsMenuSecondPage.class);
         controller = mock(InstructionsMenuSecondPageController.class);
         viewer = mock(InstructionsMenuSecondPageViewer.class);
@@ -35,14 +35,14 @@ class InstructionsMenuSecondPageStateTest {
 
     @Test
     @DisplayName("Constructor with controller and viewer sets model and level")
-    void testConstructorWithControllerAndViewer() {
+    public void testConstructorWithControllerAndViewer() {
         assertEquals(model, state.getModel(), "Model should be set correctly");
         assertEquals(2, state.getLevel(), "Level should be set correctly");
     }
 
     @Test
     @DisplayName("step(...) calls controller.step(...) and viewer.draw(...)")
-    void testStep() throws IOException {
+    public void testStep() throws IOException {
         Game game = mock(Game.class);
         Graphics graphics = mock(Graphics.class);
 
@@ -54,14 +54,14 @@ class InstructionsMenuSecondPageStateTest {
 
     @Test
     @DisplayName("stepMonsters(...) calls controller.stepMonsters(...)")
-    void testStepMonsters() throws IOException {
+    public void testStepMonsters() throws IOException {
         state.stepMonsters(123L);
         verify(controller, times(1)).stepMonsters(123L);
     }
 
     @Test
     @DisplayName("Constructor without controller and viewer initializes them correctly")
-    void testConstructorWithoutControllerAndViewer() throws IOException {
+    public void testConstructorWithoutControllerAndViewer() throws IOException {
         try (MockedConstruction<InstructionsMenuSecondPageController> mockedController = mockConstruction(InstructionsMenuSecondPageController.class,
                 (mock, context) -> {
                     doNothing().when(mock).step(any(), any(), anyLong());

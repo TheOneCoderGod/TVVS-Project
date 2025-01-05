@@ -7,25 +7,25 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class StoneWallTest {
+public class StoneWallTest {
 
     private StoneWall stoneWall;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         stoneWall = new StoneWall(3,3);
     }
 
     @Test
     @DisplayName("Constructor sets position")
-    void testConstructor() {
+    public void testConstructor() {
         assertEquals(3, stoneWall.getPosition().getX());
         assertEquals(3, stoneWall.getPosition().getY());
     }
 
     @Test
     @DisplayName("getType() returns 2")
-    void testGetType() {
+    public void testGetType() {
         assertEquals(2, stoneWall.getType());
     }
 }

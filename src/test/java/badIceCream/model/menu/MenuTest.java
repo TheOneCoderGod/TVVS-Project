@@ -7,11 +7,11 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class MenuTest {
+public class MenuTest {
 
     @Test
     @DisplayName("Menu constructor sets entries, nextEntry() and previousEntry() wrap around")
-    void testMenuBasic() {
+    public  void testMenuBasic() {
         Menu menu = new Menu(List.of("Option1", "Option2", "Option3"));
         assertEquals(3, menu.getNumberEntries());
         assertEquals("Option1", menu.getEntry(0));
@@ -41,7 +41,7 @@ class MenuTest {
 
     @Test
     @DisplayName("Menu isSelected(i) returns true only if currentEntry == i")
-    void testIsSelected() {
+    public void testIsSelected() {
         Menu menu = new Menu(List.of("A","B"));
         assertTrue(menu.isSelected(0));
         assertFalse(menu.isSelected(1));

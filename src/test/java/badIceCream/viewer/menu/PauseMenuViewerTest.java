@@ -11,14 +11,14 @@ import org.mockito.ArgumentCaptor;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class PauseMenuViewerTest {
+public class PauseMenuViewerTest {
 
     private PauseMenu model;
     private PauseMenuViewer viewer;
     private Graphics graphics;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         model = mock(PauseMenu.class);
         graphics = mock(Graphics.class);
         viewer = new PauseMenuViewer(model);
@@ -26,7 +26,7 @@ class PauseMenuViewerTest {
 
     @Test
     @DisplayName("All ASCII lines from drawTitle, drawSnowflake, drawPauseSymbol, plus loop for entries")
-    void testDrawElementsAllLines() {
+    public void testDrawElementsAllLines() {
         when(model.getNumberEntries()).thenReturn(2);
         when(model.getEntry(0)).thenReturn("RESUME");
         when(model.getEntry(1)).thenReturn("  MENU");

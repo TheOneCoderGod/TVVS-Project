@@ -19,14 +19,14 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-class InstructionsMenuSecondPageControllerTest {
+public class InstructionsMenuSecondPageControllerTest {
 
     private InstructionsMenuSecondPage menu;
     private InstructionsMenuSecondPageController controller;
     private Game game;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         // Create mocks
         menu = mock(InstructionsMenuSecondPage.class);
         game = mock(Game.class);
@@ -37,13 +37,13 @@ class InstructionsMenuSecondPageControllerTest {
 
     @Test
     @DisplayName("Constructor should properly instantiate")
-    void testConstructor() {
+    public void testConstructor() {
         assertNotNull(controller, "Controller should be instantiated");
     }
 
     @Test
     @DisplayName("step(...) with PAUSE action should go to MainMenuState")
-    void testStepPauseAction() throws IOException {
+    public void testStepPauseAction() throws IOException {
         // Mock the game’s current state to return some level, e.g., 2
         MainMenuState oldState = mock(MainMenuState.class);
         when(oldState.getLevel()).thenReturn(2);
@@ -64,7 +64,7 @@ class InstructionsMenuSecondPageControllerTest {
 
     @Test
     @DisplayName("step(...) with LEFT action should go to InstructionsMenuFirstPageState")
-    void testStepLeftAction() throws IOException {
+    public void testStepLeftAction() throws IOException {
         // Mock the game’s current state to return some level, e.g., 5
         MainMenuState oldState = mock(MainMenuState.class);
         when(oldState.getLevel()).thenReturn(5);
@@ -85,7 +85,7 @@ class InstructionsMenuSecondPageControllerTest {
 
     @Test
     @DisplayName("step(...) with an unhandled action (like RIGHT) should do nothing")
-    void testStepOtherAction() throws IOException {
+    public void testStepOtherAction() throws IOException {
         // Use an action not handled by the if statements
         controller.step(game, GUI.ACTION.RIGHT, 0L);
 

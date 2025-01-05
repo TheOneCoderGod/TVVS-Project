@@ -6,18 +6,18 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class GameOverMenuTest {
+public class GameOverMenuTest {
 
     private GameOverMenu menu;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         menu = new GameOverMenu();
     }
 
     @Test
     @DisplayName("Constructor should have 2 entries: PLAY AGAIN, MENU")
-    void testConstructor() {
+    public void testConstructor() {
         assertEquals(2, menu.getNumberEntries());
         assertEquals("PLAY AGAIN", menu.getEntry(0));
         assertEquals("   MENU", menu.getEntry(1));
@@ -25,7 +25,7 @@ class GameOverMenuTest {
 
     @Test
     @DisplayName("isSelectedPlayAgain() and isSelectedQuitToMainMenu() checks")
-    void testSelections() {
+    public void testSelections() {
         // By default, currentEntry = 0
         assertTrue(menu.isSelectedPlayAgain());
         assertFalse(menu.isSelectedQuitToMainMenu());
@@ -38,7 +38,7 @@ class GameOverMenuTest {
 
     @Test
     @DisplayName("nextEntry() and previousEntry() wrap around")
-    void testNextPreviousEntry() {
+    public void testNextPreviousEntry() {
         // Initially at index 0
         assertTrue(menu.isSelected(0));
 

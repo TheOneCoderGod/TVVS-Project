@@ -11,7 +11,7 @@ import org.mockito.ArgumentCaptor;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class GameOverMenuViewerTest {
+public class GameOverMenuViewerTest {
 
     private GameOverMenu model;
     private GameOverMenuViewer viewer;
@@ -26,7 +26,7 @@ class GameOverMenuViewerTest {
 
     @Test
     @DisplayName("All ASCII lines from drawTitle(...) and drawSnowflake(...), plus loop over entries, are required")
-    void testDrawElementsAllLines() {
+    public void testDrawElementsAllLines() {
         // Suppose we have 2 entries for the loop
         when(model.getNumberEntries()).thenReturn(2);
         when(model.getEntry(0)).thenReturn("PLAY AGAIN");
@@ -84,7 +84,7 @@ class GameOverMenuViewerTest {
 
     @Test
     @DisplayName("If 0 entries => must still have drawTitle/drawSnowflake lines but no loop calls for entries")
-    void testDrawElementsZeroEntries() {
+    public void testDrawElementsZeroEntries() {
         when(model.getNumberEntries()).thenReturn(0);
 
         viewer.drawElements(graphics);

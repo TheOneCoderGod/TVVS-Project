@@ -13,14 +13,14 @@ import static org.mockito.Mockito.*;
  * Tests for {@link FruitViewer}.
  * We ensure draw(...) calls the correct Graphics method based on 'type'.
  */
-class FruitViewerTest {
+public class FruitViewerTest {
 
     private FruitViewer fruitViewer;
     private Graphics graphics;
     private Fruit fruit;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         fruitViewer = new FruitViewer();
         graphics = mock(Graphics.class);
         fruit = mock(Fruit.class);
@@ -29,42 +29,42 @@ class FruitViewerTest {
 
     @Test
     @DisplayName("draw(...) with type=1 => drawAppleFruit(...)")
-    void testDrawApple() {
+    public void testDrawApple() {
         fruitViewer.draw(fruit, graphics, 1);
         verify(graphics).drawAppleFruit(new Position(5,5));
     }
 
     @Test
     @DisplayName("draw(...) with type=2 => drawBananaFruit(...)")
-    void testDrawBanana() {
+    public void testDrawBanana() {
         fruitViewer.draw(fruit, graphics, 2);
         verify(graphics).drawBananaFruit(new Position(5,5));
     }
 
     @Test
     @DisplayName("draw(...) with type=3 => drawCherryFruit(...)")
-    void testDrawCherry() {
+    public void testDrawCherry() {
         fruitViewer.draw(fruit, graphics, 3);
         verify(graphics).drawCherryFruit(new Position(5,5));
     }
 
     @Test
     @DisplayName("draw(...) with type=4 => drawPineappleFruit(...)")
-    void testDrawPineapple() {
+    public void testDrawPineapple() {
         fruitViewer.draw(fruit, graphics, 4);
         verify(graphics).drawPineappleFruit(new Position(5,5));
     }
 
     @Test
     @DisplayName("draw(...) with type=5 => drawStrawberryFruit(...)")
-    void testDrawStrawberry() {
+    public void testDrawStrawberry() {
         fruitViewer.draw(fruit, graphics, 5);
         verify(graphics).drawStrawberryFruit(new Position(5,5));
     }
 
     @Test
     @DisplayName("draw(...) with unknown type => no calls (mutation coverage for 'switch' completeness)")
-    void testDrawUnknownType() {
+    public void testDrawUnknownType() {
         fruitViewer.draw(fruit, graphics, 99);
         // No calls => we can verify none of the known methods are triggered
         verify(graphics, never()).drawAppleFruit(any());

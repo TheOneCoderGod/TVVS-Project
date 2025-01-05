@@ -5,11 +5,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class TypeTest {
+public class TypeTest {
 
     @Test
     @DisplayName("Type enum has expected values")
-    void testEnumValues() {
+    public void testEnumValues() {
         Type[] values = Type.values();
         assertEquals(5, values.length);
         assertTrue(contains(values, Type.menu));
@@ -21,7 +21,7 @@ class TypeTest {
 
     @Test
     @DisplayName("valueOf(...) returns correct enum constant")
-    void testValueOf() {
+    public void testValueOf() {
         assertEquals(Type.menu, Type.valueOf("menu"));
         assertEquals(Type.game, Type.valueOf("game"));
         assertEquals(Type.nulo, Type.valueOf("nulo"));

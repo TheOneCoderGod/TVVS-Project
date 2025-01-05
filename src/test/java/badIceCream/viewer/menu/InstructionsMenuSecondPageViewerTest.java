@@ -15,14 +15,14 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class InstructionsMenuSecondPageViewerTest {
+public class InstructionsMenuSecondPageViewerTest {
 
     private InstructionsMenuSecondPage model;
     private InstructionsMenuSecondPageViewer viewer;
     private Graphics graphics;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         model = mock(InstructionsMenuSecondPage.class);
         graphics = mock(Graphics.class);
         viewer = new InstructionsMenuSecondPageViewer(model);
@@ -30,7 +30,7 @@ class InstructionsMenuSecondPageViewerTest {
 
     @Test
     @DisplayName("Check drawTitle, drawSnowflake, drawCharacters, all text lines, and buttons")
-    void testDrawElementsAllLines() throws IOException {
+    public void testDrawElementsAllLines() throws IOException {
         viewer.drawElements(graphics);
 
         // Verify that drawCharacters() was called once

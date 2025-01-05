@@ -20,7 +20,7 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.*;
 
-class ArenaViewerTest {
+public class ArenaViewerTest {
 
     private Arena arena;
     private FruitViewer fruitViewer;
@@ -32,7 +32,7 @@ class ArenaViewerTest {
     private Graphics graphics;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         arena = mock(Arena.class);
         fruitViewer = mock(FruitViewer.class);
         monsterViewer = mock(MonsterViewer.class);
@@ -52,7 +52,7 @@ class ArenaViewerTest {
 
     @Test
     @DisplayName("Draw walls with different fruit cases")
-    void testDrawElements_WallFruitCases() throws IOException {
+    public void testDrawElements_WallFruitCases() throws IOException {
         Wall wall = mock(Wall.class);
         Position wallPos = pos(10, 10);
         when(wall.getPosition()).thenReturn(wallPos);
@@ -69,7 +69,7 @@ class ArenaViewerTest {
 
     @Test
     @DisplayName("Draw walls with monster on wall")
-    void testDrawElements_WallWithMonster() throws IOException {
+    public void testDrawElements_WallWithMonster() throws IOException {
         Wall wall = mock(Wall.class);
         Position wallPos = pos(11, 11);
         when(wall.getPosition()).thenReturn(wallPos);
@@ -91,7 +91,7 @@ class ArenaViewerTest {
 
     @Test
     @DisplayName("Draw hotFloor with monster type 1")
-    void testDrawElements_HotFloorWithMonsterType1() throws IOException {
+    public void testDrawElements_HotFloorWithMonsterType1() throws IOException {
         HotFloor hotFloor = mock(HotFloor.class);
         Position pos = pos(12, 12);
         when(hotFloor.getPosition()).thenReturn(pos);
@@ -112,7 +112,7 @@ class ArenaViewerTest {
 
     @Test
     @DisplayName("Draw hotFloor with iceCream on same position")
-    void testDrawElements_HotFloorWithIceCream() throws IOException {
+    public void testDrawElements_HotFloorWithIceCream() throws IOException {
         HotFloor hotFloor = mock(HotFloor.class);
         Position pos = pos(13, 13);
         when(hotFloor.getPosition()).thenReturn(pos);
@@ -133,7 +133,7 @@ class ArenaViewerTest {
 
     @Test
     @DisplayName("Draw hotFloor with no conditions")
-    void testDrawElements_HotFloorDefault() throws IOException {
+    public void testDrawElements_HotFloorDefault() throws IOException {
         HotFloor hotFloor = mock(HotFloor.class);
         Position pos = pos(14, 14);
         when(hotFloor.getPosition()).thenReturn(pos);
@@ -153,7 +153,7 @@ class ArenaViewerTest {
 
     @Test
     @DisplayName("Draw iceCream")
-    void testDrawElements_IceCream() throws IOException {
+    public void testDrawElements_IceCream() throws IOException {
         IceCream iceCream = mock(IceCream.class);
         when(iceCream.getPosition()).thenReturn(pos(16, 16));
         when(iceCream.getLastMovement()).thenReturn(ACTION.DOWN);

@@ -12,14 +12,14 @@ import static org.mockito.Mockito.*;
 /**
  * Tests for {@link HotFloorViewer}.
  */
-class HotFloorViewerTest {
+public class HotFloorViewerTest {
 
     private HotFloorViewer viewer;
     private Graphics graphics;
     private HotFloor hotFloor;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         viewer = new HotFloorViewer();
         graphics = mock(Graphics.class);
         hotFloor = mock(HotFloor.class);
@@ -29,7 +29,7 @@ class HotFloorViewerTest {
 
     @Test
     @DisplayName("draw(...) calls gui.drawHotFloor(...) with the given type")
-    void testDraw() {
+    public  void testDraw() {
         viewer.draw(hotFloor, graphics, 7);
         verify(graphics).drawHotFloor(new Position(2,2), 7);
     }

@@ -18,7 +18,7 @@ import static org.mockito.Mockito.*;
 /**
  * Improved test class for LevelCompletedMenuState, covering all constructors and interactions.
  */
-class LevelCompletedMenuStateTest {
+public class LevelCompletedMenuStateTest {
 
     private LevelCompletedMenu model;
     private LevelCompletedMenuController controller;
@@ -26,7 +26,7 @@ class LevelCompletedMenuStateTest {
     private LevelCompletedMenuState state;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         model = mock(LevelCompletedMenu.class);
         controller = mock(LevelCompletedMenuController.class);
         viewer = mock(LevelCompletedMenuViewer.class);
@@ -35,14 +35,14 @@ class LevelCompletedMenuStateTest {
 
     @Test
     @DisplayName("Constructor with controller and viewer sets model and level")
-    void testConstructorWithControllerAndViewer() {
+    public void testConstructorWithControllerAndViewer() {
         assertEquals(model, state.getModel(), "Model should be set correctly");
         assertEquals(4, state.getLevel(), "Level should be set correctly");
     }
 
     @Test
     @DisplayName("step(...) calls controller.step(...) and viewer.draw(...)")
-    void testStep() throws IOException {
+    public void testStep() throws IOException {
         Game game = mock(Game.class);
         Graphics graphics = mock(Graphics.class);
 
@@ -54,13 +54,13 @@ class LevelCompletedMenuStateTest {
 
     @Test
     @DisplayName("stepMonsters(...) calls controller.stepMonsters(...)")
-    void testStepMonsters() throws IOException {
+    public void testStepMonsters() throws IOException {
         state.stepMonsters(200L);
         verify(controller, times(1)).stepMonsters(200L);
     }
     @Test
     @DisplayName("Constructor without controller and viewer initializes them correctly")
-    void testConstructorWithoutControllerAndViewer() throws IOException {
+    public void testConstructorWithoutControllerAndViewer() throws IOException {
         try (MockedConstruction<LevelCompletedMenuController> mockedController = mockConstruction(LevelCompletedMenuController.class,
                 (mock, context) -> {
                     doNothing().when(mock).step(any(), any(), anyLong());

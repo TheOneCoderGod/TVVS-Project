@@ -10,18 +10,18 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Tests for {@link RunnerMonster}.
  */
-class RunnerMonsterTest {
+public class RunnerMonsterTest {
 
     private RunnerMonster monster;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         monster = new RunnerMonster(10,10);
     }
 
     @Test
     @DisplayName("Constructor sets position, lastAction=DOWN, isRunning=false")
-    void testConstructor() {
+    public void testConstructor() {
         assertEquals(10, monster.getPosition().getX());
         assertEquals(10, monster.getPosition().getY());
         assertEquals(GUI.ACTION.DOWN, monster.getLastAction());
@@ -30,13 +30,13 @@ class RunnerMonsterTest {
 
     @Test
     @DisplayName("getType() returns 3 for RunnerMonster")
-    void testGetType() {
+    public void testGetType() {
         assertEquals(3, monster.getType());
     }
 
     @Test
     @DisplayName("startRunning() => isRunning=true, stopRunning() => isRunning=false")
-    void testRunning() {
+    public void testRunning() {
         assertFalse(monster.isRunning());
         monster.startRunning();
         assertTrue(monster.isRunning());
@@ -46,7 +46,7 @@ class RunnerMonsterTest {
 
     @Test
     @DisplayName("setLastAction(...) changes lastAction")
-    void testSetLastAction() {
+    public void testSetLastAction() {
         monster.setLastAction(GUI.ACTION.LEFT);
         assertEquals(GUI.ACTION.LEFT, monster.getLastAction());
     }

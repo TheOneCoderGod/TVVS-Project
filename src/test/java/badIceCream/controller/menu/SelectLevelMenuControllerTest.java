@@ -20,14 +20,14 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-class SelectLevelMenuControllerTest {
+public class SelectLevelMenuControllerTest {
 
     private SelectLevelMenu menu;
     private SelectLevelMenuController controller;
     private Game game;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         menu = mock(SelectLevelMenu.class);
         game = mock(Game.class);
 
@@ -43,13 +43,13 @@ class SelectLevelMenuControllerTest {
 
     @Test
     @DisplayName("Constructor should properly instantiate the controller")
-    void testConstructor() {
+    public void testConstructor() {
         assertNotNull(controller);
     }
 
     @Test
     @DisplayName("step(...) with LEFT should call previousEntry()")
-    void testStepLeft() throws IOException {
+    public void testStepLeft() throws IOException {
         controller.step(game, GUI.ACTION.LEFT, 0L);
         verify(menu, times(1)).previousEntry();
         verify(menu, never()).nextEntry();
@@ -58,7 +58,7 @@ class SelectLevelMenuControllerTest {
 
     @Test
     @DisplayName("step(...) with RIGHT should call nextEntry()")
-    void testStepRight() throws IOException {
+    public void testStepRight() throws IOException {
         controller.step(game, GUI.ACTION.RIGHT, 0L);
         verify(menu, times(1)).nextEntry();
         verify(menu, never()).previousEntry();
@@ -67,7 +67,7 @@ class SelectLevelMenuControllerTest {
 
     @Test
     @DisplayName("step(...) with SELECT but no level selected => do nothing")
-    void testStepSelectNoLevel() throws IOException {
+    public void testStepSelectNoLevel() throws IOException {
         // All isSelectedLevelX return false by default
         controller.step(game, GUI.ACTION.SELECT, 0L);
 
@@ -76,7 +76,7 @@ class SelectLevelMenuControllerTest {
 
     @Test
     @DisplayName("step(...) with SELECT + Level1 => always load level 1 and set GameState")
-    void testStepSelectLevel1() throws IOException {
+    public void testStepSelectLevel1() throws IOException {
         when(menu.isSelectedLevel1()).thenReturn(true);
 
         // Mock current game state level (but it doesn't matter for level1)
@@ -115,7 +115,7 @@ class SelectLevelMenuControllerTest {
 
     @Test
     @DisplayName("step(...) with SELECT + Level2 => only if oldState.getLevel() >= 2")
-    void testStepSelectLevel2() throws IOException {
+    public void testStepSelectLevel2() throws IOException {
         when(menu.isSelectedLevel2()).thenReturn(true);
 
         // If the player's oldState level is 2 or more => loads arena
@@ -143,7 +143,7 @@ class SelectLevelMenuControllerTest {
 
     @Test
     @DisplayName("step(...) with SELECT + Level2 => does nothing if oldState.getLevel() < 2")
-    void testStepSelectLevel2NotAllowed() throws IOException {
+    public void testStepSelectLevel2NotAllowed() throws IOException {
         when(menu.isSelectedLevel2()).thenReturn(true);
 
         // oldState.getLevel() = 1 => not allowed
@@ -160,7 +160,7 @@ class SelectLevelMenuControllerTest {
 
     @Test
     @DisplayName("step(...) with SELECT + Level3 => only if oldState.getLevel() >= 3")
-    void testStepSelectLevel3Allowed() throws IOException {
+    public void testStepSelectLevel3Allowed() throws IOException {
         when(menu.isSelectedLevel3()).thenReturn(true);
 
         GameState oldState = mock(GameState.class);
@@ -186,7 +186,7 @@ class SelectLevelMenuControllerTest {
 
     @Test
     @DisplayName("step(...) with SELECT + Level3 => does nothing if oldState.getLevel() < 3")
-    void testStepSelectLevel3NotAllowed() throws IOException {
+    public void testStepSelectLevel3NotAllowed() throws IOException {
         when(menu.isSelectedLevel3()).thenReturn(true);
 
         GameState oldState = mock(GameState.class);
@@ -201,7 +201,7 @@ class SelectLevelMenuControllerTest {
     // Similarly for level 4
     @Test
     @DisplayName("step(...) with SELECT + Level4 => only if oldState.getLevel() >= 4")
-    void testStepSelectLevel4Allowed() throws IOException {
+    public void testStepSelectLevel4Allowed() throws IOException {
         when(menu.isSelectedLevel4()).thenReturn(true);
 
         GameState oldState = mock(GameState.class);
@@ -226,7 +226,7 @@ class SelectLevelMenuControllerTest {
 
     @Test
     @DisplayName("step(...) with SELECT + Level4 => does nothing if oldState.getLevel() < 4")
-    void testStepSelectLevel4NotAllowed() throws IOException {
+    public void testStepSelectLevel4NotAllowed() throws IOException {
         when(menu.isSelectedLevel4()).thenReturn(true);
 
         GameState oldState = mock(GameState.class);
@@ -241,7 +241,7 @@ class SelectLevelMenuControllerTest {
     // And for level 5
     @Test
     @DisplayName("step(...) with SELECT + Level5 => only if oldState.getLevel() >= 5")
-    void testStepSelectLevel5Allowed() throws IOException {
+    public void testStepSelectLevel5Allowed() throws IOException {
         when(menu.isSelectedLevel5()).thenReturn(true);
 
         GameState oldState = mock(GameState.class);
@@ -266,7 +266,7 @@ class SelectLevelMenuControllerTest {
 
     @Test
     @DisplayName("step(...) with SELECT + Level5 => does nothing if oldState.getLevel() < 5")
-    void testStepSelectLevel5NotAllowed() throws IOException {
+    public void testStepSelectLevel5NotAllowed() throws IOException {
         when(menu.isSelectedLevel5()).thenReturn(true);
 
         GameState oldState = mock(GameState.class);
@@ -280,7 +280,7 @@ class SelectLevelMenuControllerTest {
 
     @Test
     @DisplayName("step(...) with an unhandled action (UP, DOWN, etc.) => does nothing")
-    void testStepOtherAction() throws IOException {
+    public void testStepOtherAction() throws IOException {
         // E.g., the controller doesn't handle UP or DOWN, so it should do nothing
         controller.step(game, GUI.ACTION.UP, 0L);
 

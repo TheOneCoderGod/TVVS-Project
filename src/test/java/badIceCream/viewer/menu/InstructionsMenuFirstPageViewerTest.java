@@ -20,14 +20,14 @@ import static org.mockito.Mockito.*;
  * Comprehensive test class for InstructionsMenuFirstPageViewer.
  * Ensures all drawText calls are made correctly to achieve full mutation coverage.
  */
-class InstructionsMenuFirstPageViewerTest {
+public class InstructionsMenuFirstPageViewerTest {
 
     private InstructionsMenuFirstPage model;
     private InstructionsMenuFirstPageViewer viewer;
     private Graphics graphics;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         // Mock the model and graphics
         model = mock(InstructionsMenuFirstPage.class);
         graphics = mock(Graphics.class);
@@ -36,7 +36,7 @@ class InstructionsMenuFirstPageViewerTest {
 
     @Test
     @DisplayName("drawElements => verifies all drawText calls in drawTitle, drawSnowflake, and additional texts")
-    void testDrawElementsAllLines() {
+    public void testDrawElementsAllLines() {
         // Execute the method under test
         viewer.drawElements(graphics);
 

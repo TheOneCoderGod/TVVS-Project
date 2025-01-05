@@ -46,6 +46,7 @@ badIceCream\GUI\GUITest.class
 badIceCream\states\MainMenuStateTest.class
 badIceCream\model\game\elements\monsters\MonsterTest$DummyMonster.class
 badIceCream\controller\game\MonsterControllerTest.class
+badIceCream\GUI\GraphicsTest$DrawRunnerMonsterTests.class
 badIceCream\model\game\elements\fruits\AppleFruitTest.class
 badIceCream\states\StateTest$DummyState.class
 badIceCream\viewer\ElementViewerTest.class
@@ -76,6 +77,7 @@ badIceCream\controller\menu\MenuControllerTest.class
 badIceCream\model\game\elements\fruits\StrawberryFruitTest.class
 badIceCream\GUI\GameGraphicsTest.class
 badIceCream\controller\ControllerTest$StepMonstersTests.class
+badIceCream\viewer\menu\MainMenuViewerTest$DrawElementsTests.class
 badIceCream\controller\menu\MenuControllerTest$DummyMenuController.class
 badIceCream\controller\menu\GameOverMenuControllerTest.class
 badIceCream\model\game\elements\fruits\FruitTest$DummyFruit.class
@@ -85,6 +87,7 @@ badIceCream\audio\AudioControllerTest.class
 badIceCream\GUI\GameGraphicsTest$CreateTerminalTests.class
 badIceCream\viewer\menu\GameOverMenuViewerTest.class
 badIceCream\controller\game\monsters\DefaultMovementTest.class
+badIceCream\GUI\GraphicsTest$DrawHotFloorTests.class
 badIceCream\viewer\menu\SelectLevelMenuViewerTest.class
 badIceCream\GUI\GraphicsTest$DrawIceCreamTests.class
 badIceCream\states\MenuStateTest$DummyMenuState.class

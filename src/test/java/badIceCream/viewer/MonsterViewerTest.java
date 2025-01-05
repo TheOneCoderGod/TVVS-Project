@@ -14,14 +14,14 @@ import static org.mockito.Mockito.*;
  * Tests for {@link MonsterViewer}.
  * We verify each 'type' leads to the correct Graphics draw.
  */
-class MonsterViewerTest {
+public class MonsterViewerTest {
 
     private MonsterViewer viewer;
     private Graphics graphics;
     private Monster monster;
 
     @BeforeEach
-    void setUp() {
+    public  void setUp() {
         viewer = new MonsterViewer();
         graphics = mock(Graphics.class);
         monster = mock(Monster.class);
@@ -31,7 +31,7 @@ class MonsterViewerTest {
 
     @Test
     @DisplayName("draw(...) with type=1 => drawDefaultMonster(...)")
-    void testDrawDefaultMonster() {
+    public void testDrawDefaultMonster() {
         when(monster.getType()).thenReturn(1);
         viewer.draw(monster, graphics, 1);
         verify(graphics).drawDefaultMonster(new Position(5,5), GUI.ACTION.UP);
@@ -39,7 +39,7 @@ class MonsterViewerTest {
 
     @Test
     @DisplayName("draw(...) with type=2 => drawJumperMonster(...)")
-    void testDrawJumperMonster() {
+    public void testDrawJumperMonster() {
         when(monster.getType()).thenReturn(2);
         viewer.draw(monster, graphics, 2);
         verify(graphics).drawJumperMonster(new Position(5,5), GUI.ACTION.UP);
@@ -47,7 +47,7 @@ class MonsterViewerTest {
 
     @Test
     @DisplayName("draw(...) with type=3 => drawRunnerMonster(...)")
-    void testDrawRunnerMonster() {
+    public void testDrawRunnerMonster() {
         when(monster.getType()).thenReturn(3);
         when(monster.isRunning()).thenReturn(true);
         viewer.draw(monster, graphics, 3);
@@ -56,7 +56,7 @@ class MonsterViewerTest {
 
     @Test
     @DisplayName("draw(...) with type=4 => drawWallBreakerMonster(...)")
-    void testDrawWallBreakerMonster() {
+    public void testDrawWallBreakerMonster() {
         when(monster.getType()).thenReturn(4);
         viewer.draw(monster, graphics, 4);
         verify(graphics).drawWallBreakerMonster(new Position(5,5), GUI.ACTION.UP);
@@ -64,7 +64,7 @@ class MonsterViewerTest {
 
     @Test
     @DisplayName("draw(...) with unknown type => do nothing (mutation coverage)")
-    void testUnknownType() {
+    public void testUnknownType() {
         when(monster.getType()).thenReturn(99);
         viewer.draw(monster, graphics, 99);
         verify(graphics, never()).drawDefaultMonster(any(), any());

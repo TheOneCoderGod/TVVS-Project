@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * There's no code to line-cover. We'll just do a minimal test
  * with a dummy implementation, for mutation coverage completeness.
  */
-class ElementViewerTest {
+public class ElementViewerTest {
 
     // A dummy class implementing ElementViewer
     private static class DummyElement extends Element {
@@ -31,7 +31,7 @@ class ElementViewerTest {
 
     @Test
     @DisplayName("DummyElementViewer can be instantiated and draw(...) called without error")
-    void testInterfaceImplementation() {
+    public void testInterfaceImplementation() {
         ElementViewer<DummyElement> viewer = new DummyElementViewer();
         viewer.draw(new DummyElement(3,4), null, 42);
         // We simply ensure no exceptions are thrown

@@ -13,14 +13,14 @@ import static org.mockito.Mockito.*;
 /**
  * Tests for {@link IceCreamViewer}.
  */
-class IceCreamViewerTest {
+public class IceCreamViewerTest {
 
     private IceCreamViewer viewer;
     private Graphics graphics;
     private IceCream iceCream;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         viewer = new IceCreamViewer();
         graphics = mock(Graphics.class);
         iceCream = mock(IceCream.class);
@@ -31,7 +31,7 @@ class IceCreamViewerTest {
 
     @Test
     @DisplayName("draw(...) calls gui.drawIceCream(...) with position, lastMovement, and strawberryActive")
-    void testDraw() {
+    public void testDraw() {
         viewer.draw(iceCream, graphics, 1);
         verify(graphics).drawIceCream(
                 new Position(3,3),
