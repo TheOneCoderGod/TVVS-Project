@@ -1,4 +1,4 @@
-package badIceCream.controller.game.monsters;
+package badIceCream.controller.game;
 
 import badIceCream.controller.game.GameController;
 import badIceCream.model.game.arena.Arena;

@@ -59,7 +59,6 @@ badIceCream\model\game\elements\monsters\JumperMonster.class
 badIceCream\model\menu\GameOverMenu.class
 badIceCream\model\menu\LevelCompletedMenu.class
 badIceCream\controller\menu\InstructionsMenuSecondPageController.class
-badIceCream\controller\TestController.class
 badIceCream\model\game\arena\LoaderArenaBuilder.class
 badIceCream\GUI\MenuGraphics.class
 badIceCream\model\menu\Menu.class

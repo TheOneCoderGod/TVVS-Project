@@ -1,4 +1,4 @@
-package badIceCream.controller.game.monsters;
+package badIceCream.controller.game;
 
 import badIceCream.GUI.GUI;
 import badIceCream.Game;
@@ -104,7 +104,6 @@ public class IceCreamControllerTest {
         controller.step(game, GUI.ACTION.SPACE, System.currentTimeMillis());
         verify(arena).powerIceCream(any(GUI.ACTION.class));
     }
-
 
     @Test
     public void testMoveIceCreamLeftWhenNotEmpty() {

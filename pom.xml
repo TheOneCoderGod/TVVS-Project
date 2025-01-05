@@ -2,43 +2,37 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-
-  <!-- Basic project configuration -->
   <modelVersion>4.0.0</modelVersion>
+
   <groupId>badIceCream</groupId>
   <artifactId>BadIceCream</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <!-- Project metadata -->
   <name>BadIceCream</name>
   <inceptionYear>2023</inceptionYear>
 
-  <!-- Maven prerequisites -->
   <prerequisites>
     <maven>3.9.9</maven>
   </prerequisites>
 
-  <!-- Project properties -->
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <java.version>21</java.version> <!-- Use Java 21 -->
+
+    <java.version>21</java.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <maven.compiler.release>${java.version}</maven.compiler.release>
   </properties>
 
-  <!-- Dependencies section -->
   <dependencies>
-    <!-- Main Dependency for console-based UI -->
     <dependency>
       <groupId>com.googlecode.lanterna</groupId>
       <artifactId>lanterna</artifactId>
       <version>3.1.1</version>
     </dependency>
-
-    <!-- Testing Dependencies -->
+    <!-- Test -->
     <dependency>
       <groupId>net.jqwik</groupId>
       <artifactId>jqwik</artifactId>
@@ -95,10 +89,8 @@
     </dependency>
   </dependencies>
 
-  <!-- Build plugins -->
   <build>
     <plugins>
-      <!-- Compiler Plugin for Java -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -109,7 +101,6 @@
         </configuration>
       </plugin>
 
-      <!-- Assembly Plugin for packaging the application with dependencies -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
@@ -120,6 +111,11 @@
           </descriptorRefs>
           <archive>
             <manifest>
+              <!-- Add the following entries
+              Implementation-Title: ${project.name}
+              Implementation-Version: ${project.version}
+              Implementation-Vendor: ${project.organization.name}
+              -->
               <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
               <mainClass>badIceCream.Game</mainClass>
             </manifest>
@@ -136,7 +132,6 @@
         </executions>
       </plugin>
 
-      <!-- Surefire Plugin for running tests -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -153,7 +148,6 @@
         </configuration>
       </plugin>
 
-      <!-- JaCoCo Plugin for code coverage -->
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
@@ -175,7 +169,7 @@
         </executions>
       </plugin>
 
-      <!-- PIT (Mutation Testing) plugin -->
+      <!-- PIT Mutation Testing Plugin -->
       <plugin>
         <groupId>org.pitest</groupId>
         <artifactId>pitest-maven</artifactId>
@@ -192,47 +186,75 @@
           <features>
             <feature>-macos_focus</feature>
           </features>
+          <mutators>
+            <mutator>CONDITIONALS_BOUNDARY</mutator>
+            <mutator>INCREMENTS</mutator>
+            <mutator>INVERT_NEGS</mutator>
+            <mutator>MATH</mutator>
+            <mutator>NEGATE_CONDITIONALS</mutator>
+            <mutator>VOID_METHOD_CALLS</mutator>
+            <mutator>EMPTY_RETURNS</mutator>
+            <mutator>FALSE_RETURNS</mutator>
+            <mutator>TRUE_RETURNS</mutator>
+            <mutator>NULL_RETURNS</mutator>
+            <mutator>PRIMITIVE_RETURNS</mutator>
+            <mutator>CONSTRUCTOR_CALLS</mutator>
+            <mutator>INLINE_CONSTS</mutator>
+            <mutator>NON_VOID_METHOD_CALLS</mutator>
+            <mutator>REMOVE_CONDITIONALS</mutator>
+            <mutator>REMOVE_INCREMENTS</mutator>
+            <mutator>EXPERIMENTAL_ARGUMENT_PROPAGATION</mutator>
+            <mutator>EXPERIMENTAL_BIG_INTEGER</mutator>
+            <mutator>EXPERIMENTAL_NAKED_RECEIVER</mutator>
+            <mutator>EXPERIMENTAL_MEMBER_VARIABLE</mutator>
+            <mutator>EXPERIMENTAL_SWITCH</mutator>
+          </mutators>
           <excludedClasses>
-            <param>badIceCream.utils.Audio</param> <!-- Exclude Audio class from mutation testing -->
+            <excludedClass>badIceCream.utils.Audio</excludedClass>
           </excludedClasses>
         </configuration>
       </plugin>
+
     </plugins>
   </build>
 
-  <!-- Reporting Plugins for Maven reports -->
   <reporting>
     <plugins>
-      <!-- Project Information Reports Plugin -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-project-info-reports-plugin</artifactId>
         <version>3.7.0</version>
       </plugin>
 
-      <!-- Javadoc Plugin for generating documentation -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <version>3.10.1</version>
         <configuration>
-          <failOnError>false</failOnError> <!-- Don't fail on Javadoc generation errors -->
+          <failOnError>false</failOnError>
         </configuration>
+        <reportSets>
+          <reportSet>
+            <id>default</id>
+            <reports>
+              <report>javadoc</report>
+            </reports>
+          </reportSet>
+        </reportSets>
       </plugin>
 
-      <!-- Surefire Report Plugin for test reports -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-report-plugin</artifactId>
         <version>3.5.2</version>
       </plugin>
 
-      <!-- JaCoCo Report Plugin for code coverage reports -->
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>0.8.12</version>
       </plugin>
+
     </plugins>
   </reporting>
 </project>
